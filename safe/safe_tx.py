@@ -1,6 +1,5 @@
-
 class SafeTx:
-    def __init__(self, to: str, value: int, data: str, contract_method=None, contract_inputs_values=None):
+    def __init__(self, to: str, data: str, value: int = 0, contract_method=None, contract_inputs_values=None):
         self._to = to
         self._value = str(value)
         self._data = data
