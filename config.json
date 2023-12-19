@@ -1,0 +1,16 @@
+{
+  "log_path": "logs/donut-bot-distribution.log",
+  "base_csv_location": "https://www.mydonuts.online/home/mydonuts/static/rounds/round_#ROUND#.csv",
+  "snapshot.org": {
+    "ignore": [
+      {
+        "id": "0x379e39043a843625b7b6a3523d6f818bf533f643c564738f2049ab0a64479249",
+        "reason": "snapshot error calculating voting power"
+      },
+      {
+        "id": "0x442143d5c4202542da066dd6078554f152c79eddb66d1bee166768cca02da1e0",
+        "reason": "snapshot error calculating voting power"
+      }
+    ]
+  }
+}

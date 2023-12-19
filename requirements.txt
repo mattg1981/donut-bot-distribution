@@ -1,0 +1,6 @@
+requests~=2.31.0
+python-dotenv~=1.0.0
+numpy~=1.26.2
+pandas~=2.1.4
+python-graphql-client~=0.4.3
+praw~=7.7.1
