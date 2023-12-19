@@ -64,7 +64,7 @@ if __name__ == '__main__':
 
     # map awardee addresses
     for award in awards:
-        user = next((u for u in users if u['username'].lower() == award['to'].lower()),None)
+        user = next((u for u in users if u['username'].lower() == award['to'].lower()), None)
 
         if not user:
             print(f"donut reward user not found, ensure you typed the name correctly: [{award['to']}]")
@@ -74,20 +74,21 @@ if __name__ == '__main__':
 
     # encode the donut data
     distribute_contract_data = distribute_contract.encodeABI("distribute", [
-                [w3.to_checksum_address(a['address']) for a in awards if float(a['donut']) > 0],
-                [w3.to_wei(a['donut'], 'ether') for a in awards if float(a['donut']) > 0],
-                w3.to_checksum_address(GNO_DONUT_CONTRACT_ADDRESS)
-            ])
+        [w3.to_checksum_address(a['address']) for a in awards if float(a['donut']) > 0],
+        [w3.to_wei(a['donut'], 'ether') for a in awards if float(a['donut']) > 0],
+        w3.to_checksum_address(GNO_DONUT_CONTRACT_ADDRESS)
+    ])
 
     # encode the contrib data
     contrib_contract_data = gno_contrib_contract.encodeABI("mintMany", [
-            [w3.to_checksum_address(a['address']) for a in awards if float(a['contrib']) > 0],
-            [w3.to_wei(a['contrib'], 'ether') for a in awards if float(a['contrib']) > 0]
-        ])
+        [w3.to_checksum_address(a['address']) for a in awards if float(a['contrib']) > 0],
+        [w3.to_wei(a['contrib'], 'ether') for a in awards if float(a['contrib']) > 0]
+    ])
 
+    # create the transactions to be passed into the safe tx builder helper
     transactions = [
-        SafeTx(to=w3.to_checksum_address(GNO_DISTRIBUTE_CONTRACT_ADDRESS), value=0, data=distribute_contract_data),
-        SafeTx(to=w3.to_checksum_address(GNO_CONTRIB_CONTRACT_ADDRESS), value=0, data=contrib_contract_data),
+        SafeTx(to=w3.to_checksum_address(GNO_DISTRIBUTE_CONTRACT_ADDRESS), data=distribute_contract_data),
+        SafeTx(to=w3.to_checksum_address(GNO_CONTRIB_CONTRACT_ADDRESS), data=contrib_contract_data),
     ]
 
     # build the tx builder json
@@ -101,7 +102,3 @@ if __name__ == '__main__':
 
     with open(os.path.normpath(output_location), 'w') as f:
         json.dump(tx, f, indent=4)
-
-
-
-
