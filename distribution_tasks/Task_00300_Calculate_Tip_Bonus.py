@@ -9,9 +9,8 @@ from distribution_tasks.distribution_task import DistributionTask
 class CalculateTipsBonusDistributionTask(DistributionTask):
     DONUTS_FROM_TIPPING_OTHERS = 170000
     DONUTS_FROM_RECEIVING_TIPS = 340000
-    START_BLOCK = 30732101
-    END_BLOCK = 31207100
     GOV_WEIGHT_THRESHOLD = 500
+
     REGISTERED_USERS_URL = "https://ethtrader.github.io/donut.distribution/users.json"
     ONCHAIN_TIPS_FILE = "https://raw.githubusercontent.com/mattg1981/donut-bot-output/main/onchain_tips/onchain_tips.csv"
     OFFCHAIN_TIPS_URL = "https://raw.githubusercontent.com/mattg1981/donut-bot-output/main/offchain_tips/materialized/round_#ROUND#_materialized_tips.json"
