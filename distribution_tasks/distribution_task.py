@@ -4,6 +4,7 @@ import json
 import logging
 import os
 import re
+import shutil
 from pathlib import Path
 
 
@@ -22,7 +23,7 @@ class DistributionTask:
 
         version = 0
 
-        regex_pattern = f'{filename}\.(\d*)\.\w+\.csv'
+        regex_pattern = f'{filename}\\.(\\d*)\\.\\w+\\.csv'
         regex = re.compile(regex_pattern)
 
         if len(file_names):
@@ -53,25 +54,36 @@ class DistributionTask:
         return file_location
 
     def get_current_document_version(self, filename):
-        file_names = [file for file in os.listdir(self.working_directory)
-                      if file.startswith(f"{filename}.")]
-
-        if not file_names:
-            return None
-
-        regex_pattern = f'{filename}\.(\d*)\.\w+\.csv'
-        regex = re.compile(regex_pattern)
+        directories = [self.cache_directory, self.working_directory]
 
         max_version = 0
-        max_versioned_location = file_names[0]
+        max_versioned_location = None
+        top_level_dir = None
 
-        for file in file_names:
-            regex_result = regex.search(file)
-            if int(regex_result[1]) > max_version:
-                max_version = int(regex_result[1])
-                max_versioned_location = file
+        for dir in directories:
+            file_names = [file for file in os.listdir(dir) if file.startswith(f"{filename}.")]
 
-        location = os.path.join(self.working_directory, max_versioned_location)
+            if not file_names:
+                continue
+
+            regex_pattern = f'{filename}\\.(\\d*)\\.\\w+\\.csv'
+            regex = re.compile(regex_pattern)
+
+            if not max_versioned_location:
+                max_versioned_location = file_names[0]
+                top_level_dir = dir
+
+            for file in file_names:
+                regex_result = regex.search(file)
+                if int(regex_result[1]) > max_version:
+                    max_version = int(regex_result[1])
+                    max_versioned_location = file
+                    top_level_dir = dir
+
+        if not max_versioned_location:
+            return None
+
+        location = os.path.join(top_level_dir, max_versioned_location)
 
         with open(location, newline='') as csvfile:
             reader = csv.DictReader(csvfile, delimiter=',')
@@ -110,6 +122,10 @@ class DistributionTask:
         with open(tx_file_path, 'w') as f:
             json.dump(tx, f, indent=4)
 
+    def cache_file(self, versioned_document_path):
+        basename = os.path.basename(versioned_document_path)
+        shutil.copyfile(versioned_document_path, os.path.join(self.cache_directory, basename))
+
     @property
     def distribution_round(self):
         if not self.pipeline:
@@ -130,6 +146,13 @@ class DistributionTask:
             return None
 
         return self.pipeline['working_dir']
+
+    @property
+    def cache_directory(self):
+        if not self.pipeline:
+            return None
+
+        return self.pipeline['cache_dir']
 
     @property
     def priority(self):

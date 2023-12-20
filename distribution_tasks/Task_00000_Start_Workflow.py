@@ -17,7 +17,10 @@ class CreateDirectoryStructureDistributionTask(DistributionTask):
         # create file structure
         base_dir = path.dirname(path.abspath(__file__))
         working_dir = path.join(base_dir, f"../out/round_{self.distribution_round}")
+        cache_dir = path.join(base_dir, f"../cache/round_{self.distribution_round}")
+
         os.makedirs(path.normpath(working_dir), exist_ok=True)
+        os.makedirs(path.normpath(cache_dir), exist_ok=True)
 
         # clear out the working directory (in case files remain from a previous run)
         files = glob.glob(f'{working_dir}/*.csv')
@@ -34,6 +37,7 @@ class CreateDirectoryStructureDistributionTask(DistributionTask):
 
         return super().update_pipeline(pipeline_config, {
             'working_dir': os.path.normpath(working_dir),
+            'cache_dir': os.path.normpath(cache_dir),
             'log_dir': path.join(working_dir, "logs"),
             'tx_builder_dir': path.join(working_dir, "tx_builder")
         })

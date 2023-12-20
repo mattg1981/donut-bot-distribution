@@ -18,31 +18,28 @@ class PullBaseFilesDistributionTask(DistributionTask):
         self.logger.info("begin task")
         super().process(pipeline_config)
 
-        # get the csv file once it has been published
-        # url = self.config["base_csv_location"]
-        # url = url.replace("#ROUND#", str(super().distribution_round))
-        #
-        # self.logger.info(f"retrieving final csv file from base location... url [{url}]")
-        #
-        # request_result = requests.get(url).text
-        # reader = csv.DictReader(request_result.splitlines(), delimiter=',')
-        # csv_records = list(reader)
-
-        # write new csv
-        # csv_location = super().version_document_location()
-        # with open(csv_location, 'w') as output_file:
-        #     writer = csv.DictWriter(output_file, csv_records[0].keys(), extrasaction='ignore')
-        #     writer.writeheader()
-        #     writer.writerows(csv_records)
-
-        base_dir = path.dirname(path.abspath(__file__))
-        test_file = path.join(base_dir, f"../test/round_{super().distribution_round}.csv")
-        with open(test_file, newline='') as csvfile:
-            reader = csv.DictReader(csvfile, delimiter=',')
-            base_csv = list(reader)
-
         distribution_filename = "distribution"
-        super().save_document_version(base_csv, distribution_filename)
+
+        # test for cached file
+        base_csv = super().get_current_document_version(distribution_filename)
+
+        if not base_csv:
+            # get the csv file once it has been published
+            url = self.config["base_csv_location"]
+            url = url.replace("#ROUND#", str(super().distribution_round))
+
+            self.logger.info(f"retrieving final csv file from base location... url [{url}]")
+
+            request_result = requests.get(url).text
+            reader = csv.DictReader(request_result.splitlines(), delimiter=',')
+            base_csv = list(reader)
+        else:
+            self.logger.info("cached version of distribution file detected and being used")
+            self.logger.info("NOTE: if there was a previous issue with this file causing a re-run to be required, "
+                             "ensure you delete this file form the cache directory")
+
+        base_csv_location = super().save_document_version(base_csv, distribution_filename)
+        super().cache_file(base_csv_location)
 
         # get users file that will be used for any user <-> address lookups
         users_filename = "users"
@@ -51,7 +48,8 @@ class PullBaseFilesDistributionTask(DistributionTask):
 
         # get special memberships file that will be used later in the pipeline
         memberships_filename = "membership"
-        membership = json.load(request.urlopen(f"https://raw.githubusercontent.com/mattg1981/donut-bot-output/main/memberships/memberships_{self.distribution_round}.json"))
+        membership = json.load(request.urlopen(
+            f"https://raw.githubusercontent.com/mattg1981/donut-bot-output/main/memberships/memberships_{self.distribution_round}.json"))
         super().save_document_version(membership, memberships_filename)
 
         # get distribution round data

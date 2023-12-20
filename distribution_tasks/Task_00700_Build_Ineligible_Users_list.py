@@ -29,8 +29,6 @@ class ApplyVotingIncentivesDistributionTask(DistributionTask):
         # load environment variables
         load_dotenv()
 
-        ineligible_users = []
-
         distribution = super().get_current_document_version(pipeline_config['distribution'])
         distribution_round = super().get_current_document_version(pipeline_config['distribution_round'])
 
@@ -43,66 +41,65 @@ class ApplyVotingIncentivesDistributionTask(DistributionTask):
                              # username=os.getenv('INELIGIBLE_CLIENT_USERNAME'),
                              # password=os.getenv('INELIGIBLE_CLIENT_PASSWORD'),
                              user_agent="ethtrader ineligible-users (by u/mattg1981)")
+
         reddit.read_only = True
 
-        # idx = 0
-        # for d in distribution:
-        #     idx += 1
-        #     self.logger.info(f"checking eligiblity requirements for {d['username']} [{idx} of {len(distribution)}]")
-        #     redditor = reddit.redditor(d['username'])
-        #
-        #     try:
-        #         if hasattr(redditor, 'is_suspended'):
-        #             if redditor.is_suspended:
-        #                 self.logger.info(f"  adding user [{d['username']}] to ineligible list: user is suspended")
-        #                 ineligible_users.append({
-        #                     'user': d['username'],
-        #                     'reason': 'suspended'
-        #                 })
-        #                 continue
-        #
-        #         if redditor.total_karma < 100:
-        #             self.logger.info(f"  adding user [{d['username']}] to ineligible list: karma < 100")
-        #             ineligible_users.append({
-        #                 'user': d['username'],
-        #                 'reason': 'karma'
-        #             })
-        #             continue
-        #
-        #         if datetime.fromtimestamp(redditor.created) > cutoff_date:
-        #             self.logger.info(f"  adding user [{d['username']}] to ineligible list: created < 60 days")
-        #             ineligible_users.append({
-        #                 'user': d['username'],
-        #                 'reason': 'age'
-        #             })
-        #             continue
-        #
-        #         self.logger.info("  ok...")
-        #
-        #     except prawcore.exceptions.NotFound as e:
-        #         self.logger.info(f"removing user [{d['username']}] from distribution: user is deleted (not found)")
-        #         self.logger.error(e)
-        #
-        #         ineligible_users.append({
-        #             'user': d['username'],
-        #             'reason': 'deleted'
-        #         })
-        #         continue
-        #
-        #     except Exception as e:
-        #         self.logger.error(e)
-
-        # uncomment the code below after a file has been retrieved and saved to the /test location
-        # this saves us from having to generate the file over and over (time consuming process)
-        # -----------------
-        base_dir = path.dirname(path.abspath(__file__))
-        test_file = path.join(base_dir, f"../test/ineligible_users.000.csv")
-        with open(test_file, newline='') as csvfile:
-            reader = csv.DictReader(csvfile, delimiter=',')
-            ineligible_users = list(reader)
-
+        # test for cached file
         ineligible_users_filename = "ineligible_users"
-        super().save_document_version(ineligible_users, ineligible_users_filename)
+        ineligible_users = super().get_current_document_version(ineligible_users_filename)
+
+        if not ineligible_users:
+            ineligible_users = []
+
+            idx = 0
+            for d in distribution:
+                idx += 1
+                self.logger.info(f"checking eligiblity requirements for {d['username']} [{idx} of {len(distribution)}]")
+                redditor = reddit.redditor(d['username'])
+
+                try:
+                    if hasattr(redditor, 'is_suspended'):
+                        if redditor.is_suspended:
+                            self.logger.info(f"  adding user [{d['username']}] to ineligible list: user is suspended")
+                            ineligible_users.append({
+                                'user': d['username'],
+                                'reason': 'suspended'
+                            })
+                            continue
+
+                    if redditor.total_karma < 100:
+                        self.logger.info(f"  adding user [{d['username']}] to ineligible list: karma < 100")
+                        ineligible_users.append({
+                            'user': d['username'],
+                            'reason': 'karma'
+                        })
+                        continue
+
+                    if datetime.fromtimestamp(redditor.created) > cutoff_date:
+                        self.logger.info(f"  adding user [{d['username']}] to ineligible list: created < 60 days")
+                        ineligible_users.append({
+                            'user': d['username'],
+                            'reason': 'age'
+                        })
+                        continue
+
+                    self.logger.info("  ok...")
+
+                except prawcore.exceptions.NotFound as e:
+                    self.logger.info(f"removing user [{d['username']}] from distribution: user is deleted (not found)")
+                    self.logger.error(e)
+
+                    ineligible_users.append({
+                        'user': d['username'],
+                        'reason': 'deleted'
+                    })
+                    continue
+
+                except Exception as e:
+                    self.logger.error(e)
+
+        path = super().save_document_version(ineligible_users, ineligible_users_filename)
+        super().cache_file(path)
 
         return super().update_pipeline(pipeline_config, {
             'ineligible_users': ineligible_users_filename
