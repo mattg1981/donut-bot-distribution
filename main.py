@@ -49,7 +49,7 @@ if __name__ == '__main__':
     logger.info(f"{len(tasks)} tasks found")
     logger.info("begin processing task pipeline...")
 
-    pipeline_config = {'step': 0, 'round': int(sys.argv[1])}
+    pipeline_config = {'step': 1, 'round': int(sys.argv[1])}
     for task in tasks:
         pipeline_config = task.process(pipeline_config)
         pipeline_config['step'] += 1
