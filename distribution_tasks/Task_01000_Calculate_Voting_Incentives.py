@@ -1,14 +1,8 @@
-import csv
-import json
-import shutil
+import os
+
 from datetime import datetime
 from decimal import Decimal
-from os import path
-from urllib import request
-
-import requests
 from python_graphql_client import GraphqlClient
-
 from distribution_tasks.distribution_task import DistributionTask
 
 
@@ -18,8 +12,8 @@ class ApplyVotingIncentivesDistributionTask(DistributionTask):
         self.priority = 1000
 
     def process(self, pipeline_config):
-        self.logger.info("begin task")
         super().process(pipeline_config)
+        self.logger.info(f"begin task [step: {super().current_step}] [file: {os.path.basename(__file__)}]")
 
         distribution_data = super().get_current_document_version(pipeline_config['distribution'])
         tip_bonus_data = super().get_current_document_version(pipeline_config['tipping_bonus'])
@@ -91,19 +85,6 @@ class ApplyVotingIncentivesDistributionTask(DistributionTask):
                 else:
                     voter['qty'] = voter['qty'] + 1
 
-        # json_object = {
-        #     'label': f"round_{ROUND}",
-        #     "voters": voters
-        # }
-        #
-        # out_file = f"../out/voters_round_{ROUND}.json"
-        #
-        # if os.path.exists(out_file):
-        #     os.remove(out_file)
-        #
-        # with open(out_file, 'w') as f:
-        #     json.dump(json_object, f, indent=4)
-
         for v in voters:
             voter = next((u for u in users if u["address"].lower() == v["address"].lower()), None)
 
@@ -118,7 +99,7 @@ class ApplyVotingIncentivesDistributionTask(DistributionTask):
 
             if not dist:
                 self.logger.info(
-                    f"user {voter['username']} does not exist in distribution file, no bonus to be applied...")
+                    f"  user {voter['username']} does not exist in distribution file, no bonus to be applied...")
                 continue
 
             tip_bonus = (tip_bonus and tip_bonus['points']) or 0

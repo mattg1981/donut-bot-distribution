@@ -1,19 +1,9 @@
-import csv
-import json
 import os
-import shutil
-from datetime import datetime, timedelta
-from decimal import Decimal
-from os import path
-from time import sleep
-from urllib import request
-
 import praw
 import prawcore
-import requests
-from dotenv import load_dotenv
-from python_graphql_client import GraphqlClient
 
+from dotenv import load_dotenv
+from datetime import datetime, timedelta
 from distribution_tasks.distribution_task import DistributionTask
 
 
@@ -23,8 +13,8 @@ class ApplyVotingIncentivesDistributionTask(DistributionTask):
         self.priority = 700
 
     def process(self, pipeline_config):
-        self.logger.info("begin task")
         super().process(pipeline_config)
+        self.logger.info(f"begin task [step: {super().current_step}] [file: {os.path.basename(__file__)}]")
 
         # load environment variables
         load_dotenv()
@@ -54,13 +44,13 @@ class ApplyVotingIncentivesDistributionTask(DistributionTask):
             idx = 0
             for d in distribution:
                 idx += 1
-                self.logger.info(f"checking eligiblity requirements for {d['username']} [{idx} of {len(distribution)}]")
+                self.logger.info(f"  checking eligiblity requirements for {d['username']} [{idx} of {len(distribution)}]")
                 redditor = reddit.redditor(d['username'])
 
                 try:
                     if hasattr(redditor, 'is_suspended'):
                         if redditor.is_suspended:
-                            self.logger.info(f"  adding user [{d['username']}] to ineligible list: user is suspended")
+                            self.logger.info(f"    adding user [{d['username']}] to ineligible list: user is suspended")
                             ineligible_users.append({
                                 'user': d['username'],
                                 'reason': 'suspended'
@@ -68,7 +58,7 @@ class ApplyVotingIncentivesDistributionTask(DistributionTask):
                             continue
 
                     if redditor.total_karma < 100:
-                        self.logger.info(f"  adding user [{d['username']}] to ineligible list: karma < 100")
+                        self.logger.info(f"    adding user [{d['username']}] to ineligible list: karma < 100")
                         ineligible_users.append({
                             'user': d['username'],
                             'reason': 'karma'
@@ -76,17 +66,17 @@ class ApplyVotingIncentivesDistributionTask(DistributionTask):
                         continue
 
                     if datetime.fromtimestamp(redditor.created) > cutoff_date:
-                        self.logger.info(f"  adding user [{d['username']}] to ineligible list: created < 60 days")
+                        self.logger.info(f"    adding user [{d['username']}] to ineligible list: created < 60 days")
                         ineligible_users.append({
                             'user': d['username'],
                             'reason': 'age'
                         })
                         continue
 
-                    self.logger.info("  ok...")
+                    self.logger.info("    ok...")
 
                 except prawcore.exceptions.NotFound as e:
-                    self.logger.info(f"removing user [{d['username']}] from distribution: user is deleted (not found)")
+                    self.logger.info(f"    removing user [{d['username']}] from distribution: user is deleted (not found)")
                     self.logger.error(e)
 
                     ineligible_users.append({

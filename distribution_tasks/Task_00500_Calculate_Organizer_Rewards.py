@@ -1,10 +1,4 @@
-import csv
-import json
-import shutil
-from os import path
-from urllib import request
-
-import requests
+import os
 
 from distribution_tasks.distribution_task import DistributionTask
 
@@ -15,8 +9,8 @@ class ApplyOrganizerRewardsDistributionTask(DistributionTask):
         self.priority = 500
 
     def process(self, pipeline_config):
-        self.logger.info("begin task")
         super().process(pipeline_config)
+        self.logger.info(f"begin task [step: {super().current_step}] [file: {os.path.basename(__file__)}]")
 
         distribution = super().get_current_document_version(pipeline_config['distribution'])
         users = super().get_current_document_version('users')

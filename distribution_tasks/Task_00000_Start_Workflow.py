@@ -1,7 +1,7 @@
 import glob
 import os
-from os import path
 
+from os import path
 from distribution_tasks.distribution_task import DistributionTask
 
 
@@ -11,8 +11,10 @@ class CreateDirectoryStructureDistributionTask(DistributionTask):
         self.priority = 0
 
     def process(self, pipeline_config):
-        self.logger.info("begin task")
         super().process(pipeline_config)
+        self.logger.info(f"begin task [step: {super().current_step}] [file: {os.path.basename(__file__)}]")
+
+        self.logger.info("  build directory structure...")
 
         # create file structure
         base_dir = path.dirname(path.abspath(__file__))
@@ -21,6 +23,8 @@ class CreateDirectoryStructureDistributionTask(DistributionTask):
 
         os.makedirs(path.normpath(working_dir), exist_ok=True)
         os.makedirs(path.normpath(cache_dir), exist_ok=True)
+
+        self.logger.info("  clear out workding directory...")
 
         # clear out the working directory (in case files remain from a previous run)
         files = glob.glob(f'{working_dir}/*.csv')
@@ -32,8 +36,6 @@ class CreateDirectoryStructureDistributionTask(DistributionTask):
         for location in locations:
             os.makedirs(location, exist_ok=True)
             os.makedirs(location, exist_ok=True)
-
-        self.logger.info("end task")
 
         return super().update_pipeline(pipeline_config, {
             'working_dir': os.path.normpath(working_dir),

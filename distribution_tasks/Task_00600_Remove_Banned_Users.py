@@ -1,14 +1,7 @@
-import csv
 import json
-import shutil
-from datetime import datetime
-from decimal import Decimal
-from os import path
+import os
+
 from urllib import request
-
-import requests
-from python_graphql_client import GraphqlClient
-
 from distribution_tasks.distribution_task import DistributionTask
 
 
@@ -18,8 +11,8 @@ class ApplyVotingIncentivesDistributionTask(DistributionTask):
         self.priority = 600
 
     def process(self, pipeline_config):
-        self.logger.info("begin task")
         super().process(pipeline_config)
+        self.logger.info(f"begin task [step: {super().current_step}] [file: {os.path.basename(__file__)}]")
 
 
         temp_banned = json.load(request.urlopen(f"https://raw.githubusercontent.com/mattg1981/donut-bot-output/main"
@@ -33,11 +26,11 @@ class ApplyVotingIncentivesDistributionTask(DistributionTask):
 
         distribution = super().get_current_document_version(pipeline_config['distribution'])
 
-        self.logger.info(f"distribution size before bans: [{len(distribution)}]")
+        self.logger.info(f"  distribution size before bans: [{len(distribution)}]")
 
         distribution = [d for d in distribution if d["username"] not in banned_users]
 
-        self.logger.info(f"distribution size after bans: [{len(distribution)}]")
+        self.logger.info(f"  distribution size after bans: [{len(distribution)}]")
 
         super().save_document_version(distribution, pipeline_config['distribution'])
 

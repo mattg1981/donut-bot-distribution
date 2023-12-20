@@ -1,9 +1,8 @@
+import os
 import urllib
 import numpy as np
 import pandas as pd
-import json
 
-from pathlib import Path
 from distribution_tasks.distribution_task import DistributionTask
 
 
@@ -23,9 +22,14 @@ class CalculateTipsBonusDistributionTask(DistributionTask):
 
     def get_onchain_post_tips(self):
         """ Get onchain tips from the csv file and filter out tips outside the range or comment tips """
+        self.logger.info("  pulling down onchain tips file...")
         onchain_tips = pd.read_csv(self.ONCHAIN_TIPS_FILE)
-        onchain_tips = onchain_tips[
-            (self.START_BLOCK <= onchain_tips["block"]) & (onchain_tips["block"] <= self.END_BLOCK)]
+
+        dr = super().get_current_document_version("distribution_round")[0]
+
+        onchain_tips = onchain_tips[(onchain_tips['timestamp'] >= dr['from_date']) & (onchain_tips['timestamp'] <= dr['to_date'])]
+        # onchain_tips = onchain_tips[(self.START_BLOCK <= onchain_tips["block"]) & (onchain_tips["block"] <= self.END_BLOCK)]
+
         onchain_tips = onchain_tips[~onchain_tips["content_id"].astype(str).str.startswith("t1")]
         onchain_tips["type"] = "onchain"
 
@@ -34,6 +38,7 @@ class CalculateTipsBonusDistributionTask(DistributionTask):
     def get_offchain_post_tips(self, offchain_tips_url):
         """ Get offchain tips from url and filter out comment tips """
         try:
+            self.logger.info("  pulling down offchain tips file...")
             offchain_tips = pd.read_json(offchain_tips_url)
         except urllib.error.HTTPError:
             print("No offchain tips found or url is not valid")
@@ -124,40 +129,10 @@ class CalculateTipsBonusDistributionTask(DistributionTask):
         distribution = distribution.sort_values(by="total_donuts", ascending=False)
         return distribution
 
-    # def format_final_json(self, distribution, round):
-    #     """ Format the distribution dataframe to the final json format """
-    #     json_formatted = {
-    #         "label": f"round_{round}",
-    #         "startBlock": self.START_BLOCK,
-    #         "endBlock": self.END_BLOCK,
-    #         "govWeightThreshold": self.GOV_WEIGHT_THRESHOLD,
-    #         "donutUpvoterTotalReward": self.DONUTS_FROM_TIPPING_OTHERS,
-    #         "quadRankTotalReward": self.DONUTS_FROM_RECEIVING_TIPS
-    #     }
-    #     rewards_donut_upvoter = [
-    #         {
-    #             "username": row["user"],
-    #             "points": int(row["donut_upvoter"]),
-    #             "contributor_type": "donut_upvoter"
-    #         }
-    #         for _, row in distribution.iterrows()
-    #     ]
-    #     rewards_quad_rank = [
-    #         {
-    #             "username": row["user"],
-    #             "points": int(row["quad_rank"]),
-    #             "contributor_type": "quad_rank"
-    #         }
-    #         for _, row in distribution.iterrows()
-    #     ]
-    #     json_formatted["rewards"] = rewards_donut_upvoter + rewards_quad_rank
-    #     return json_formatted
-
     def process(self, pc):
-        self.logger.info("begin task")
         super().process(pc)
+        self.logger.info(f"begin task [step: {super().current_step}] [file: {os.path.basename(__file__)}]")
 
-        # perform task logic
         offchain_tips = self.OFFCHAIN_TIPS_URL.replace("#ROUND#", str(super().distribution_round))
         post_tips = self.get_post_tips(offchain_tips)
         offchain_tips = self.compute_offchain_tips(post_tips)
@@ -167,7 +142,6 @@ class CalculateTipsBonusDistributionTask(DistributionTask):
         count_quad_rank = self.compute_donuts_from_quad_rank(post_tips_with_weight)
 
         distribution = self.create_distribution(count_tips, count_quad_rank, offchain_tips)
-        # json_formatted = self.format_final_json(distribution, pc['distribution_round'])
 
         output = [
             {
@@ -180,8 +154,6 @@ class CalculateTipsBonusDistributionTask(DistributionTask):
         ]
 
         super().save_document_version(output, 'tipping_bonus')
-
-        self.logger.info("end task")
 
         return super().update_pipeline(pc, {
             'tipping_bonus': 'tipping_bonus',

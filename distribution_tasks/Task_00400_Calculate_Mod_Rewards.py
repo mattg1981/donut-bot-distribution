@@ -1,33 +1,34 @@
-import csv
 import json
-import shutil
-from os import path
+import os
 from urllib import request
-
-import requests
 
 from distribution_tasks.distribution_task import DistributionTask
 
 
 class ApplyModeratorrBonusDistributionTask(DistributionTask):
+
+    MOD_REWARD_POOL = 85000
+
     def __init__(self, config, logger_name):
         DistributionTask.__init__(self, config, logger_name)
         self.priority = 400
 
     def process(self, pipeline_config):
-        self.logger.info("begin task")
         super().process(pipeline_config)
+        self.logger.info(f"begin task [step: {super().current_step}] [file: {os.path.basename(__file__)}]")
 
         distribution = super().get_current_document_version(pipeline_config['distribution'])
         users = super().get_current_document_version('users')
 
         # get moderators
+        self.logger.info("  grabbing mods file...")
         mods = json.load(request.urlopen(f"https://raw.githubusercontent.com/mattg1981/donut-bot-output/main/moderators/moderators_{super().distribution_round}.json"))
-        reward_amount = 85000/len([x for x in mods if int(x['bonus_eligible']) == 1])
+        bonus_eligible_mods = [x for x in mods if int(x['bonus_eligible']) == 1 and x['community'].lower() == 'ethtrader']
+        reward_amount = self.MOD_REWARD_POOL / len(bonus_eligible_mods)
 
         rewards = []
 
-        for mod in mods:
+        for mod in bonus_eligible_mods:
             dist_record = next((x for x in distribution if x["username"].lower() == mod["name"].lower()), None)
 
             if not dist_record:

@@ -1,10 +1,8 @@
-import csv
 import json
-from copy import deepcopy
-from decimal import Decimal
-from os import path
-from urllib import request
+import os
 
+from decimal import Decimal
+from urllib import request
 from distribution_tasks.distribution_task import DistributionTask
 
 
@@ -17,19 +15,15 @@ class DistributeOffchainTipsDistributionTask(DistributionTask):
         self.priority = 200
 
     def process(self, pipeline_config):
-        self.logger.info("begin task")
-
-        # important - this call loads the configuration so that you can user properties such as:
-        # super().distribution_round
-        # super().working_dir
         super().process(pipeline_config)
-
-        # perform task logic
+        self.logger.info(f"begin task [step: {super().current_step}] [file: {os.path.basename(__file__)}]")
 
         # get funded accounts
+        self.logger.info("  grabbing funded accounts file...")
         funded_accounts = json.load(request.urlopen(f"https://raw.githubusercontent.com/mattg1981/donut-bot-output/main/funded_accounts/funded_round_{super().distribution_round}.json"))
 
         # get offchain tips
+        self.logger.info("  offchain tips file...")
         offchain_tips = json.load(request.urlopen(f"https://raw.githubusercontent.com/mattg1981/donut-bot-output/main/offchain_tips/tips_round_{super().distribution_round}.json"))
 
         # list of off chain users
@@ -199,8 +193,6 @@ class DistributeOffchainTipsDistributionTask(DistributionTask):
         super().save_document_version(offchain_users, offchain_filename)
         super().save_document_version(distribution, pipeline_config["distribution"])
         super().save_document_version(materialized_tips, materialized_tips_filename)
-
-        self.logger.info("end task")
 
         return super().update_pipeline(pipeline_config, {
             "offchain": offchain_filename,
