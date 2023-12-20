@@ -11,9 +11,9 @@ class CalculateTipsBonusDistributionTask(DistributionTask):
     DONUTS_FROM_RECEIVING_TIPS = 340000
     GOV_WEIGHT_THRESHOLD = 500
 
-    REGISTERED_USERS_URL = "https://ethtrader.github.io/donut.distribution/users.json"
-    ONCHAIN_TIPS_FILE = "https://raw.githubusercontent.com/mattg1981/donut-bot-output/main/onchain_tips/onchain_tips.csv"
-    OFFCHAIN_TIPS_URL = "https://raw.githubusercontent.com/mattg1981/donut-bot-output/main/offchain_tips/materialized/round_#ROUND#_materialized_tips.json"
+    # REGISTERED_USERS_URL = "https://ethtrader.github.io/donut.distribution/users.json"
+    # ONCHAIN_TIPS_FILE = "https://raw.githubusercontent.com/mattg1981/donut-bot-output/main/onchain_tips/onchain_tips.csv"
+    # OFFCHAIN_TIPS_URL = "https://raw.githubusercontent.com/mattg1981/donut-bot-output/main/offchain_tips/materialized/round_#ROUND#_materialized_tips.json"
 
     def __init__(self, config, logger_name):
         DistributionTask.__init__(self, config, logger_name)
@@ -22,7 +22,9 @@ class CalculateTipsBonusDistributionTask(DistributionTask):
     def get_onchain_post_tips(self):
         """ Get onchain tips from the csv file and filter out tips outside the range or comment tips """
         self.logger.info("  pulling down onchain tips file...")
-        onchain_tips = pd.read_csv(self.ONCHAIN_TIPS_FILE)
+        oc_tips = super().get_current_document_version('onchain_tips')
+        # onchain_tips = pd.read_csv(self.ONCHAIN_TIPS_FILE)
+        onchain_tips = pd.DataFrame.from_records(oc_tips).astype({'amount': 'float'})
 
         dr = super().get_current_document_version("distribution_round")[0]
 
@@ -34,11 +36,14 @@ class CalculateTipsBonusDistributionTask(DistributionTask):
 
         return onchain_tips
 
-    def get_offchain_post_tips(self, offchain_tips_url):
+    # def get_offchain_post_tips(self, offchain_tips_url):
+    def get_offchain_post_tips(self):
         """ Get offchain tips from url and filter out comment tips """
         try:
             self.logger.info("  pulling down offchain tips file...")
-            offchain_tips = pd.read_json(offchain_tips_url)
+            # offchain_tips = pd.read_json(offchain_tips_url)
+            offc_tips = super().get_current_document_version('offchain_tips')
+            offchain_tips = pd.DataFrame.from_records(offc_tips).astype({'amount': 'float'})
         except urllib.error.HTTPError:
             print("No offchain tips found or url is not valid")
             return pd.DataFrame(columns=["from_user", "to_user", "amount", "type"])
@@ -50,10 +55,12 @@ class CalculateTipsBonusDistributionTask(DistributionTask):
 
         return offchain_tips
 
-    def get_post_tips(self, offchain_tips_url):
+    # def get_post_tips(self, offchain_tips_url):
+    def get_post_tips(self):
         """ Get both onchain and offchain tips and merge them together """
         onchain_tips = self.get_onchain_post_tips()
-        offchain_tips = self.get_offchain_post_tips(offchain_tips_url)
+        # offchain_tips = self.get_offchain_post_tips(offchain_tips_url)
+        offchain_tips = self.get_offchain_post_tips()
 
         if offchain_tips.empty:
             return onchain_tips
@@ -62,16 +69,19 @@ class CalculateTipsBonusDistributionTask(DistributionTask):
 
     def add_weights(self, tips):
         """ Add the weights of sender and receiver to the tips dataframe """
-        users_weight = pd.read_json(self.REGISTERED_USERS_URL)
+        users = super().get_current_document_version('users')
+        # users_weight = pd.read_json(self.REGISTERED_USERS_URL)
+
+        users_weight = pd.DataFrame.from_records(users)
 
         tips_with_weight = pd.merge(tips, users_weight, how="inner", left_on="from_user", right_on="username")
         tips_with_weight = tips_with_weight[["from_user", "to_user", "amount", "weight"]].rename(
-            columns={"weight": "sender_weight"})
+            columns={"weight": "sender_weight"}).astype({"sender_weight": "int32"})
 
         # Adding the weight of the receiver also removes tips to users that are not registered
         tips_with_weight = pd.merge(tips_with_weight, users_weight, how="inner", left_on="to_user", right_on="username")
         tips_with_weight = tips_with_weight[["from_user", "to_user", "amount", "sender_weight", "weight"]].rename(
-            columns={"weight": "receiver_weight"})
+            columns={"weight": "receiver_weight"}).astype({"receiver_weight": "int32"})
 
         return tips_with_weight
 
@@ -132,8 +142,9 @@ class CalculateTipsBonusDistributionTask(DistributionTask):
         super().process(pc)
         self.logger.info(f"begin task [step: {super().current_step}] [file: {os.path.basename(__file__)}]")
 
-        offchain_tips = self.OFFCHAIN_TIPS_URL.replace("#ROUND#", str(super().distribution_round))
-        post_tips = self.get_post_tips(offchain_tips)
+        # offchain_tips = self.OFFCHAIN_TIPS_URL.replace("#ROUND#", str(super().distribution_round))
+        # post_tips = self.get_post_tips(offchain_tips)
+        post_tips = self.get_post_tips()
         offchain_tips = self.compute_offchain_tips(post_tips)
 
         post_tips_with_weight = self.filter_out_by_gov_weight(self.add_weights(post_tips))
