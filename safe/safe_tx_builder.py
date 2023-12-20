@@ -2,6 +2,7 @@ import json
 import os
 import pathlib
 from datetime import datetime
+from hashlib import sha3_256
 
 
 def build_tx_builder_json(description: str, transactions: list):
@@ -11,12 +12,15 @@ def build_tx_builder_json(description: str, transactions: list):
 
     tx['meta']['description'] = description
     tx['createdAt'] = int(datetime.now().timestamp())
-    tx['transactions'] = list().extend([{
+    tx['transactions'] = [{
         "to": t.to,
         "value": t.value,
         "data": t.data,
         "contractMethod": t.contract_method,
         "contractInputsValues": t.contract_inputs_values
-    } for t in transactions])
+    } for t in transactions]
+
+    tx_json = json.dumps(tx['transactions'], sort_keys=True).encode('utf-8')
+    tx['meta']['checksum'] = sha3_256(tx_json).hexdigest()
 
     return tx

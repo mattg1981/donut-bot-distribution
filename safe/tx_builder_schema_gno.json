@@ -4,6 +4,7 @@
   "createdAt": 0,
   "meta": {
     "name": "Transactions Batch",
+    "checksum": null,
     "description": null,
     "txBuilderVersion": "1.16.3",
     "createdFromSafeAddress": "0x682b5664C2b9a6a93749f2159F95c23fEd654F0A",
