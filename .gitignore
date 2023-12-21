@@ -1,4 +1,4 @@
 /.env
 /venv/
-/out/*
+/out/ad_hoc
 /cache/
