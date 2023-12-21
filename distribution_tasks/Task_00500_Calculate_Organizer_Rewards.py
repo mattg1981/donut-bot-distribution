@@ -26,7 +26,7 @@ class ApplyOrganizerRewardsDistributionTask(DistributionTask):
             dist_record = next((x for x in distribution if x["username"].lower() == organizer.lower()), None)
 
             if not dist_record:
-                address = next((u['address'] for u in users if u['username'] == organizer), None)
+                address = next((u['address'] for u in users if u['username'].lower() == organizer.lower()), None)
                 if not address:
                     self.logger.warning(
                         f"  organizer [{organizer}] not found in user .csv, skipping calc...")
@@ -41,6 +41,7 @@ class ApplyOrganizerRewardsDistributionTask(DistributionTask):
                     "comment score": 0,
                     "post score": 0,
                     "points": 0,
+                    "pay2post": '0.0',
                     "blockchain_address": address
                 })
 

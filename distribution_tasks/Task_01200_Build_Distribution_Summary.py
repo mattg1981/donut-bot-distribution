@@ -26,14 +26,17 @@ class ApplyVotingIncentivesDistributionTask(DistributionTask):
         distribution_summary = []
 
         for d in distribution_data:
-            offchain = next((o for o in offchain_data if o['user'] == d['username']), None)
-            voter = next((v for v in voter_data if v['username'] == d['username']), None)
-            tip_bonus = next((t for t in tip_bonus_data if t['username'] == d['username']), None)
-            mod = next((t for t in mod_rewards if t['username'] == d['username']), None)
-            org = next((o for o in organizer_rewards if o['username'] == d['username']), None)
-            base_record = next((b for b in base_distribution_file if b['username'] == d['username']), None)
-            contrib_record = next((c for c in contrib_data if c['username'] == d['username']), None)
-            user = next((u for u in user_data if u['username'] == d['username']), None)
+            offchain = next((o for o in offchain_data if o['user'].lower() == d['username'].lower()), None)
+            tip_bonus = next((t for t in tip_bonus_data if t['username'].lower() == d['username'].lower()), None)
+            mod = next((t for t in mod_rewards if t['username'].lower() == d['username'].lower()), None)
+            org = next((o for o in organizer_rewards if o['username'].lower() == d['username'].lower()), None)
+            base_record = next((b for b in base_distribution_file if b['username'].lower() == d['username'].lower()), None)
+            contrib_record = next((c for c in contrib_data if c['username'].lower() == d['username'].lower()), None)
+            user = next((u for u in user_data if u['username'].lower() == d['username'].lower()), None)
+
+            voter = None
+            if voter_data:
+                voter = next((v for v in voter_data if v['username'].lower() == d['username'].lower()), None)
 
             points = Decimal(d['points'])
 

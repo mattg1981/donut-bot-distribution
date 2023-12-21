@@ -188,7 +188,7 @@ class DistributeOffchainTipsDistributionTask(DistributionTask):
             self.logger.info("")
 
         offchain_filename = 'offchain'
-        materialized_tips_filename = "materialized"
+        materialized_tips_filename = "materialized_tips"
 
         super().save_document_version(offchain_users, offchain_filename)
         super().save_document_version(distribution, pipeline_config["distribution"])

@@ -32,7 +32,7 @@ class ApplyModeratorrBonusDistributionTask(DistributionTask):
             dist_record = next((x for x in distribution if x["username"].lower() == mod["name"].lower()), None)
 
             if not dist_record:
-                address = next((u['address'] for u in users if u['username'] == mod['name']), None)
+                address = next((u['address'] for u in users if u['username'].lower() == mod['name'].lower()), None)
                 if not address:
                     self.logger.warning(
                         f"  moderator [{mod['name']}] not found in user .csv, skipping calc...")
@@ -47,6 +47,7 @@ class ApplyModeratorrBonusDistributionTask(DistributionTask):
                     "comment score": 0,
                     "post score": 0,
                     "points": 0,
+                    "pay2post": '0.0',
                     "blockchain_address": address
                 })
 

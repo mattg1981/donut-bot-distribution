@@ -42,8 +42,8 @@ class CalculateTipsBonusDistributionTask(DistributionTask):
         try:
             self.logger.info("  pulling down offchain tips file...")
             # offchain_tips = pd.read_json(offchain_tips_url)
-            offc_tips = super().get_current_document_version('offchain_tips')
-            offchain_tips = pd.DataFrame.from_records(offc_tips).astype({'amount': 'float'})
+            materialized_tips = super().get_current_document_version('materialized_tips')
+            offchain_tips = pd.DataFrame.from_records(materialized_tips).astype({'amount': 'float'})
         except urllib.error.HTTPError:
             print("No offchain tips found or url is not valid")
             return pd.DataFrame(columns=["from_user", "to_user", "amount", "type"])

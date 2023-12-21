@@ -92,10 +92,10 @@ class ApplyVotingIncentivesDistributionTask(DistributionTask):
                 self.logger.info(f"address {voter['id']} does not exist in users.json file")
                 continue
 
-            tip_bonus = next((t for t in tip_bonus_data if t['username'] == voter['username']), None)
-            mod = next((t for t in mod_rewards if t['username'] == voter['username']), None)
-            org = next((o for o in organizer_rewards if o['username'] == voter['username']), None)
-            dist = next((x for x in distribution_data if x["username"] == voter["username"]), None)
+            tip_bonus = next((t for t in tip_bonus_data if t['username'].lower() == voter['username'].lower()), None)
+            mod = next((t for t in mod_rewards if t['username'].lower() == voter['username'].lower()), None)
+            org = next((o for o in organizer_rewards if o['username'].lower() == voter['username'].lower()), None)
+            dist = next((x for x in distribution_data if x["username"].lower() == voter["username"].lower()), None)
 
             if not dist:
                 self.logger.info(
