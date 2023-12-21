@@ -19,10 +19,10 @@ class DistributeOffchainTipsDistributionTask(DistributionTask):
         self.logger.info(f"begin task [step: {super().current_step}] [file: {os.path.basename(__file__)}]")
 
         # get funded accounts
-        self.logger.info("  grabbing funded accounts file...")
-        funded_accounts = json.load(request.urlopen(f"https://raw.githubusercontent.com/mattg1981/donut-bot-output/main/funded_accounts/funded_round_{super().distribution_round}.json"))
+        funded_accounts = super().get_current_document_version("funded_accounts")
 
         # get offchain tips
+        # this file is not saved in the output directory - instead, a materialized file is calculated and saved
         self.logger.info("  offchain tips file...")
         offchain_tips = json.load(request.urlopen(f"https://raw.githubusercontent.com/mattg1981/donut-bot-output/main/offchain_tips/tips_round_{super().distribution_round}.json"))
 

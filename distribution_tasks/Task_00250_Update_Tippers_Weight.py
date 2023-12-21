@@ -1,11 +1,4 @@
-import json
 import os
-import pathlib
-
-from decimal import Decimal
-from urllib import request
-
-from web3 import Web3
 
 from distribution_tasks.distribution_task import DistributionTask
 
@@ -18,153 +11,24 @@ class DistributeOffchainTipsDistributionTask(DistributionTask):
         # the order the task will be executed (smaller values have higher priority)
         self.priority = 250
 
-    def caluclate_weights(self, tippers):
-        # get users file
-        users = super().get_current_document_version('users')
-
-        self.logger.info("  connecting to provider - infura.io...")
-        eth_w3 = Web3(Web3.HTTPProvider(self.config['infura.io']['api_url'] + os.getenv('INFURA_IO_API_KEY')))
-        if not eth_w3.is_connected():
-            self.logger.error("  failed to connect to infura.io [mainnet]")
-            exit(4)
-        else:
-            self.logger.info("  success.")
-
-        self.logger.info("  connecting to provider - ankr.com...")
-        gno_w3 = Web3(Web3.HTTPProvider(os.getenv('ANKR_API_PROVIDER')))
-        if not gno_w3.is_connected():
-            self.logger.error("  failed to connect to ankr node [gnosis]")
-            exit(4)
-        else:
-            self.logger.info("  success.")
-        # lookup abi
-        with open(os.path.join(pathlib.Path().resolve(), "contracts/erc20.json"), 'r') as f:
-            erc20_abi = json.load(f)
-
-        with open(os.path.join(pathlib.Path().resolve(), "contracts/staking.json"), 'r') as f:
-            staking_abi = json.load(f)
-
-        with open(os.path.join(pathlib.Path().resolve(), "contracts/uniswap_token.json"), 'r') as f:
-            uniswap_abi = json.load(f)
-
-        user_weights = []
-
-        # contrib
-        contrib_contract = gno_w3.eth.contract(address=gno_w3.to_checksum_address(
-            self.config["contracts"]["gnosis"]["contrib"]), abi=erc20_abi)
-
-        # mainnet donut
-        donut_eth_contract = eth_w3.eth.contract(address=eth_w3.to_checksum_address(
-            self.config["contracts"]["mainnet"]["donut"]), abi=erc20_abi)
-
-        # gnosis donut
-        donut_gno_contract = gno_w3.eth.contract(address=gno_w3.to_checksum_address(
-            self.config["contracts"]["gnosis"]["donut"]), abi=erc20_abi)
-
-        # gnosis staking
-        staking_gno_contract = gno_w3.eth.contract(address=gno_w3.to_checksum_address(
-            self.config["contracts"]["gnosis"]["staking"]), abi=staking_abi)
-
-        # mainnet staking
-        staking_eth_contract = eth_w3.eth.contract(address=eth_w3.to_checksum_address(
-            self.config["contracts"]["mainnet"]["staking"]), abi=staking_abi)
-
-        # gnosis lp
-        lp_gno_contract = gno_w3.eth.contract(address=gno_w3.to_checksum_address(
-            self.config["contracts"]["gnosis"]["lp"]), abi=uniswap_abi)
-
-        # mainnet lp
-        lp_eth_contract = eth_w3.eth.contract(address=eth_w3.to_checksum_address(
-            self.config["contracts"]["mainnet"]["lp"]), abi=uniswap_abi)
-
-        eth_lp_supply = lp_eth_contract.functions.totalSupply().call()
-        gno_lp_supply = lp_gno_contract.functions.totalSupply().call()
-
-        # eth_staking_supply = staking_eth_contract.functions.totalSupply().call()
-        # gno_staking_supply = staking_gno_contract.functions.totalSupply().call()
-
-        uniswap_eth_donuts = lp_eth_contract.functions.getReserves().call()
-        uniswap_gno_donuts = lp_gno_contract.functions.getReserves().call()
-
-        mainnet_multiplier = uniswap_eth_donuts[0] / eth_lp_supply
-        gno_multiplier = uniswap_gno_donuts[0] / gno_lp_supply
-
-        i = 0
-        for tipper in tippers:
-            i = i+1
-            self.logger.info(f"  calculating weight for user: [{tipper}] ({i} / {len(tippers)})")
-            user = next((u for u in users if tipper.lower() == u['username'].lower()), None)
-
-            if not user:
-                self.logger.warning(f"  user [{tipper}] not found in user file")
-                continue
-
-            address = eth_w3.to_checksum_address(user['address'])
-
-            contrib_balance = contrib_contract.functions.balanceOf(address).call()
-            eth_donut_balance = donut_eth_contract.functions.balanceOf(address).call()
-            gno_donut_balance = donut_gno_contract.functions.balanceOf(address).call()
-
-            staked_mainnet_balance = staking_eth_contract.functions.balanceOf(address).call() * mainnet_multiplier
-            staked_gno_balance = staking_gno_contract.functions.balanceOf(address).call() * gno_multiplier
-
-            donut_balance = eth_donut_balance + gno_donut_balance + staked_mainnet_balance + staked_gno_balance
-            donut_balance = gno_w3.from_wei(donut_balance, "ether")
-            contrib_balance = gno_w3.from_wei(contrib_balance, "ether")
-            weight = donut_balance if donut_balance < contrib_balance else contrib_balance
-
-            self.logger.info(f"    donut: [{donut_balance}] - contrib [{contrib_balance}] - weight [{weight}]")
-
-            user_weights.append({
-                'tipper': tipper,
-                'donut': int(donut_balance),
-                'contrib': int(contrib_balance),
-                'weight': int(weight)
-            })
-
-            user['contrib'] = int(contrib_balance)
-            user["donut"] = int(donut_balance)
-            user['weight'] = int(weight)
-
-        fp = super().save_document_version(user_weights, "user_weights")
-        super().cache_file(fp)
-        return users
-
     def process(self, pipeline_config):
         super().process(pipeline_config)
         self.logger.info(f"begin task [step: {super().current_step}] [file: {os.path.basename(__file__)}]")
 
-        # get materialized tips
-        materialized_tips = super().get_current_document_version('materialized_tips')
-
-        # get onchain tips
-        onchain_tips = super().get_current_document_version('onchain_tips')
-        dr = super().get_current_document_version("distribution_round")[0]
-        onchain_tips = [t for t in onchain_tips if t['timestamp'] >= dr['from_date'] and t['timestamp'] <= dr['to_date']]
-
-        # find all tippers
-        tippers = [t['from_user'] for t in materialized_tips if t['from_user']]
-        tippers.extend([t['to_user'] for t in materialized_tips if t['to_user']])
-        tippers.extend([o['from_user'] for o in onchain_tips if o['from_user']])
-        tippers.extend([o['to_user'] for o in onchain_tips if o['to_user']])
-
-        tippers = list(set(tippers))
-
         user_weights = super().get_current_document_version("user_weights")
-        if user_weights:
-            self.logger.info("found user_weight file in cache, using that file...")
-            users = super().get_current_document_version('users')
-            for u in users:
-                weight = next((w for w in user_weights if w['tipper'].lower() == u['username'].lower()), None)
+        users = super().get_current_document_version('users')
 
-                if not weight:
-                    continue
+        for u in users:
+            weight = next((w for w in user_weights if w['tipper'].lower() == u['username'].lower()), None)
 
-                u['donut'] = weight['donut']
-                u['contrib'] = weight['contrib']
-                u['weight'] = weight['weight']
-        else:
-            users = self.caluclate_weights(tippers)
+            if not weight:
+                continue
+
+            self.logger.info(f"  updating weight for: [{u['username']}]")
+
+            u['donut'] = weight['donut']
+            u['contrib'] = weight['contrib']
+            u['weight'] = weight['weight']
 
         super().save_document_version(users, "users")
 

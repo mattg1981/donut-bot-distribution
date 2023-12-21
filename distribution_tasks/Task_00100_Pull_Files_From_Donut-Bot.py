@@ -103,6 +103,12 @@ class PullBaseFilesDistributionTask(DistributionTask):
                                                 f"/bans/perm_bans.json"))
         super().save_document_version(perm_banned, 'perm_bans')
 
+        # funded accounts
+        self.logger.info("  grabbing funded accounts file...")
+        funded_accounts = json.load(request.urlopen(
+            f"https://raw.githubusercontent.com/mattg1981/donut-bot-output/main/funded_accounts/funded_round_{super().distribution_round}.json"))
+        super().save_document_version(funded_accounts, "funded_accounts")
+
         return super().update_pipeline(pipeline_config, {
             'distribution': distribution_filename,
             'users': users_filename,
@@ -110,5 +116,6 @@ class PullBaseFilesDistributionTask(DistributionTask):
             'distribution_round': distribution_round_filename,
             'onchain_tips_filename': onchain_tips_filename,
             'temp_bans': 'temp_bans',
-            'perm_bans': "perm_bans"
+            'perm_bans': 'perm_bans',
+            'funded_accounts': 'funded_accounts'
         })
