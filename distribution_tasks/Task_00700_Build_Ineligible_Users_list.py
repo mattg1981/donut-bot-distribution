@@ -17,7 +17,7 @@ class ApplyVotingIncentivesDistributionTask(DistributionTask):
         self.logger.info(f"begin task [step: {super().current_step}] [file: {os.path.basename(__file__)}]")
 
         # load environment variables
-        load_dotenv()
+        # load_dotenv()
 
         distribution = super().get_current_document_version(pipeline_config['distribution'])
         distribution_round = super().get_current_document_version(pipeline_config['distribution_round'])
