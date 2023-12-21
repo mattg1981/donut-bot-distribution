@@ -93,17 +93,31 @@ class PullBaseFilesDistributionTask(DistributionTask):
         lp_eth_contract = eth_w3.eth.contract(address=eth_w3.to_checksum_address(
             self.config["contracts"]["mainnet"]["lp"]), abi=uniswap_abi)
 
-        eth_lp_supply = lp_eth_contract.functions.totalSupply().call()
-        gno_lp_supply = lp_gno_contract.functions.totalSupply().call()
+        self.logger.info("  retrieving reserves and calculating multipliers...")
+        was_success = False
+        for j in range(1,8):
+            try:
+                eth_lp_supply = lp_eth_contract.functions.totalSupply().call()
+                gno_lp_supply = lp_gno_contract.functions.totalSupply().call()
 
-        # eth_staking_supply = staking_eth_contract.functions.totalSupply().call()
-        # gno_staking_supply = staking_gno_contract.functions.totalSupply().call()
+                # eth_staking_supply = staking_eth_contract.functions.totalSupply().call()
+                # gno_staking_supply = staking_gno_contract.functions.totalSupply().call()
 
-        uniswap_eth_donuts = lp_eth_contract.functions.getReserves().call()
-        uniswap_gno_donuts = lp_gno_contract.functions.getReserves().call()
+                uniswap_eth_donuts = lp_eth_contract.functions.getReserves().call()
+                uniswap_gno_donuts = lp_gno_contract.functions.getReserves().call()
 
-        mainnet_multiplier = uniswap_eth_donuts[0] / eth_lp_supply
-        gno_multiplier = uniswap_gno_donuts[0] / gno_lp_supply
+                mainnet_multiplier = uniswap_eth_donuts[0] / eth_lp_supply
+                gno_multiplier = uniswap_gno_donuts[0] / gno_lp_supply
+
+                was_success = True
+                break
+            except Exception as e:
+                self.logger.error(e)
+                continue
+
+        if not was_success:
+            self.logger.error("  unable to query at this time, attempt at a later time...")
+            exit(4)
 
         i = 0
         for tipper in tippers:
@@ -117,30 +131,43 @@ class PullBaseFilesDistributionTask(DistributionTask):
 
             address = eth_w3.to_checksum_address(user['address'])
 
-            contrib_balance = contrib_contract.functions.balanceOf(address).call()
-            eth_donut_balance = donut_eth_contract.functions.balanceOf(address).call()
-            gno_donut_balance = donut_gno_contract.functions.balanceOf(address).call()
+            was_success = False
+            for j in range(1,8):
+                try:
+                    contrib_balance = contrib_contract.functions.balanceOf(address).call()
+                    eth_donut_balance = donut_eth_contract.functions.balanceOf(address).call()
+                    gno_donut_balance = donut_gno_contract.functions.balanceOf(address).call()
 
-            staked_mainnet_balance = staking_eth_contract.functions.balanceOf(address).call() * mainnet_multiplier
-            staked_gno_balance = staking_gno_contract.functions.balanceOf(address).call() * gno_multiplier
+                    staked_mainnet_balance = staking_eth_contract.functions.balanceOf(address).call() * mainnet_multiplier
+                    staked_gno_balance = staking_gno_contract.functions.balanceOf(address).call() * gno_multiplier
 
-            donut_balance = eth_donut_balance + gno_donut_balance + staked_mainnet_balance + staked_gno_balance
-            donut_balance = gno_w3.from_wei(donut_balance, "ether")
-            contrib_balance = gno_w3.from_wei(contrib_balance, "ether")
-            weight = donut_balance if donut_balance < contrib_balance else contrib_balance
+                    donut_balance = eth_donut_balance + gno_donut_balance + staked_mainnet_balance + staked_gno_balance
+                    donut_balance = gno_w3.from_wei(donut_balance, "ether")
+                    contrib_balance = gno_w3.from_wei(contrib_balance, "ether")
+                    weight = donut_balance if donut_balance < contrib_balance else contrib_balance
+                except Exception as e:
+                    self.logger.error(e)
+                    continue
 
-            self.logger.info(f"    donut: [{donut_balance}] - contrib [{contrib_balance}] - weight [{weight}]")
+                self.logger.info(f"    donut: [{donut_balance}] - contrib [{contrib_balance}] - weight [{weight}]")
 
-            user_weights.append({
-                'tipper': tipper,
-                'donut': int(donut_balance),
-                'contrib': int(contrib_balance),
-                'weight': int(weight)
-            })
+                user_weights.append({
+                    'tipper': tipper,
+                    'donut': int(donut_balance),
+                    'contrib': int(contrib_balance),
+                    'weight': int(weight)
+                })
 
-            user['contrib'] = int(contrib_balance)
-            user["donut"] = int(donut_balance)
-            user['weight'] = int(weight)
+                user['contrib'] = int(contrib_balance)
+                user["donut"] = int(donut_balance)
+                user['weight'] = int(weight)
+
+                was_success = True
+                break
+
+            if not was_success:
+                self.logger.error("  unable to query at this time, attempt at a later time...")
+                exit(4)
 
         fp = super().save_document_version(user_weights, "user_weights")
         super().cache_file(fp)
