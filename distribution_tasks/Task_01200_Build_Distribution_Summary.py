@@ -87,16 +87,16 @@ class ApplyVotingIncentivesDistributionTask(DistributionTask):
 
             distribution_summary.append({
                 'username': d['username'],
-                'points': max(points, Decimal(0)),
-                'contrib': contrib,
+                'points': max(round(points, 4), Decimal(0)),
+                'contrib': int(float(contrib)),
                 'base': base,
-                'offchain_tips': offchain_tips,
-                'funded': funded,
-                'voting': voting,
+                'offchain_tips': round(Decimal(offchain_tips), 4),
+                'funded': round(Decimal(funded), 4),
+                'voting': round(Decimal(voting), 4),
                 'donut_upvoter': donut_upvoter,
                 'quad_rank': quad_rank,
-                'moderator': moderator,
-                'organizer': organizer,
+                'moderator': round(Decimal(moderator), 4),
+                'organizer': round(Decimal(organizer), 4),
                 'pay2post': pay2post,
                 'address': user['address']
             })
