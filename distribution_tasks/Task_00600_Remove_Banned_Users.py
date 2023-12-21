@@ -14,12 +14,8 @@ class ApplyVotingIncentivesDistributionTask(DistributionTask):
         super().process(pipeline_config)
         self.logger.info(f"begin task [step: {super().current_step}] [file: {os.path.basename(__file__)}]")
 
-
-        temp_banned = json.load(request.urlopen(f"https://raw.githubusercontent.com/mattg1981/donut-bot-output/main"
-                                                  f"/bans/temp_bans_round_{super().distribution_round}.json"))
-
-        perm_banned = json.load(request.urlopen(f"https://raw.githubusercontent.com/mattg1981/donut-bot-output/main"
-                                            f"/bans/perm_bans.json"))
+        temp_banned = super().get_current_document_version('temp_bans')
+        perm_banned = super().get_current_document_version('perm_bans')
 
         all_bans = temp_banned + perm_banned
         banned_users = [b['username'] for b in all_bans]
