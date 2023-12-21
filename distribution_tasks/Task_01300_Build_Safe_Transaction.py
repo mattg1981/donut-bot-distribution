@@ -59,6 +59,8 @@ class GnoTransactionBuilderDistributionTask(DistributionTask):
 
         tx = build_tx_builder_json(f"EthTrader round {super().distribution_round}", transactions)
 
+        self.logger.info(f"  distribution round checksum: [{tx['meta']['checksum']}]")
+
         super().save_safe_tx(tx)
 
         return super().update_pipeline(pipeline_config)
