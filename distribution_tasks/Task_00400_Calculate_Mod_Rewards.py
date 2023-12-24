@@ -5,7 +5,7 @@ from urllib import request
 from distribution_tasks.distribution_task import DistributionTask
 
 
-class ApplyModeratorrBonusDistributionTask(DistributionTask):
+class ApplyModeratorBonusDistributionTask(DistributionTask):
 
     MOD_REWARD_POOL = 85000
 

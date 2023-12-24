@@ -3,7 +3,7 @@ import os
 from distribution_tasks.distribution_task import DistributionTask
 
 
-class DistributeOffchainTipsDistributionTask(DistributionTask):
+class UpdatedUsersWeightDistributionTask(DistributionTask):
     def __init__(self, config, logger_name):
         DistributionTask.__init__(self, config, logger_name)
 

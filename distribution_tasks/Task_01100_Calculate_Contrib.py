@@ -4,7 +4,7 @@ from decimal import Decimal
 from distribution_tasks.distribution_task import DistributionTask
 
 
-class ApplyVotingIncentivesDistributionTask(DistributionTask):
+class CalculateContribDistributionTask(DistributionTask):
     def __init__(self, config, logger_name):
         DistributionTask.__init__(self, config, logger_name)
         self.priority = 1100
