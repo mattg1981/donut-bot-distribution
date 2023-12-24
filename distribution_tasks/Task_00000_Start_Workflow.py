@@ -31,7 +31,7 @@ class CreateDirectoryStructureDistributionTask(DistributionTask):
         for f in files:
             os.remove(f)
 
-        locations = [path.join(working_dir, "logs"), path.join(working_dir, "tx_builder")]
+        locations = [path.join(working_dir, "logs"), path.join(working_dir, "tx_builder"), path.join(working_dir, "legacy")]
 
         for location in locations:
             os.makedirs(location, exist_ok=True)
@@ -41,5 +41,6 @@ class CreateDirectoryStructureDistributionTask(DistributionTask):
             'working_dir': os.path.normpath(working_dir),
             'cache_dir': os.path.normpath(cache_dir),
             'log_dir': path.join(working_dir, "logs"),
-            'tx_builder_dir': path.join(working_dir, "tx_builder")
+            'tx_builder_dir': path.join(working_dir, "tx_builder"),
+            'legacy_dir': path.join(working_dir, "legacy"),
         })
