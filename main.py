@@ -49,9 +49,9 @@ if __name__ == '__main__':
     logger.info(f"{len(tasks)} tasks found")
     logger.info("begin processing task pipeline...")
 
-    pre_cache_run = "--pre-cache" in sys.argv
+    pre_cache_run = "--build-cache" in sys.argv
 
-    pipeline_config = {'step': 1, 'round': int(sys.argv[1]), 'pre-cache': pre_cache_run}
+    pipeline_config = {'step': 1, 'round': int(sys.argv[1]), 'build-cache': pre_cache_run}
     for task in tasks:
         pipeline_config = task.process(pipeline_config)
         pipeline_config['step'] += 1
