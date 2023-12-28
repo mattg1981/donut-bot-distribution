@@ -16,7 +16,7 @@ class BuildLegacySummaryDistributionTask(DistributionTask):
 
     def __init__(self, config, logger_name):
         DistributionTask.__init__(self, config, logger_name)
-        self.priority = 1400
+        self.priority = 1500
 
     def process(self, pipeline_config):
         super().process(pipeline_config)
@@ -33,8 +33,8 @@ class BuildLegacySummaryDistributionTask(DistributionTask):
                     'address': d['address'],
                     'donut': float(d['points']),
                     'data': {
-                        'removed': False,
-                        'removalReason': None,
+                        'removed': d['eligible'] == 'False',
+                        'removalReason': d['eligiblity_reason'],
                         'fromKarma': float(d['base']),
                         'fromTipsGiven': float(d['donut_upvoter']),
                         'fromTipsRecd': float(d['quad_rank']),

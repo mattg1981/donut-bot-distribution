@@ -9,7 +9,7 @@ class UpdatedUsersWeightDistributionTask(DistributionTask):
 
         # be sure to change the priority - this value determines
         # the order the task will be executed (smaller values have higher priority)
-        self.priority = 250
+        self.priority = 400
 
     def process(self, pipeline_config):
         super().process(pipeline_config)

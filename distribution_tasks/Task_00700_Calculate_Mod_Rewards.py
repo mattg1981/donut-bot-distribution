@@ -11,7 +11,7 @@ class ApplyModeratorBonusDistributionTask(DistributionTask):
 
     def __init__(self, config, logger_name):
         DistributionTask.__init__(self, config, logger_name)
-        self.priority = 400
+        self.priority = 700
 
     def process(self, pipeline_config):
         super().process(pipeline_config)

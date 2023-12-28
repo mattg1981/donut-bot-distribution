@@ -7,7 +7,7 @@ from distribution_tasks.distribution_task import DistributionTask
 class BuildSummaryDistributionTask(DistributionTask):
     def __init__(self, config, logger_name):
         DistributionTask.__init__(self, config, logger_name)
-        self.priority = 1200
+        self.priority = 1300
 
     def process(self, pipeline_config):
         super().process(pipeline_config)
@@ -85,6 +85,35 @@ class BuildSummaryDistributionTask(DistributionTask):
             contrib = (contrib_record and contrib_record['contrib']) or 0
             pay2post = d['pay2post']
 
+            # if not eligible, see if they have any funded amount that needs to
+            # be returned
+            # if d['eligible'].lower() != 'true':
+            #     if offchain and Decimal(offchain['funded']) > 0:
+            #         distribution_summary.append({
+            #             'username': d['username'],
+            #             'points': round(Decimal(funded), 4),
+            #             'contrib': 0,
+            #             'base': base,
+            #             'offchain_tips': round(Decimal(offchain_tips), 4),
+            #             'funded': round(Decimal(funded), 4),
+            #             'voting': round(Decimal(voting), 4),
+            #             'donut_upvoter': donut_upvoter,
+            #             'quad_rank': quad_rank,
+            #             'moderator': round(Decimal(moderator), 4),
+            #             'organizer': round(Decimal(organizer), 4),
+            #             'pay2post': pay2post,
+            #             'address': user['address']
+            #         })
+            #     continue
+
+            if d['eligible'].lower() != 'true':
+                if d['eligiblity_reason'] in ['age', 'karma']:
+                    points = Decimal(funded) + Decimal(offchain_tips)
+                else:
+                    points = 0
+
+                contrib = 0
+
             distribution_summary.append({
                 'username': d['username'],
                 'points': max(round(points, 4), Decimal(0)),
@@ -98,6 +127,8 @@ class BuildSummaryDistributionTask(DistributionTask):
                 'moderator': round(Decimal(moderator), 4),
                 'organizer': round(Decimal(organizer), 4),
                 'pay2post': pay2post,
+                'eligible': d['eligible'],
+                'eligiblity_reason': d['eligiblity_reason'],
                 'address': user['address']
             })
 

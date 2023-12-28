@@ -3,25 +3,27 @@ import os
 from distribution_tasks.distribution_task import DistributionTask
 
 
-class ApplyVotingIncentivesDistributionTask(DistributionTask):
+class FlagIneligibleUsersDistributionTask(DistributionTask):
     def __init__(self, config, logger_name):
         DistributionTask.__init__(self, config, logger_name)
-        self.priority = 900
+        self.priority = 1000
 
     def process(self, pipeline_config):
         super().process(pipeline_config)
         self.logger.info(f"begin task [step: {super().current_step}] [file: {os.path.basename(__file__)}]")
 
-        ineligible_records = super().get_current_document_version(pipeline_config["ineligible_users"])
-        ineligible_users = [i['user'] for i in ineligible_records]
-
+        ineligible_users = super().get_current_document_version(pipeline_config["ineligible_users"])
         distribution = super().get_current_document_version(pipeline_config['distribution'])
 
-        self.logger.info(f"  distribution size before ineligible users removed: [{len(distribution)}]")
+        for d in distribution:
+            user = next((x for x in ineligible_users if x['user'].lower() == d['username'].lower()), None)
 
-        distribution = [d for d in distribution if d["username"] not in ineligible_users]
-
-        self.logger.info(f"  distribution size after ineligible users removed: [{len(distribution)}]")
+            if user:
+                d['eligible'] = False
+                d['eligiblity_reason'] = user['reason']
+            else:
+                d['eligible'] = True
+                d['eligiblity_reason'] = ""
 
         super().save_document_version(distribution, pipeline_config['distribution'])
 

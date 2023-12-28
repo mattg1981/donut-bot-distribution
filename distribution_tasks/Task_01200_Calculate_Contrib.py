@@ -7,7 +7,7 @@ from distribution_tasks.distribution_task import DistributionTask
 class CalculateContribDistributionTask(DistributionTask):
     def __init__(self, config, logger_name):
         DistributionTask.__init__(self, config, logger_name)
-        self.priority = 1100
+        self.priority = 1200
 
     def process(self, pipeline_config):
         super().process(pipeline_config)

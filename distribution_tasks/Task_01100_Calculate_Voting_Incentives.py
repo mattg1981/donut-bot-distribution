@@ -9,7 +9,7 @@ from distribution_tasks.distribution_task import DistributionTask
 class ApplyVotingIncentivesDistributionTask(DistributionTask):
     def __init__(self, config, logger_name):
         DistributionTask.__init__(self, config, logger_name)
-        self.priority = 1000
+        self.priority = 1100
 
     def process(self, pipeline_config):
         super().process(pipeline_config)

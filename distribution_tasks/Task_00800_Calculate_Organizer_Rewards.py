@@ -6,7 +6,7 @@ from distribution_tasks.distribution_task import DistributionTask
 class ApplyOrganizerRewardsDistributionTask(DistributionTask):
     def __init__(self, config, logger_name):
         DistributionTask.__init__(self, config, logger_name)
-        self.priority = 500
+        self.priority = 800
 
     def process(self, pipeline_config):
         super().process(pipeline_config)
@@ -27,6 +27,7 @@ class ApplyOrganizerRewardsDistributionTask(DistributionTask):
 
             if not dist_record:
                 address = next((u['address'] for u in users if u['username'].lower() == organizer.lower()), None)
+
                 if not address:
                     self.logger.warning(
                         f"  organizer [{organizer}] not found in user .csv, skipping calc...")

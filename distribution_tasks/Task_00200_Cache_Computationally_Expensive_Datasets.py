@@ -1,18 +1,26 @@
 import json
 import os
 import pathlib
+from datetime import datetime, timedelta
 
+import praw
+import prawcore
 from web3 import Web3
 from urllib import request
 from distribution_tasks.distribution_task import DistributionTask
 
 
-class PullBaseFilesDistributionTask(DistributionTask):
+class BuildCacheDistributionTask(DistributionTask):
     def __init__(self, config, logger_name):
         DistributionTask.__init__(self, config, logger_name)
-        self.priority = 150
+        self.priority = 200
 
-    def precache_user_weights(self):
+    def build_and_cache_user_weights(self):
+        file_exists = super().get_current_document_version("user_weights")
+
+        if file_exists:
+            return
+
         # get users file
         users = super().get_current_document_version('users')
 
@@ -172,19 +180,96 @@ class PullBaseFilesDistributionTask(DistributionTask):
         fp = super().save_document_version(user_weights, "user_weights")
         super().cache_file(fp)
 
+    def build_and_cache_ineligible_users(self):
+        ineligible_users_filename = "ineligible_users"
+        file_exists = super().get_current_document_version(ineligible_users_filename)
+
+        if file_exists:
+            return
+
+        distribution = super().get_current_document_version('distribution')
+
+        # todo add tipper users (as they may not previously exist in the dist file)
+        # as well as mods and organizers
+
+        distribution_round = super().get_current_document_version('distribution_round')
+
+        distribution_round_end_date = datetime.strptime(distribution_round[0]['to_date'], '%Y-%m-%d %H:%M:%S.%f')
+        cutoff_date = distribution_round_end_date - timedelta(days=60)
+
+        # creating an authorized reddit instance
+        reddit = praw.Reddit(client_id=os.getenv('INELIGIBLE_CLIENT_ID'),
+                             client_secret=os.getenv('INELIGIBLE_CLIENT_SECRET'),
+                             user_agent="ethtrader ineligible-users (by u/mattg1981)")
+
+        reddit.read_only = True
+
+        ineligible_users = []
+
+        idx = 0
+        for d in distribution:
+            idx += 1
+            self.logger.info(
+                f"  checking eligiblity requirements for {d['username']} [{idx} of {len(distribution)}]")
+            redditor = reddit.redditor(d['username'])
+
+            try:
+                if hasattr(redditor, 'is_suspended'):
+                    if redditor.is_suspended:
+                        self.logger.info(f"    adding user [{d['username']}] to ineligible list: user is suspended")
+                        ineligible_users.append({
+                            'user': d['username'],
+                            'reason': 'suspended'
+                        })
+                        continue
+
+                if redditor.total_karma < 100:
+                    self.logger.info(f"    adding user [{d['username']}] to ineligible list: karma < 100")
+                    ineligible_users.append({
+                        'user': d['username'],
+                        'reason': 'karma'
+                    })
+                    continue
+
+                if datetime.fromtimestamp(redditor.created) > cutoff_date:
+                    self.logger.info(f"    adding user [{d['username']}] to ineligible list: created < 60 days")
+                    ineligible_users.append({
+                        'user': d['username'],
+                        'reason': 'age'
+                    })
+                    continue
+
+                self.logger.info("    ok...")
+
+            except prawcore.exceptions.NotFound as e:
+                self.logger.info(
+                    f"    removing user [{d['username']}] from distribution: user is deleted (not found)")
+                self.logger.error(e)
+
+                ineligible_users.append({
+                    'user': d['username'],
+                    'reason': 'deleted or shadow ban'
+                })
+                continue
+
+            except Exception as e:
+                self.logger.error(e)
+
+        path = super().save_document_version(ineligible_users, ineligible_users_filename)
+        super().cache_file(path)
+
     def process(self, pipeline_config):
         super().process(pipeline_config)
         self.logger.info(f"begin task [step: {super().current_step}] [file: {os.path.basename(__file__)}]")
 
-        user_weights = super().get_current_document_version("user_weights")
+        self.build_and_cache_user_weights()
+        self.build_and_cache_ineligible_users()
 
-        if not user_weights:
-            self.precache_user_weights()
-
-        if pipeline_config['pre-cache']:
-            self.logger.info("PRE-CACHE directive ... aborting run here...")
+        if pipeline_config['build-cache']:
+            self.logger.info("BUILD-CACHE directive ... aborting run here...")
             exit(0)
 
         return super().update_pipeline(pipeline_config, {
-
+            "user_weights": "user_weights",
+            "ineligible_users": "ineligible_users"
         })

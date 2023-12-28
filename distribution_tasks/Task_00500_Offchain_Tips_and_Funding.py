@@ -12,7 +12,7 @@ class DistributeOffchainTipsDistributionTask(DistributionTask):
 
         # be sure to change the priority - this value determines
         # the order the task will be executed (smaller values have higher priority)
-        self.priority = 200
+        self.priority = 500
 
     def process(self, pipeline_config):
         super().process(pipeline_config)
@@ -20,6 +20,17 @@ class DistributeOffchainTipsDistributionTask(DistributionTask):
 
         # get funded accounts
         funded_accounts = super().get_current_document_version("funded_accounts")
+
+        ineligible_users = super().get_current_document_version("ineligible_users")
+        ineligible_users = [x['user'].lower() for x in ineligible_users]
+
+        perm_bans = super().get_current_document_version("perm_bans")
+        perm_bans = [x['username'].lower() for x in perm_bans]
+
+        temp_bans = super().get_current_document_version("temp_bans")
+        temp_bans = [x['username'].lower() for x in temp_bans]
+
+        ineligible_users = ineligible_users + perm_bans + temp_bans
 
         # get offchain tips
         # this file is not saved in the output directory - instead, a materialized file is calculated and saved
@@ -84,6 +95,17 @@ class DistributeOffchainTipsDistributionTask(DistributionTask):
                 self.logger.info(f"user [{tip['to_user']}] is not registered, tip will be ignored!")
                 self.logger.info("")
                 continue
+
+            # ineligible users cannot send tips but can receive them
+            if tip["from_user"].lower() in ineligible_users:
+                self.logger.info(f"user [{tip['from_user']}] is ineligible (or banned) this round, tip will be ignored!")
+                self.logger.info("")
+                continue
+
+            # if tip["to_user"].lower() in ineligible_users:
+            #     self.logger.info(f"user [{tip['to_user']}] is ineligible (or banned) this round, tip will be ignored!")
+            #     self.logger.info("")
+            #     continue
 
             distribution_from = next((x for x in distribution if x["username"].lower() == tip["from_user"].lower()), None)
             distribution_to = next((x for x in distribution if x["username"].lower() == tip["to_user"].lower()), None)

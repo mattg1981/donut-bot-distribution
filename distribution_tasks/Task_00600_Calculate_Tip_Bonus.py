@@ -17,7 +17,7 @@ class CalculateTipsBonusDistributionTask(DistributionTask):
 
     def __init__(self, config, logger_name):
         DistributionTask.__init__(self, config, logger_name)
-        self.priority = 300
+        self.priority = 600
 
     def get_onchain_post_tips(self):
         """ Get onchain tips from the csv file and filter out tips outside the range or comment tips """

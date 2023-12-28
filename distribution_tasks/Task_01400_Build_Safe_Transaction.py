@@ -20,7 +20,7 @@ class GnoTransactionBuilderDistributionTask(DistributionTask):
 
     def __init__(self, config, logger_name):
         DistributionTask.__init__(self, config, logger_name)
-        self.priority = 1300
+        self.priority = 1400
 
         with open(os.path.normpath("contracts/gno_distribute_abi.json"), 'r') as f:
             self.gno_distribute_abi = json.load(f)
@@ -42,8 +42,8 @@ class GnoTransactionBuilderDistributionTask(DistributionTask):
                                                abi=self.gno_contrib_abi)
 
         distribute_contract_data = distribute_contract.encodeABI("distribute", [
-                    [w3.to_checksum_address(d['address']) for d in distribution_summary if float(d['points']) > 0],
-                    [w3.to_wei(d['points'], 'ether') for d in distribution_summary if float(d['points']) > 0],
+                    [w3.to_checksum_address(d['address']) for d in distribution_summary if float(d['points']) > 0 and (d['eligible'] == 'True' or (d['eligible'] == 'False' and d['eligiblity_reason'] in ['age', 'karma']))],
+                    [w3.to_wei(d['points'], 'ether') for d in distribution_summary if float(d['points']) > 0 and (d['eligible'] == 'True' or (d['eligible'] == 'False' and d['eligiblity_reason'] in ['age', 'karma']))],
                     w3.to_checksum_address(self.GNO_DONUT_CONTRACT_ADDRESS)
                 ])
 
