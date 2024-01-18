@@ -16,9 +16,11 @@ class BuildCacheDistributionTask(DistributionTask):
         self.priority = 200
 
     def build_and_cache_user_weights(self):
+        self.logger.info("  build user weights...")
         file_exists = super().get_current_document_version("user_weights")
 
         if file_exists:
+            self.logger.info("    ... file exists in cache already!")
             return
 
         # get users file
@@ -34,9 +36,11 @@ class BuildCacheDistributionTask(DistributionTask):
         # weight for all tippers
 
         self.logger.info("  grabbing offchain tips file...")
-        offchain_tips = json.load(
-            request.urlopen(
-                f"https://raw.githubusercontent.com/mattg1981/donut-bot-output/main/offchain_tips/tips_round_{super().distribution_round}.json"))
+        offchain_tips = super().get_current_document_version('offchain_tips')
+
+        # offchain_tips = json.load(
+        #     request.urlopen(
+        #         f"https://raw.githubusercontent.com/mattg1981/donut-bot-output/main/offchain_tips/tips_round_{super().distribution_round}.json"))
 
         # find all tip senders and receivers
         tippers = [t['from_user'] for t in offchain_tips if t['from_user']]
@@ -134,7 +138,7 @@ class BuildCacheDistributionTask(DistributionTask):
             user = next((u for u in users if tipper.lower() == u['username'].lower()), None)
 
             if not user:
-                self.logger.warning(f"  user [{tipper}] not found in user file")
+                self.logger.warning(f"    user [{tipper}] not found in user file")
                 continue
 
             address = eth_w3.to_checksum_address(user['address'])
@@ -181,17 +185,16 @@ class BuildCacheDistributionTask(DistributionTask):
         super().cache_file(fp)
 
     def build_and_cache_ineligible_users(self):
+        self.logger.info("  build ineligible users...")
+
         ineligible_users_filename = "ineligible_users"
         file_exists = super().get_current_document_version(ineligible_users_filename)
 
         if file_exists:
+            self.logger.info("    ... file exists in cache already!")
             return
 
         distribution = super().get_current_document_version('distribution')
-
-        # todo add tipper users (as they may not previously exist in the dist file)
-        # as well as mods and organizers
-
         distribution_round = super().get_current_document_version('distribution_round')
 
         distribution_round_end_date = datetime.strptime(distribution_round[0]['to_date'], '%Y-%m-%d %H:%M:%S.%f')
