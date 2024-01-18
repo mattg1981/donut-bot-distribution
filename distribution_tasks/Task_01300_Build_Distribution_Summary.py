@@ -14,7 +14,7 @@ class BuildSummaryDistributionTask(DistributionTask):
         self.logger.info(f"begin task [step: {super().current_step}] [file: {os.path.basename(__file__)}]")
 
         distribution_data = super().get_current_document_version(pipeline_config['distribution'])
-        offchain_data = super().get_current_document_version(pipeline_config['offchain'])
+        offchain_data = super().get_current_document_version(pipeline_config['offchain_data'])
         contrib_data = super().get_current_document_version('contrib')
         voter_data = super().get_current_document_version(pipeline_config['voter'])
         tip_bonus_data = super().get_current_document_version(pipeline_config['tipping_bonus'])
