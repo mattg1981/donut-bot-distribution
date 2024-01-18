@@ -81,15 +81,13 @@ class PullBaseFilesDistributionTask(DistributionTask):
         else:
             self.logger.info("  grabbed onchain tips from cache")
 
-        # materialized tips are calculated during this pipeline
-
-        # # get offchain tips for this round
-        # self.logger.info("  grabbing offchain tips file...")
-        # offchain_tips_filename = "offchain_tips"
-        # offchain_tips = json.load(
-        #     request.urlopen(
-        #         f"https://raw.githubusercontent.com/mattg1981/donut-bot-output/main/offchain_tips/materialized/round_{super().distribution_round}_materialized_tips.json"))
-        # super().save_document_version(offchain_tips, offchain_tips_filename)
+        # get offchain tips for this round
+        self.logger.info("  grabbing offchain tips file...")
+        offchain_tips_filename = "offchain_tips"
+        offchain_tips = json.load(
+            request.urlopen(
+                f"https://raw.githubusercontent.com/mattg1981/donut-bot-output/main/offchain_tips/tips_round_{super().distribution_round}.json"))
+        super().save_document_version(offchain_tips, offchain_tips_filename)
 
         # temp bans
         self.logger.info("  grabbing temp bans file...")
@@ -115,6 +113,7 @@ class PullBaseFilesDistributionTask(DistributionTask):
             'memberships': memberships_filename,
             'distribution_round': distribution_round_filename,
             'onchain_tips_filename': onchain_tips_filename,
+            'offchain_tips': offchain_tips_filename,
             'temp_bans': 'temp_bans',
             'perm_bans': 'perm_bans',
             'funded_accounts': 'funded_accounts'
