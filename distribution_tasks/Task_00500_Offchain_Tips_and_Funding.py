@@ -21,6 +21,9 @@ class DistributeOffchainTipsDistributionTask(DistributionTask):
         # get funded accounts
         funded_accounts = super().get_current_document_version("funded_accounts")
 
+        # get raw offchain tips
+        offchain_tips = super().get_current_document_version("offchain_tips")
+
         ineligible_users = super().get_current_document_version("ineligible_users")
         ineligible_users = [x['user'].lower() for x in ineligible_users]
 
@@ -32,10 +35,10 @@ class DistributeOffchainTipsDistributionTask(DistributionTask):
 
         ineligible_users = ineligible_users + perm_bans + temp_bans
 
-        # get offchain tips
-        # this file is not saved in the output directory - instead, a materialized file is calculated and saved
-        self.logger.info("  offchain tips file...")
-        offchain_tips = json.load(request.urlopen(f"https://raw.githubusercontent.com/mattg1981/donut-bot-output/main/offchain_tips/tips_round_{super().distribution_round}.json"))
+        # # get offchain tips
+        # # this file is not saved in the output directory - instead, a materialized file is calculated and saved
+        # self.logger.info("  offchain tips file...")
+        # offchain_tips = json.load(request.urlopen(f"https://raw.githubusercontent.com/mattg1981/donut-bot-output/main/offchain_tips/tips_round_{super().distribution_round}.json"))
 
         # list of off chain users
         offchain_users = []
@@ -91,7 +94,7 @@ class DistributeOffchainTipsDistributionTask(DistributionTask):
             self.logger.info(
                 f"tip [{i} of {len(offchain_tips)}] << [from]: {tip['from_user']} [to]:{tip['to_user']} [amount]: {tip['amount']} [token]: {tip['token']} >>")
 
-            if not tip["to_user_registered"]:
+            if not int(tip["to_user_registered"]):
                 self.logger.info(f"user [{tip['to_user']}] is not registered, tip will be ignored!")
                 self.logger.info("")
                 continue
@@ -134,14 +137,14 @@ class DistributeOffchainTipsDistributionTask(DistributionTask):
                 }
                 distribution.append(distribution_to)
 
-                offchain_user = {
+                offchain_to = {
                     'user': tip["to_user"],
                     'points': 0,
                     'funded': 0,
                     'tips': 0
                 }
 
-                offchain_users.append(offchain_user)
+                offchain_users.append(offchain_to)
 
             if not offchain_from:
                 offchain_from = {
@@ -164,7 +167,7 @@ class DistributeOffchainTipsDistributionTask(DistributionTask):
                 offchain_users.append(offchain_to)
 
             old_sender_balance = Decimal(distribution_from['points']) + offchain_from['points']
-            tip_amount = tip["amount"]
+            tip_amount = Decimal(tip["amount"])
 
             # user didn't have enough to tip - attempt to adjust the amount or skip if the sender had <= 0 balance
             if Decimal(old_sender_balance) < tip_amount:
@@ -209,7 +212,7 @@ class DistributeOffchainTipsDistributionTask(DistributionTask):
 
             self.logger.info("")
 
-        offchain_filename = 'offchain'
+        offchain_filename = 'offchain_data'
         materialized_tips_filename = "materialized_tips"
 
         super().save_document_version(offchain_users, offchain_filename)
@@ -217,6 +220,6 @@ class DistributeOffchainTipsDistributionTask(DistributionTask):
         super().save_document_version(materialized_tips, materialized_tips_filename)
 
         return super().update_pipeline(pipeline_config, {
-            "offchain": offchain_filename,
+            "offchain_data": offchain_filename,
             "materialized_tips": materialized_tips_filename
         })
