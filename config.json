@@ -10,6 +10,14 @@
       {
         "id": "0x442143d5c4202542da066dd6078554f152c79eddb66d1bee166768cca02da1e0",
         "reason": "snapshot error calculating voting power"
+      },
+      {
+        "id": "0xb5fd9b1d2466c650a93996f442eaf8fdd16aa4850fa441d0ad56fadaafe2f27e",
+        "reason": "testing to see if the 'error calculating voting power' was resolved"
+      },
+      {
+        "id": "0xbe12cddefa2354dc9a9c273c227a7df5e9991533874e4f3b338ad9836e9e5040",
+        "reason": "double post"
       }
     ]
   },
