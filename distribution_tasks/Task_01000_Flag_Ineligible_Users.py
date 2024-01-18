@@ -15,6 +15,22 @@ class FlagIneligibleUsersDistributionTask(DistributionTask):
         ineligible_users = super().get_current_document_version(pipeline_config["ineligible_users"])
         distribution = super().get_current_document_version(pipeline_config['distribution'])
 
+        # add in banned users
+        perm_bans = super().get_current_document_version("perm_bans")
+        temp_bans = super().get_current_document_version("temp_bans")
+
+        for pb in perm_bans:
+            ineligible_users.append({
+                'user': pb['username'],
+                'reason': 'perma ban'
+            })
+
+        for tb in temp_bans:
+            ineligible_users.append({
+                'user': tb['username'],
+                'reason': 'temp ban'
+            })
+
         for d in distribution:
             user = next((x for x in ineligible_users if x['user'].lower() == d['username'].lower()), None)
 
