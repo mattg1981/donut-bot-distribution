@@ -40,6 +40,7 @@ class ApplyVotingIncentivesDistributionTask(DistributionTask):
                       ) {
                         id      
                         end
+                        title
                     }}
             """
 
@@ -57,6 +58,8 @@ class ApplyVotingIncentivesDistributionTask(DistributionTask):
             # if proposal not in this round, continue on to the next one
             if not (dr_start_date <= proposal_end <= dr_end_date):
                 continue
+
+            self.logger.info(f"proposal found for this round... [title] {p['title']}")
 
             voters_query = """
                     query Votes {
