@@ -1,0 +1,2 @@
+user,address,amount,token,block_number,tx_hash,tx_timestamp,processed_at,created_at
+aminok,0xbea18a39a1cee253705eb5e966fe23f26dd109ef,50000,DONUT,31316874,0x5a92683d63aeade9506acd099d926efff7a8ccff1abc24ba387042105767ad23,2023-12-06 23:21:40,2023-12-07 09:46:18.761828,2023-12-07 09:46:17.392858

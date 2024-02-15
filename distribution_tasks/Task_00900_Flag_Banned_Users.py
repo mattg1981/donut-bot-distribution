@@ -31,6 +31,8 @@ class FlagBannedUsersDistributionTask(DistributionTask):
                 d['eligible'] = True
                 d['eligiblity_reason'] = ""
 
+        self.logger.info(f"  distribution size after bans: [{len([x for x in distribution if x['eligiblity_reason'] != 'ban'])}]")
+
         super().save_document_version(distribution, pipeline_config['distribution'])
 
         return super().update_pipeline(pipeline_config)

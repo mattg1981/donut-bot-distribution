@@ -107,11 +107,14 @@ class BuildSummaryDistributionTask(DistributionTask):
             #     continue
 
             if d['eligible'].lower() != 'true':
-                if d['eligiblity_reason'] in ['age', 'karma']:
-                    points = Decimal(funded) + Decimal(offchain_tips)
+                # -- mattg1981 -- ineligible users can now send and receive tips
+                # but will not receive their base score or any bonuses as well as 0 contrib
+
+                # return their funded amount
+                if offchain:
+                    points = Decimal(offchain['points'])
                 else:
                     points = 0
-
                 contrib = 0
 
             distribution_summary.append({

@@ -8,6 +8,11 @@ import web3.constants
 
 from distribution_tasks.distribution_task import DistributionTask
 
+# An account was created in the community with the idea that all
+# points it earns will be burned.  However, by sending to the
+# zero address, that does not properly burn the token (in the
+# sense that it doesnt decrement the totalSupply()).  We remove
+# this account from the distribution to prevent this from happening
 
 class RemoveBurnAccountsDistributionTask(DistributionTask):
 

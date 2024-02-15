@@ -24,16 +24,20 @@ class DistributeOffchainTipsDistributionTask(DistributionTask):
         # get raw offchain tips
         offchain_tips = super().get_current_document_version("offchain_tips")
 
-        ineligible_users = super().get_current_document_version("ineligible_users")
-        ineligible_users = [x['user'].lower() for x in ineligible_users]
+        # -- start --- ineligible users are now allowed to send and receive tips
 
-        perm_bans = super().get_current_document_version("perm_bans")
-        perm_bans = [x['username'].lower() for x in perm_bans]
+        # ineligible_users = super().get_current_document_version("ineligible_users")
+        # ineligible_users = [x['user'].lower() for x in ineligible_users]
 
-        temp_bans = super().get_current_document_version("temp_bans")
-        temp_bans = [x['username'].lower() for x in temp_bans]
+        # perm_bans = super().get_current_document_version("perm_bans")
+        # perm_bans = [x['username'].lower() for x in perm_bans]
 
-        ineligible_users = ineligible_users + perm_bans + temp_bans
+        # temp_bans = super().get_current_document_version("temp_bans")
+        # temp_bans = [x['username'].lower() for x in temp_bans]
+
+        # ineligible_users = perm_bans + temp_bans
+
+        # -- end --
 
         # # get offchain tips
         # # this file is not saved in the output directory - instead, a materialized file is calculated and saved
@@ -100,10 +104,10 @@ class DistributeOffchainTipsDistributionTask(DistributionTask):
                 continue
 
             # ineligible users cannot send tips but can receive them
-            if tip["from_user"].lower() in ineligible_users:
-                self.logger.info(f"user [{tip['from_user']}] is ineligible (or banned) this round, tip will be ignored!")
-                self.logger.info("")
-                continue
+            # if tip["from_user"].lower() in ineligible_users:
+            #     self.logger.info(f"user [{tip['from_user']}] is ineligible (or banned) this round, tip will be ignored!")
+            #     self.logger.info("")
+            #     continue
 
             # if tip["to_user"].lower() in ineligible_users:
             #     self.logger.info(f"user [{tip['to_user']}] is ineligible (or banned) this round, tip will be ignored!")

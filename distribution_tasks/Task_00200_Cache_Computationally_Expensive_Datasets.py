@@ -29,8 +29,10 @@ class BuildCacheDistributionTask(DistributionTask):
         # get onchain tips
         onchain_tips = super().get_current_document_version('onchain_tips')
         dr = super().get_current_document_version("distribution_round")[0]
+        # onchain_tips = [t for t in onchain_tips if
+        #                t['timestamp'] >= dr['from_date'] and t['timestamp'] <= dr['to_date']]
         onchain_tips = [t for t in onchain_tips if
-                        t['timestamp'] >= dr['from_date'] and t['timestamp'] <= dr['to_date']]
+                        dr['from_date'] <= t['timestamp'] <= dr['to_date']]
 
         # get offchain tips (we may not know which have materialized at this point, so we will calculate the
         # weight for all tippers
@@ -50,10 +52,18 @@ class BuildCacheDistributionTask(DistributionTask):
 
         tippers = list(set(tippers))
 
-        self.logger.info("  connecting to provider - infura.io...")
-        eth_w3 = Web3(Web3.HTTPProvider(self.config['infura.io']['api_url'] + os.getenv('INFURA_IO_API_KEY')))
+        self.logger.info("  connecting to provider - infura.io [mainnet]... ")
+        eth_w3 = Web3(Web3.HTTPProvider(os.getenv('INFURA_IO_ETH')))
         if not eth_w3.is_connected():
             self.logger.error("  failed to connect to infura.io [mainnet]")
+            exit(4)
+        else:
+            self.logger.info("  success.")
+
+        self.logger.info("  connecting to provider - infura.io [arb1]... ")
+        arb1_w3 = Web3(Web3.HTTPProvider(os.getenv('INFURA_IO_ARB1')))
+        if not arb1_w3.is_connected():
+            self.logger.error("  failed to connect to infura.io [arb1]")
             exit(4)
         else:
             self.logger.info("  success.")
@@ -65,6 +75,7 @@ class BuildCacheDistributionTask(DistributionTask):
             exit(4)
         else:
             self.logger.info("  success.")
+
         # lookup abi
         with open(os.path.join(pathlib.Path().resolve(), "contracts/erc20.json"), 'r') as f:
             erc20_abi = json.load(f)
@@ -81,6 +92,10 @@ class BuildCacheDistributionTask(DistributionTask):
         contrib_contract = gno_w3.eth.contract(address=gno_w3.to_checksum_address(
             self.config["contracts"]["gnosis"]["contrib"]), abi=erc20_abi)
 
+        # TODO uncomment when arb1 migration complete
+        # contrib_contract = arb1_w3.eth.contract(address=arb1_w3.to_checksum_address(
+        #    self.config["contracts"]["arb1"]["contrib"]), abi=erc20_abi)
+
         # mainnet donut
         donut_eth_contract = eth_w3.eth.contract(address=eth_w3.to_checksum_address(
             self.config["contracts"]["mainnet"]["donut"]), abi=erc20_abi)
@@ -88,6 +103,10 @@ class BuildCacheDistributionTask(DistributionTask):
         # gnosis donut
         donut_gno_contract = gno_w3.eth.contract(address=gno_w3.to_checksum_address(
             self.config["contracts"]["gnosis"]["donut"]), abi=erc20_abi)
+
+        # arb1 donut
+        donut_arb1_contract = arb1_w3.eth.contract(address=arb1_w3.to_checksum_address(
+            self.config["contracts"]["arb1"]["donut"]), abi=erc20_abi)
 
         # gnosis staking
         staking_gno_contract = gno_w3.eth.contract(address=gno_w3.to_checksum_address(
@@ -104,6 +123,8 @@ class BuildCacheDistributionTask(DistributionTask):
         # mainnet lp
         lp_eth_contract = eth_w3.eth.contract(address=eth_w3.to_checksum_address(
             self.config["contracts"]["mainnet"]["lp"]), abi=uniswap_abi)
+
+        # TODO add arb1 lp
 
         self.logger.info("  retrieving reserves and calculating multipliers...")
         was_success = False
@@ -147,15 +168,22 @@ class BuildCacheDistributionTask(DistributionTask):
             for j in range(1,8):
                 try:
                     contrib_balance = contrib_contract.functions.balanceOf(address).call()
+
                     eth_donut_balance = donut_eth_contract.functions.balanceOf(address).call()
                     gno_donut_balance = donut_gno_contract.functions.balanceOf(address).call()
+                    arb1_donut_balance = donut_arb1_contract.functions.balanceOf(address).call()
 
                     staked_mainnet_balance = staking_eth_contract.functions.balanceOf(address).call() * mainnet_multiplier
                     staked_gno_balance = staking_gno_contract.functions.balanceOf(address).call() * gno_multiplier
 
-                    donut_balance = eth_donut_balance + gno_donut_balance + staked_mainnet_balance + staked_gno_balance
-                    donut_balance = gno_w3.from_wei(donut_balance, "ether")
-                    contrib_balance = gno_w3.from_wei(contrib_balance, "ether")
+                    donut_balance = (arb1_donut_balance +
+                                     eth_donut_balance +
+                                     gno_donut_balance +
+                                     staked_mainnet_balance +
+                                     staked_gno_balance)
+
+                    donut_balance = arb1_w3.from_wei(donut_balance, "ether")
+                    contrib_balance = arb1_w3.from_wei(contrib_balance, "ether")
                     weight = donut_balance if donut_balance < contrib_balance else contrib_balance
                 except Exception as e:
                     self.logger.error(e)

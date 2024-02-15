@@ -21,9 +21,6 @@
       }
     ]
   },
-  "infura.io": {
-    "api_url": "https://mainnet.infura.io/v3/"
-  },
   "contracts": {
     "mainnet": {
       "donut": "0xC0F9bD5Fa5698B6505F643900FFA515Ea5dF54A9",
@@ -34,7 +31,13 @@
       "contrib": "0xFc24F552fa4f7809a32Ce6EE07C09Dcd7A41988F",
       "donut": "0x524B969793a64a602342d89BC2789D43a016B13A",
       "lp": "0x077240a400b1740C8cD6f73DEa37DA1F703D8c00",
-      "staking": "0x84b427415A23bFB57Eb94a0dB6a818EB63E2429D"
+      "staking": "0x84b427415A23bFB57Eb94a0dB6a818EB63E2429D",
+      "distribute": "0xea0B2A9a711a8Cf9F9cAddA0a8996c0EDdC44B37"
+    },
+    "arb1": {
+      "contrib": "0xF28831db80a616dc33A5869f6F689F54ADd5b74C",
+      "donut": "0xF42e2B8bc2aF8B110b65be98dB1321B1ab8D44f5",
+      "distribute": "0xf4d6a6585BDaebB6456050Ae456Bc69ea7f51838"
     }
   }
 }

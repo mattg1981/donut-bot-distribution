@@ -8,7 +8,7 @@ from web3 import Web3
 # SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 # sys.path.append(os.path.dirname(SCRIPT_DIR))
 from safe.safe_tx import SafeTx
-from safe.safe_tx_builder import build_tx_builder_json
+from safe.safe_tx_builder import build_tx_builder_json, SafeChain
 
 """
     This file is largely the same as Task_1300_Build_Safe_Transaction except the transactions are hand-crafted
@@ -21,7 +21,7 @@ GNO_DONUT_CONTRACT_ADDRESS = "0x524b969793a64a602342d89bc2789d43a016b13a"
 
 if __name__ == '__main__':
 
-    with open(os.path.normpath("../contracts/gno_distribute_abi.json"), 'r') as f:
+    with open(os.path.normpath("../contracts/distribute_abi.json"), 'r') as f:
         gno_distribute_abi = json.load(f)
 
     with open(os.path.normpath("../contracts/gno_contrib_abi.json"), 'r') as f:
@@ -40,17 +40,17 @@ if __name__ == '__main__':
 
     awards = [
         {
-            "to": None,
-            "donut": None,
-            "contrib": None,
+            "to": "reddito321",
+            "donut": 250000,
+            "contrib": 50000,
             "reason": "donut initiative"
         },
-        {
-            "to": None,
-            "donut": None,
-            "contrib": None,
-            "reason": "reward organizer"
-        }
+        # {
+        #     "to": "mattg1981",
+        #     "donut": 5000,
+        #     "contrib": 1000,
+        #     "reason": "reward organizer"
+        # }
     ]
 
     # get users file that will be used for any user <-> address lookups
@@ -86,7 +86,7 @@ if __name__ == '__main__':
     ]
 
     # build the tx builder json
-    tx = build_tx_builder_json(f"donut-initiative awards", transactions)
+    tx = build_tx_builder_json(SafeChain.GNOSIS, f"donut-initiative awards", transactions)
 
     # save the tx builder json to file to be uploaded
     output_location = f"../out/ad_hoc/donut-initiative_{datetime.now().strftime('%m-%d-%Y')}.json"

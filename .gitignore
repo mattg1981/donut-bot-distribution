@@ -1,3 +1,4 @@
 /.env
 /venv/
 /out/ad_hoc
+/.idea

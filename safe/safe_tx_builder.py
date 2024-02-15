@@ -3,10 +3,22 @@ import os
 import pathlib
 from datetime import datetime
 from hashlib import sha3_256
+from enum import Enum
 
 
-def build_tx_builder_json(description: str, transactions: list):
-    schema_path = os.path.normpath(os.path.join(pathlib.Path(__file__).parent.resolve(), "tx_builder_schema_gno.json"))
+class SafeChain(Enum):
+    GNOSIS = 1
+    ARB1 = 2
+
+
+def build_tx_builder_json(chain: SafeChain, description: str, transactions: list):
+    if chain == SafeChain.ARB1:
+        schema_path = os.path.normpath(
+            os.path.join(pathlib.Path(__file__).parent.resolve(), "tx_builder_schema_arb1.json"))
+    else:
+        schema_path = os.path.normpath(
+            os.path.join(pathlib.Path(__file__).parent.resolve(), "tx_builder_schema_gno.json"))
+
     with open(schema_path, 'r') as f:
         tx = json.load(f)
 

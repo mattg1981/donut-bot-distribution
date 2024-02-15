@@ -7,8 +7,10 @@ from distribution_tasks.distribution_task import DistributionTask
 
 
 class CalculateTipsBonusDistributionTask(DistributionTask):
-    DONUTS_FROM_TIPPING_OTHERS = 170000
-    DONUTS_FROM_RECEIVING_TIPS = 340000
+    DONUTS_FROM_TIPPING_OTHERS = 34000
+    # DONUTS_FROM_TIPPING_OTHERS = 170000  - reduced by 80% in round 133
+    DONUTS_FROM_RECEIVING_TIPS = 68000
+    # DONUTS_FROM_RECEIVING_TIPS = 340000   - reduced by 80% in round 133
     GOV_WEIGHT_THRESHOLD = 500
 
     # REGISTERED_USERS_URL = "https://ethtrader.github.io/donut.distribution/users.json"
