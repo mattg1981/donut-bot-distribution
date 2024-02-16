@@ -40,8 +40,8 @@ class GnoTransactionBuilderDistributionTask(DistributionTask):
                                                abi=self.gno_contrib_abi)
 
         distribute_contract_data = distribute_contract.encodeABI("distribute", [
-                    [w3.to_checksum_address(d['address']) for d in distribution_summary if float(d['points']) > 0 and (d['eligible'] == 'True' or (d['eligible'] == 'False' and d['eligiblity_reason'] in ['age', 'karma']))],
-                    [w3.to_wei(d['points'], 'ether') for d in distribution_summary if float(d['points']) > 0 and (d['eligible'] == 'True' or (d['eligible'] == 'False' and d['eligiblity_reason'] in ['age', 'karma']))],
+                    [w3.to_checksum_address(d['address']) for d in distribution_summary if float(d['points']) > 0],
+                    [w3.to_wei(d['points'], 'ether') for d in distribution_summary if float(d['points']) > 0],
                     w3.to_checksum_address(self.config["contracts"]["gnosis"]["donut"])
                 ])
 
