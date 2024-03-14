@@ -35,7 +35,7 @@ class DistributionTask:
             version += 1
 
         file_location = os.path.join(self.working_directory,
-                                f"{filename}.{str(version).zfill(3)}.{self._logger_extra}.csv")
+                                     f"{filename}.{str(version).zfill(3)}.{self._logger_extra}.csv")
 
         if isinstance(obj, list) and not isinstance(obj[0], dict):
             # attempt to turn the obj into a dict (should work with classes but will likely not work with all
@@ -114,7 +114,7 @@ class DistributionTask:
 
     def save_safe_tx(self, tx):
         tx_builder_dir = self.pipeline['tx_builder_dir']
-        tx_file_path = os.path.join(tx_builder_dir,f"tx_{self.distribution_round}.json")
+        tx_file_path = os.path.join(tx_builder_dir, f"arb1_tx_{self.distribution_round}.json")
 
         if os.path.exists(tx_file_path):
             os.remove(tx_file_path)

@@ -29,7 +29,7 @@ if __name__ == '__main__':
     logger = logging.getLogger(logger_name)
     logger.setLevel(logging.INFO)
 
-    file_handler = RotatingFileHandler(path.normpath(path.join(log_dir, f"distribution_{int(sys.argv[1])}.log")), maxBytes=10000000, backupCount=4)
+    file_handler = RotatingFileHandler(path.normpath(path.join(log_dir, f"distribution_{int(sys.argv[1])}.log")), maxBytes=100000000, backupCount=4)
     file_handler.setFormatter(formatter)
     console_handler = logging.StreamHandler()
     logger.addHandler(file_handler)

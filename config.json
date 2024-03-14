@@ -18,6 +18,10 @@
       {
         "id": "0xbe12cddefa2354dc9a9c273c227a7df5e9991533874e4f3b338ad9836e9e5040",
         "reason": "double post"
+      },
+      {
+        "id": "0xc3ac036af5544e8fdc12b69a00224175b6a9ec7700fed02bbac78f9c1a51054a",
+        "reason": "not a governance poll"
       }
     ]
   },

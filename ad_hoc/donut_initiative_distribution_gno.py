@@ -40,10 +40,10 @@ if __name__ == '__main__':
 
     awards = [
         {
-            "to": "reddito321",
-            "donut": 250000,
-            "contrib": 50000,
-            "reason": "donut initiative"
+            "to": "PoojaaPriyaa",
+            "donut": 10000,
+            "contrib": 0,
+            "reason": "discord contest"
         },
         # {
         #     "to": "mattg1981",
