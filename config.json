@@ -41,7 +41,9 @@
     "arb1": {
       "contrib": "0xF28831db80a616dc33A5869f6F689F54ADd5b74C",
       "donut": "0xF42e2B8bc2aF8B110b65be98dB1321B1ab8D44f5",
-      "distribute": "0xf4d6a6585BDaebB6456050Ae456Bc69ea7f51838"
+      "distribute": "0xf4d6a6585BDaebB6456050Ae456Bc69ea7f51838",
+      "sushi_nft_position_manager": "0xF0cBce1942A68BEB3d1b73F0dd86C8DCc363eF49",
+      "sushi_pool": "0x65f7a98d87bc21a3748545047632fef4d3ff9a67"
     }
   }
 }
