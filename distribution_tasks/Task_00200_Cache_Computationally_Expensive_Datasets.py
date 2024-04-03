@@ -1,13 +1,23 @@
 import json
+import math
 import os
 import pathlib
 from datetime import datetime, timedelta
 
 import praw
 import prawcore
+import requests
+from gql import Client, gql
+from gql.transport.requests import RequestsHTTPTransport
 from web3 import Web3
 from urllib import request
 from distribution_tasks.distribution_task import DistributionTask
+
+TICK_BASE = 1.0001
+
+
+def tick_to_price(tick):
+    return TICK_BASE ** tick
 
 
 class BuildCacheDistributionTask(DistributionTask):
@@ -86,15 +96,21 @@ class BuildCacheDistributionTask(DistributionTask):
         with open(os.path.join(pathlib.Path().resolve(), "contracts/uniswap_token.json"), 'r') as f:
             uniswap_abi = json.load(f)
 
+        with open(os.path.join(pathlib.Path().resolve(), "contracts/arb1_NonfungiblePositionManager_abi.json"),
+                  'r') as f:
+            sushi_v3_abi = json.load(f)
+
+        with open(os.path.join(pathlib.Path().resolve(), "contracts/arb1_sushi_pool_abi.json"), 'r') as f:
+            sushi_lp_pool_abi = json.load(f)
+
         user_weights = []
 
         # contrib
-        contrib_contract = gno_w3.eth.contract(address=gno_w3.to_checksum_address(
-            self.config["contracts"]["gnosis"]["contrib"]), abi=erc20_abi)
+        # contrib_contract = gno_w3.eth.contract(address=gno_w3.to_checksum_address(
+        #     self.config["contracts"]["gnosis"]["contrib"]), abi=erc20_abi)
 
-        # TODO uncomment when arb1 migration complete
-        # contrib_contract = arb1_w3.eth.contract(address=arb1_w3.to_checksum_address(
-        #    self.config["contracts"]["arb1"]["contrib"]), abi=erc20_abi)
+        contrib_contract = arb1_w3.eth.contract(address=arb1_w3.to_checksum_address(
+            self.config["contracts"]["arb1"]["contrib"]), abi=erc20_abi)
 
         # mainnet donut
         donut_eth_contract = eth_w3.eth.contract(address=eth_w3.to_checksum_address(
@@ -124,11 +140,9 @@ class BuildCacheDistributionTask(DistributionTask):
         lp_eth_contract = eth_w3.eth.contract(address=eth_w3.to_checksum_address(
             self.config["contracts"]["mainnet"]["lp"]), abi=uniswap_abi)
 
-        # TODO add arb1 lp
-
         self.logger.info("  retrieving reserves and calculating multipliers...")
         was_success = False
-        for j in range(1,8):
+        for j in range(1, 8):
             try:
                 eth_lp_supply = lp_eth_contract.functions.totalSupply().call()
                 gno_lp_supply = lp_gno_contract.functions.totalSupply().call()
@@ -152,6 +166,107 @@ class BuildCacheDistributionTask(DistributionTask):
             self.logger.error("  unable to query at this time, attempt at a later time...")
             exit(4)
 
+        sushi_lp = []
+
+        # get sushi lp position holders
+        position_query = """query get_positions($pool_id: ID!) {
+          positions(where: {pool: $pool_id}) {
+            id
+            owner
+            liquidity
+            tickLower { tickIdx }
+            tickUpper { tickIdx }
+            pool { id }
+            token0 {
+              symbol
+              decimals
+            }
+            token1 {
+              symbol
+              decimals
+            }
+          }
+        }"""
+
+        # return the tick and the sqrt of the current price
+        pool_query = """query get_pools($pool_id: ID!) {
+          pools(where: {id: $pool_id}) {
+            tick
+            sqrtPrice
+          }
+        }"""
+
+        client = Client(
+            transport=RequestsHTTPTransport(
+                url='https://api.thegraph.com/subgraphs/name/sushi-v3/v3-arbitrum',
+                verify=True,
+                retries=5,
+            ))
+
+        variables = {"$pool_id": self.config["contracts"]["arb1"]["sushi_pool"]}
+
+        # get pool info for current price
+        response = client.execute(gql(pool_query), variable_values=variables)
+
+        if len(response['pools']) == 0:
+            print("position not found")
+            exit(-1)
+
+        pool = response['pools'][0]
+        current_tick = int(pool["tick"])
+        current_sqrt_price = int(pool["sqrtPrice"]) / (2 ** 96)
+
+        # get position info in pool
+        response = client.execute(gql(position_query), variable_values=variables)
+
+        if len(response['positions']) == 0:
+            print("position not found")
+            exit(-1)
+
+        for position in response['positions']:
+            liquidity = int(position["liquidity"])
+            tick_lower = int(position["tickLower"]["tickIdx"])
+            tick_upper = int(position["tickUpper"]["tickIdx"])
+            pool_id = position["pool"]["id"]
+
+            token0 = position["token0"]["symbol"]
+            token1 = position["token1"]["symbol"]
+            decimals0 = int(position["token0"]["decimals"])
+            decimals1 = int(position["token1"]["decimals"])
+
+            # Compute and print the current price
+            current_price = tick_to_price(current_tick)
+            adjusted_current_price = current_price / (10 ** (decimals1 - decimals0))
+
+            sa = tick_to_price(tick_lower / 2)
+            sb = tick_to_price(tick_upper / 2)
+
+            if tick_upper <= current_tick:
+                # Only token1 locked
+                amount0 = 0
+                amount1 = liquidity * (sb - sa)
+            elif tick_lower < current_tick < tick_upper:
+                # Both tokens present
+                amount0 = liquidity * (sb - current_sqrt_price) / (current_sqrt_price * sb)
+                amount1 = liquidity * (current_sqrt_price - sa)
+            else:
+                # Only token0 locked
+                amount0 = liquidity * (sb - sa) / (sa * sb)
+                amount1 = 0
+
+            # print info about the position
+            adjusted_amount0 = amount0 / (10 ** decimals0)
+            adjusted_amount1 = amount1 / (10 ** decimals1)
+            print("  position {: 7d} in range [{},{}]: {:.2f} {} and {:.2f} {} at the current price".format(
+                int(position["id"]), tick_lower, tick_upper,
+                adjusted_amount0, token0, adjusted_amount1, token1))
+
+            sushi_lp.append({
+                "id": position["id"],
+                "owner": position["owner"],
+                "tokens": adjusted_amount1
+            })
+
         i = 0
         for tipper in tippers:
             i = i + 1
@@ -165,7 +280,7 @@ class BuildCacheDistributionTask(DistributionTask):
             address = eth_w3.to_checksum_address(user['address'])
 
             was_success = False
-            for j in range(1,8):
+            for j in range(1, 8):
                 try:
                     contrib_balance = contrib_contract.functions.balanceOf(address).call()
 
@@ -173,14 +288,18 @@ class BuildCacheDistributionTask(DistributionTask):
                     gno_donut_balance = donut_gno_contract.functions.balanceOf(address).call()
                     arb1_donut_balance = donut_arb1_contract.functions.balanceOf(address).call()
 
-                    staked_mainnet_balance = staking_eth_contract.functions.balanceOf(address).call() * mainnet_multiplier
+                    staked_mainnet_balance = staking_eth_contract.functions.balanceOf(
+                        address).call() * mainnet_multiplier
                     staked_gno_balance = staking_gno_contract.functions.balanceOf(address).call() * gno_multiplier
+
+                    sushi_lp_donuts = sum([int(s["tokens"]) for s in sushi_lp if s["owner"].lower() == address.lower()])
 
                     donut_balance = (arb1_donut_balance +
                                      eth_donut_balance +
                                      gno_donut_balance +
                                      staked_mainnet_balance +
-                                     staked_gno_balance)
+                                     staked_gno_balance +
+                                     sushi_lp_donuts)
 
                     donut_balance = arb1_w3.from_wei(donut_balance, "ether")
                     contrib_balance = arb1_w3.from_wei(contrib_balance, "ether")
