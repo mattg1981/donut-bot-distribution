@@ -52,6 +52,43 @@ class ApplyOrganizerRewardsDistributionTask(DistributionTask):
                 'points': organizer_reward
             })
 
+        ###
+        # mattg1981 - add community managers
+        ###
+
+        community_managers = ['friendly-airline2426']
+        community_manager_reward = 10000 / len(community_managers)
+
+        for manager in community_managers:
+            dist_record = next((x for x in distribution if x["username"].lower() == manager.lower()), None)
+
+            if not dist_record:
+                address = next((u['address'] for u in users if u['username'].lower() == manager.lower()), None)
+
+                if not address:
+                    self.logger.warning(
+                        f"  community manager [{manager}] not found in user .csv, skipping calc...")
+                    continue
+
+                self.logger.warning(
+                    f"  community manager [{manager}] does not appear in the distribution .csv, adding to file")
+
+                distribution.append({
+                    "username": manager,
+                    "comments": 0,
+                    "comment score": 0,
+                    "post score": 0,
+                    "points": 0,
+                    "pay2post": '0.0',
+                    "blockchain_address": address
+                })
+
+            # dist_record['points'] = float(dist_record['points']) + organizer_reward
+            rewards.append({
+                'username': manager,
+                'points': organizer_reward
+            })
+
         super().save_document_version(distribution, pipeline_config['distribution'])
         super().save_document_version(rewards, "organizers")
 
