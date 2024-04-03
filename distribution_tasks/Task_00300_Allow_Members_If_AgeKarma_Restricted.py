@@ -27,7 +27,7 @@ class AllowSpecialMembersIfApplicableDistributionTask(DistributionTask):
 
         ineligible_users = [u for u in ineligible_users if u['user'] not in eligible_users]
 
-        self.logger.info(f"  ineligible users after before special memberships: [{len(ineligible_users)}]")
+        self.logger.info(f"  ineligible users after special memberships: [{len(ineligible_users)}]")
 
         super().save_document_version(ineligible_users, pipeline_config['ineligible_users'])
 
