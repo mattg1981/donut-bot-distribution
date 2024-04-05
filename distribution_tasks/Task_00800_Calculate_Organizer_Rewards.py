@@ -15,8 +15,8 @@ class ApplyOrganizerRewardsDistributionTask(DistributionTask):
         distribution = super().get_current_document_version(pipeline_config['distribution'])
         users = super().get_current_document_version('users')
 
-        # get organizers
-        # per https://snapshot.org/#/ethtraderdao.eth/proposal/0x8ff68520b909ad93fc86643751e6cc32967d4df5f3fd43a00f50e9e80d74ed3b
+        # get organizers per:
+        # https://snapshot.org/#/ethtraderdao.eth/proposal/0x8ff68520b909ad93fc86643751e6cc32967d4df5f3fd43a00f50e9e80d74ed3b
 
         organizers = ["carlslarson", "mattg1981", "reddito321"]
         organizer_reward = 25000 / len(organizers)
@@ -86,7 +86,7 @@ class ApplyOrganizerRewardsDistributionTask(DistributionTask):
             # dist_record['points'] = float(dist_record['points']) + organizer_reward
             rewards.append({
                 'username': manager,
-                'points': organizer_reward
+                'points': community_manager_reward
             })
 
         super().save_document_version(distribution, pipeline_config['distribution'])
