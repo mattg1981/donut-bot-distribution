@@ -96,12 +96,12 @@ class BuildCacheDistributionTask(DistributionTask):
         with open(os.path.join(pathlib.Path().resolve(), "contracts/uniswap_token.json"), 'r') as f:
             uniswap_abi = json.load(f)
 
-        with open(os.path.join(pathlib.Path().resolve(), "contracts/arb1_NonfungiblePositionManager_abi.json"),
-                  'r') as f:
-            sushi_v3_abi = json.load(f)
-
-        with open(os.path.join(pathlib.Path().resolve(), "contracts/arb1_sushi_pool_abi.json"), 'r') as f:
-            sushi_lp_pool_abi = json.load(f)
+        # with open(os.path.join(pathlib.Path().resolve(), "contracts/arb1_NonfungiblePositionManager_abi.json"),
+        #           'r') as f:
+        #     sushi_v3_abi = json.load(f)
+        #
+        # with open(os.path.join(pathlib.Path().resolve(), "contracts/arb1_sushi_pool_abi.json"), 'r') as f:
+        #     sushi_lp_pool_abi = json.load(f)
 
         user_weights = []
 
@@ -203,7 +203,7 @@ class BuildCacheDistributionTask(DistributionTask):
                 retries=5,
             ))
 
-        variables = {"$pool_id": self.config["contracts"]["arb1"]["sushi_pool"]}
+        variables = {"pool_id": self.config["contracts"]["arb1"]["sushi_pool"]}
 
         # get pool info for current price
         response = client.execute(gql(pool_query), variable_values=variables)
@@ -255,11 +255,8 @@ class BuildCacheDistributionTask(DistributionTask):
                 amount1 = 0
 
             # print info about the position
-            adjusted_amount0 = amount0 / (10 ** decimals0)
-            adjusted_amount1 = amount1 / (10 ** decimals1)
-            print("  position {: 7d} in range [{},{}]: {:.2f} {} and {:.2f} {} at the current price".format(
-                int(position["id"]), tick_lower, tick_upper,
-                adjusted_amount0, token0, adjusted_amount1, token1))
+            adjusted_amount0 = amount0 # / (10 ** decimals0)
+            adjusted_amount1 = amount1 # / (10 ** decimals1)
 
             sushi_lp.append({
                 "id": position["id"],
@@ -294,6 +291,9 @@ class BuildCacheDistributionTask(DistributionTask):
 
                     sushi_lp_donuts = sum([int(s["tokens"]) for s in sushi_lp if s["owner"].lower() == address.lower()])
 
+                    if sushi_lp_donuts > 0:
+                        pass
+
                     donut_balance = (arb1_donut_balance +
                                      eth_donut_balance +
                                      gno_donut_balance +
@@ -314,7 +314,10 @@ class BuildCacheDistributionTask(DistributionTask):
                     'tipper': tipper,
                     'donut': int(donut_balance),
                     'contrib': int(contrib_balance),
-                    'weight': int(weight)
+                    'weight': int(weight),
+                    'eth_stake': int(arb1_w3.from_wei(staked_mainnet_balance, "ether")),
+                    'gnosis_stake': int(arb1_w3.from_wei(staked_gno_balance, "ether")),
+                    'arb1_sushi': int(arb1_w3.from_wei(sushi_lp_donuts, "ether"))
                 })
 
                 user['contrib'] = int(contrib_balance)
