@@ -20,6 +20,8 @@ class DistributeOffchainTipsDistributionTask(DistributionTask):
 
         # get funded accounts
         funded_accounts = super().get_current_document_version("funded_accounts")
+        if not funded_accounts:
+            funded_accounts = []
 
         # get raw offchain tips
         offchain_tips = super().get_current_document_version("offchain_tips")
