@@ -46,7 +46,7 @@ class DistributionTask:
             except Exception:
                 return None
 
-        with open(file_location, 'w') as output_file:
+        with open(file_location, 'w', newline='') as output_file:
             writer = csv.DictWriter(output_file, obj[0].keys(), extrasaction='ignore')
             writer.writeheader()
             writer.writerows(obj)
@@ -96,7 +96,7 @@ class DistributionTask:
         file_names = [file for file in os.listdir(self.working_directory)
                       if file.startswith(f"{filename}.")]
 
-        regex_pattern = f'{filename}\.(\d*)\.\w+\.csv'
+        regex_pattern = f'{filename}\\.(\\d*)\\.\\w+\\.csv'
         regex = re.compile(regex_pattern)
 
         file_version = None
@@ -119,7 +119,7 @@ class DistributionTask:
         if os.path.exists(tx_file_path):
             os.remove(tx_file_path)
 
-        with open(tx_file_path, 'w') as f:
+        with open(tx_file_path, 'w', newline='') as f:
             json.dump(tx, f, indent=4)
 
     def cache_file(self, versioned_document_path):
