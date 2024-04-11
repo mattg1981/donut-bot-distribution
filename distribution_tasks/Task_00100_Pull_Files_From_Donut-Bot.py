@@ -53,7 +53,8 @@ class PullBaseFilesDistributionTask(DistributionTask):
         self.logger.info("  grabbing special membership file...")
         memberships_filename = "membership"
         membership = json.load(request.urlopen(
-            f"https://raw.githubusercontent.com/mattg1981/donut-bot-output/main/memberships/memberships_{self.distribution_round}.json"))
+            f"https://raw.githubusercontent.com/mattg1981/donut-bot-output/main/memberships"
+            f"/memberships_{self.distribution_round}.json"))
         super().save_document_version(membership, memberships_filename)
 
         # get distribution round data
@@ -91,8 +92,13 @@ class PullBaseFilesDistributionTask(DistributionTask):
 
         # temp bans
         self.logger.info("  grabbing temp bans file...")
-        temp_banned = json.load(request.urlopen(f"https://raw.githubusercontent.com/mattg1981/donut-bot-output/main"
+        try:
+            temp_banned = json.load(request.urlopen(f"https://raw.githubusercontent.com/mattg1981/donut-bot-output/main"
                                                 f"/bans/temp_bans_round_{super().distribution_round}.json"))
+        except:
+            self.logger.info("  no temp bans found...")
+            temp_banned = {}
+
         super().save_document_version(temp_banned, 'temp_bans')
 
         # perm bans
@@ -103,8 +109,12 @@ class PullBaseFilesDistributionTask(DistributionTask):
 
         # funded accounts
         self.logger.info("  grabbing funded accounts file...")
-        funded_accounts = json.load(request.urlopen(
-            f"https://raw.githubusercontent.com/mattg1981/donut-bot-output/main/funded_accounts/funded_round_{super().distribution_round}.json"))
+        try:
+            funded_accounts = json.load(request.urlopen(
+                f"https://raw.githubusercontent.com/mattg1981/donut-bot-output/main/funded_accounts/funded_round_{super().distribution_round}.json"))
+        except:
+            self.logger.info("  no funded accounts found...")
+            funded_accounts = {}
         super().save_document_version(funded_accounts, "funded_accounts")
 
         return super().update_pipeline(pipeline_config, {
