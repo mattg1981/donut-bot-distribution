@@ -11,7 +11,6 @@ from dotenv import load_dotenv
 from distribution_tasks import *
 from distribution_tasks.distribution_task import DistributionTask
 
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     # load environment variables
     load_dotenv()
@@ -39,7 +38,6 @@ if __name__ == '__main__':
     else:
         round = int(sys.argv[1])
 
-
     # create round_{} folder so that we can put the log in there
     base_dir = path.dirname(path.abspath(__file__))
     log_dir = path.join(base_dir, f"./out/round_{round}/logs")
@@ -51,7 +49,8 @@ if __name__ == '__main__':
     logger = logging.getLogger(logger_name)
     logger.setLevel(logging.INFO)
 
-    file_handler = RotatingFileHandler(path.normpath(path.join(log_dir, f"distribution_{round}.log")), maxBytes=100000000, backupCount=4)
+    file_handler = RotatingFileHandler(path.normpath(path.join(log_dir, f"distribution_{round}.log")),
+                                       maxBytes=100000000, backupCount=4)
     file_handler.setFormatter(formatter)
     console_handler = logging.StreamHandler()
     logger.addHandler(file_handler)

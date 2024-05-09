@@ -1,17 +1,14 @@
 import json
-import math
 import os
 import pathlib
-from datetime import datetime, timedelta
-
 import praw
 import prawcore
-import requests
+
 from gql import Client, gql
 from gql.transport.requests import RequestsHTTPTransport
 from web3 import Web3
-from urllib import request
 from distribution_tasks.distribution_task import DistributionTask
+from datetime import datetime, timedelta
 
 TICK_BASE = 1.0001
 
@@ -254,7 +251,6 @@ class BuildCacheDistributionTask(DistributionTask):
                 amount0 = liquidity * (sb - sa) / (sa * sb)
                 amount1 = 0
 
-            # print info about the position
             adjusted_amount0 = amount0 # / (10 ** decimals0)
             adjusted_amount1 = amount1 # / (10 ** decimals1)
 
@@ -290,9 +286,6 @@ class BuildCacheDistributionTask(DistributionTask):
                     staked_gno_balance = staking_gno_contract.functions.balanceOf(address).call() * gno_multiplier
 
                     sushi_lp_donuts = sum([int(s["tokens"]) for s in sushi_lp if s["owner"].lower() == address.lower()])
-
-                    if sushi_lp_donuts > 0:
-                        pass
 
                     donut_balance = (arb1_donut_balance +
                                      eth_donut_balance +
