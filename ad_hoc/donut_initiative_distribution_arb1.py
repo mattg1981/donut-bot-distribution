@@ -36,35 +36,24 @@ if __name__ == '__main__':
 
     awards = [
         {
-            "to": "mattg1981",
-            "donut": 10,
-            "contrib": 10,
-            "reason": "testing distribution"
+            "user": "mattg1981",
+            "donut": 1_080_000,
+            "contrib": 216_000,
+            "reason": "DI - Arb 1 Migration"
         },
         {
-            "to": "carlslarson",
-            "donut": 10,
-            "contrib": 10,
-            "reason": "testing distribution"
+            "user": "carlslarson",
+            "donut": 120_000,
+            "contrib": 24_000,
+            "reason": "DI - Arb 1 Migration"
         },
         {
-            "to": "raymv1987",
-            "donut": 10,
-            "contrib": 10,
-            "reason": "testing distribution"
+            "user": "mattg1981",
+            "donut": 5_000,
+            "contrib": 1_000,
+            "reason": "DI - Arb 1 Migration (transaction generator)"
         },
-        {
-            "to": "aminok",
-            "donut": 10,
-            "contrib": 10,
-            "reason": "testing distribution"
-        },
-        {
-            "to": "jake123194",
-            "donut": 10,
-            "contrib": 10,
-            "reason": "testing distribution"
-        },
+
     ]
 
     # get users file that will be used for any user <-> address lookups
@@ -72,13 +61,14 @@ if __name__ == '__main__':
 
     # map awardee addresses
     for award in awards:
-        user = next((u for u in users if u['username'].lower() == award['to'].lower()), None)
+        if not 'address' in award:
+            user = next((u for u in users if u['username'].lower() == award['user'].lower()), None)
 
-        if not user:
-            print(f"donut reward user not found, ensure you typed the name correctly: [{award['to']}]")
-            exit(4)
+            if not user:
+                print(f"donut reward user not found, ensure you typed the name correctly: [{award['user']}]")
+                exit(4)
 
-        award["address"] = user["address"]
+            award["address"] = user["address"]
 
     # encode the donut data
     distribute_contract_data = distribute_contract.encodeABI("distribute", [
@@ -103,10 +93,10 @@ if __name__ == '__main__':
     tx = build_tx_builder_json(SafeChain.ARB1, f"donut-initiative awards", transactions)
 
     # save the tx builder json to file to be uploaded
-    output_location = f"../out/ad_hoc/donut-initiative_arb1_{datetime.now().strftime('%m-%d-%Y')}.json"
+    output_location = f"donut-initiative_arb1_{datetime.now().strftime('%m-%d-%Y')}.json"
 
     if os.path.exists(output_location):
         os.remove(output_location)
 
-    with open(os.path.normpath(output_location), 'w') as f:
-        json.dump(tx, f, indent=4)
+    with open(output_location, 'w', newline='', encoding='utf-8') as f:
+        json.dump(tx, f, indent=4, ensure_ascii=False)
