@@ -7,15 +7,9 @@ from distribution_tasks.distribution_task import DistributionTask
 
 
 class CalculateTipsBonusDistributionTask(DistributionTask):
-    DONUTS_FROM_TIPPING_OTHERS = 34000
-    # DONUTS_FROM_TIPPING_OTHERS = 170000  - reduced by 80% in round 133
+    DONUTS_FROM_TIPPING_OTHERS = 0
     DONUTS_FROM_RECEIVING_TIPS = 68000
-    # DONUTS_FROM_RECEIVING_TIPS = 340000   - reduced by 80% in round 133
     GOV_WEIGHT_THRESHOLD = 500
-
-    # REGISTERED_USERS_URL = "https://ethtrader.github.io/donut.distribution/users.json"
-    # ONCHAIN_TIPS_FILE = "https://raw.githubusercontent.com/mattg1981/donut-bot-output/main/onchain_tips/onchain_tips.csv"
-    # OFFCHAIN_TIPS_URL = "https://raw.githubusercontent.com/mattg1981/donut-bot-output/main/offchain_tips/materialized/round_#ROUND#_materialized_tips.json"
 
     def __init__(self, config, logger_name):
         DistributionTask.__init__(self, config, logger_name)
@@ -31,7 +25,6 @@ class CalculateTipsBonusDistributionTask(DistributionTask):
         dr = super().get_current_document_version("distribution_round")[0]
 
         onchain_tips = onchain_tips[(onchain_tips['timestamp'] >= dr['from_date']) & (onchain_tips['timestamp'] <= dr['to_date'])]
-        # onchain_tips = onchain_tips[(self.START_BLOCK <= onchain_tips["block"]) & (onchain_tips["block"] <= self.END_BLOCK)]
 
         onchain_tips = onchain_tips[~onchain_tips["content_id"].astype(str).str.startswith("t1")]
         onchain_tips["type"] = "onchain"
@@ -43,7 +36,6 @@ class CalculateTipsBonusDistributionTask(DistributionTask):
         """ Get offchain tips from url and filter out comment tips """
         try:
             self.logger.info("  pulling down offchain tips file...")
-            # offchain_tips = pd.read_json(offchain_tips_url)
             materialized_tips = super().get_current_document_version('materialized_tips')
             offchain_tips = pd.DataFrame.from_records(materialized_tips).astype({'amount': 'float'})
         except urllib.error.HTTPError:
@@ -61,7 +53,6 @@ class CalculateTipsBonusDistributionTask(DistributionTask):
     def get_post_tips(self):
         """ Get both onchain and offchain tips and merge them together """
         onchain_tips = self.get_onchain_post_tips()
-        # offchain_tips = self.get_offchain_post_tips(offchain_tips_url)
         offchain_tips = self.get_offchain_post_tips()
 
         if offchain_tips.empty:
@@ -72,8 +63,6 @@ class CalculateTipsBonusDistributionTask(DistributionTask):
     def add_weights(self, tips):
         """ Add the weights of sender and receiver to the tips dataframe """
         users = super().get_current_document_version('users')
-        # users_weight = pd.read_json(self.REGISTERED_USERS_URL)
-
         users_weight = pd.DataFrame.from_records(users)
 
         tips_with_weight = pd.merge(tips, users_weight, how="inner", left_on="from_user", right_on="username")
@@ -144,8 +133,6 @@ class CalculateTipsBonusDistributionTask(DistributionTask):
         super().process(pc)
         self.logger.info(f"begin task [step: {super().current_step}] [file: {os.path.basename(__file__)}]")
 
-        # offchain_tips = self.OFFCHAIN_TIPS_URL.replace("#ROUND#", str(super().distribution_round))
-        # post_tips = self.get_post_tips(offchain_tips)
         post_tips = self.get_post_tips()
         offchain_tips = self.compute_offchain_tips(post_tips)
 
