@@ -33,6 +33,9 @@ class BuildCacheDistributionTask(DistributionTask):
         # get users file
         users = super().get_current_document_version('users')
 
+        # get arb 1 liqudity file
+        liquidity = super().get_current_document_version('liquidity')
+
         # get onchain tips
         onchain_tips = super().get_current_document_version('onchain_tips')
         dr = super().get_current_document_version("distribution_round")[0]
@@ -163,102 +166,102 @@ class BuildCacheDistributionTask(DistributionTask):
             self.logger.error("  unable to query at this time, attempt at a later time...")
             exit(4)
 
-        sushi_lp = []
-
-        # get sushi lp position holders
-        position_query = """query get_positions($pool_id: ID!) {
-          positions(where: {pool: $pool_id}) {
-            id
-            owner
-            liquidity
-            tickLower { tickIdx }
-            tickUpper { tickIdx }
-            pool { id }
-            token0 {
-              symbol
-              decimals
-            }
-            token1 {
-              symbol
-              decimals
-            }
-          }
-        }"""
-
-        # return the tick and the sqrt of the current price
-        pool_query = """query get_pools($pool_id: ID!) {
-          pools(where: {id: $pool_id}) {
-            tick
-            sqrtPrice
-          }
-        }"""
-
-        client = Client(
-            transport=RequestsHTTPTransport(
-                url='https://api.thegraph.com/subgraphs/name/sushi-v3/v3-arbitrum',
-                verify=True,
-                retries=5,
-            ))
-
-        variables = {"pool_id": self.config["contracts"]["arb1"]["sushi_pool"]}
-
-        # get pool info for current price
-        response = client.execute(gql(pool_query), variable_values=variables)
-
-        if len(response['pools']) == 0:
-            print("position not found")
-            exit(-1)
-
-        pool = response['pools'][0]
-        current_tick = int(pool["tick"])
-        current_sqrt_price = int(pool["sqrtPrice"]) / (2 ** 96)
-
-        # get position info in pool
-        response = client.execute(gql(position_query), variable_values=variables)
-
-        if len(response['positions']) == 0:
-            print("position not found")
-            exit(-1)
-
-        for position in response['positions']:
-            liquidity = int(position["liquidity"])
-            tick_lower = int(position["tickLower"]["tickIdx"])
-            tick_upper = int(position["tickUpper"]["tickIdx"])
-            pool_id = position["pool"]["id"]
-
-            token0 = position["token0"]["symbol"]
-            token1 = position["token1"]["symbol"]
-            decimals0 = int(position["token0"]["decimals"])
-            decimals1 = int(position["token1"]["decimals"])
-
-            # Compute and print the current price
-            current_price = tick_to_price(current_tick)
-            adjusted_current_price = current_price / (10 ** (decimals1 - decimals0))
-
-            sa = tick_to_price(tick_lower / 2)
-            sb = tick_to_price(tick_upper / 2)
-
-            if tick_upper <= current_tick:
-                # Only token1 locked
-                amount0 = 0
-                amount1 = liquidity * (sb - sa)
-            elif tick_lower < current_tick < tick_upper:
-                # Both tokens present
-                amount0 = liquidity * (sb - current_sqrt_price) / (current_sqrt_price * sb)
-                amount1 = liquidity * (current_sqrt_price - sa)
-            else:
-                # Only token0 locked
-                amount0 = liquidity * (sb - sa) / (sa * sb)
-                amount1 = 0
-
-            adjusted_amount0 = amount0 # / (10 ** decimals0)
-            adjusted_amount1 = amount1 # / (10 ** decimals1)
-
-            sushi_lp.append({
-                "id": position["id"],
-                "owner": position["owner"],
-                "tokens": adjusted_amount1
-            })
+        # sushi_lp = []
+        #
+        # # get sushi lp position holders
+        # position_query = """query get_positions($pool_id: ID!) {
+        #   positions(where: {pool: $pool_id}) {
+        #     id
+        #     owner
+        #     liquidity
+        #     tickLower { tickIdx }
+        #     tickUpper { tickIdx }
+        #     pool { id }
+        #     token0 {
+        #       symbol
+        #       decimals
+        #     }
+        #     token1 {
+        #       symbol
+        #       decimals
+        #     }
+        #   }
+        # }"""
+        #
+        # # return the tick and the sqrt of the current price
+        # pool_query = """query get_pools($pool_id: ID!) {
+        #   pools(where: {id: $pool_id}) {
+        #     tick
+        #     sqrtPrice
+        #   }
+        # }"""
+        #
+        # client = Client(
+        #     transport=RequestsHTTPTransport(
+        #         url='https://api.thegraph.com/subgraphs/name/sushi-v3/v3-arbitrum',
+        #         verify=True,
+        #         retries=5,
+        #     ))
+        #
+        # variables = {"pool_id": self.config["contracts"]["arb1"]["sushi_pool"]}
+        #
+        # # get pool info for current price
+        # response = client.execute(gql(pool_query), variable_values=variables)
+        #
+        # if len(response['pools']) == 0:
+        #     print("position not found")
+        #     exit(-1)
+        #
+        # pool = response['pools'][0]
+        # current_tick = int(pool["tick"])
+        # current_sqrt_price = int(pool["sqrtPrice"]) / (2 ** 96)
+        #
+        # # get position info in pool
+        # response = client.execute(gql(position_query), variable_values=variables)
+        #
+        # if len(response['positions']) == 0:
+        #     print("position not found")
+        #     exit(-1)
+        #
+        # for position in response['positions']:
+        #     liquidity = int(position["liquidity"])
+        #     tick_lower = int(position["tickLower"]["tickIdx"])
+        #     tick_upper = int(position["tickUpper"]["tickIdx"])
+        #     pool_id = position["pool"]["id"]
+        #
+        #     token0 = position["token0"]["symbol"]
+        #     token1 = position["token1"]["symbol"]
+        #     decimals0 = int(position["token0"]["decimals"])
+        #     decimals1 = int(position["token1"]["decimals"])
+        #
+        #     # Compute and print the current price
+        #     current_price = tick_to_price(current_tick)
+        #     adjusted_current_price = current_price / (10 ** (decimals1 - decimals0))
+        #
+        #     sa = tick_to_price(tick_lower / 2)
+        #     sb = tick_to_price(tick_upper / 2)
+        #
+        #     if tick_upper <= current_tick:
+        #         # Only token1 locked
+        #         amount0 = 0
+        #         amount1 = liquidity * (sb - sa)
+        #     elif tick_lower < current_tick < tick_upper:
+        #         # Both tokens present
+        #         amount0 = liquidity * (sb - current_sqrt_price) / (current_sqrt_price * sb)
+        #         amount1 = liquidity * (current_sqrt_price - sa)
+        #     else:
+        #         # Only token0 locked
+        #         amount0 = liquidity * (sb - sa) / (sa * sb)
+        #         amount1 = 0
+        #
+        #     adjusted_amount0 = amount0 # / (10 ** decimals0)
+        #     adjusted_amount1 = amount1 # / (10 ** decimals1)
+        #
+        #     sushi_lp.append({
+        #         "id": position["id"],
+        #         "owner": position["owner"],
+        #         "tokens": adjusted_amount1
+        #     })
 
         i = 0
         for tipper in tippers:
