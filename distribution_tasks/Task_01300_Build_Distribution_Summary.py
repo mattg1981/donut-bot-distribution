@@ -131,7 +131,7 @@ class BuildSummaryDistributionTask(DistributionTask):
                 'organizer': round(Decimal(organizer), 4),
                 'pay2post': pay2post,
                 'eligible': d['eligible'],
-                'eligiblity_reason': d['eligiblity_reason'],
+                'eligibility_reason': d['eligiblity_reason'],
                 'address': user['address']
             })
 
