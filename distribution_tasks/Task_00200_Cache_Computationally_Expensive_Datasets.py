@@ -285,7 +285,8 @@ class BuildCacheDistributionTask(DistributionTask):
                         address).call() * mainnet_multiplier
                     staked_gno_balance = staking_gno_contract.functions.balanceOf(address).call() * gno_multiplier
 
-                    sushi_lp_donuts = sum([int(s["tokens"]) for s in sushi_lp if s["owner"].lower() == address.lower()])
+                    # sushi_lp_donuts = sum([int(s["tokens"]) for s in sushi_lp if s["owner"].lower() == address.lower()])
+                    sushi_lp_donuts = sum([int(l['donut_in_lp']) for l in liquidity if l['owner'].lower() == address.lower()])
 
                     donut_balance = (arb1_donut_balance +
                                      eth_donut_balance +
