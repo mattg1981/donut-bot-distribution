@@ -66,8 +66,8 @@ class CalculateTipsBonusDistributionTask(DistributionTask):
         users_weight = pd.DataFrame.from_records(users)
 
         tips_with_weight = pd.merge(tips, users_weight, how="inner", left_on="from_user", right_on="username")
-        tips_with_weight = tips_with_weight[["from_user", "to_user", "amount", "weight"]].rename(
-            columns={"weight": "sender_weight"}).astype({"sender_weight": "int32"})
+        tips_with_weight = tips_with_weight[["from_user", "to_user", "amount", "weight_y"]].rename(
+            columns={"weight_y": "sender_weight"}).astype({"sender_weight": "int32"})
 
         # Adding the weight of the receiver also removes tips to users that are not registered
         tips_with_weight = pd.merge(tips_with_weight, users_weight, how="inner", left_on="to_user", right_on="username")
