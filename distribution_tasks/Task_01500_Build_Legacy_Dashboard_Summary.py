@@ -34,9 +34,9 @@ class BuildLegacySummaryDistributionTask(DistributionTask):
                     'donut': float(d['points']),
                     'data': {
                         'removed': d['eligible'] == 'False',
-                        'removalReason': d['eligiblity_reason'],
+                        'removalReason': d['eligibility_reason'],
                         'fromKarma': float(d['base']),
-                        'fromTipsGiven': float(d['donut_upvoter']),
+                        'fromTipsGiven': 0,
                         'fromTipsRecd': float(d['quad_rank']),
                         'voterBonus': float(d['voting']),
                         'pay2PostFee': abs(float(d['pay2post']))
