@@ -37,14 +37,16 @@ class DistributionTask:
         file_location = os.path.join(self.working_directory,
                                      f"{filename}.{str(version).zfill(3)}.{self._logger_extra}.csv")
 
+        # wrap the dict in a list so that its a uniform structure for the following logic
+        if isinstance(obj, dict):
+            tmp = [obj]
+            obj = tmp
+
         if isinstance(obj, list) and not isinstance(obj[0], dict):
             # attempt to turn the obj into a dict (should work with classes but will likely not work with all
             # objects being passed in and will need to be tweaked to handle those.  The only 2 things I pass in
             # currently are dicts and objects, so it works for our needs now
-            try:
-                obj = [vars(o) for o in obj]
-            except Exception:
-                return None
+            obj = [vars(o) for o in obj]
 
         with open(file_location, 'w', newline='') as output_file:
             writer = csv.DictWriter(output_file, obj[0].keys(), extrasaction='ignore')
