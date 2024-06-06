@@ -7,9 +7,9 @@ class UpdatedUsersWeightDistributionTask(DistributionTask):
     def __init__(self, config, logger_name):
         DistributionTask.__init__(self, config, logger_name)
 
-        # be sure to change the priority - this value determines
-        # the order the task will be executed (smaller values have higher priority)
-        self.priority = 400
+        # this is no longer needed since the weights are updated daily and can be reliably pulled
+        # from the users.json file
+        self.priority = -400
 
     def process(self, pipeline_config):
         super().process(pipeline_config)
