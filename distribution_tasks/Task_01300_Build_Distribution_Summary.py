@@ -16,7 +16,7 @@ class BuildSummaryDistributionTask(DistributionTask):
         distribution_data = super().get_current_document_version(pipeline_config['distribution'])
         offchain_data = super().get_current_document_version(pipeline_config['offchain_data'])
         contrib_data = super().get_current_document_version('contrib')
-        voter_data = super().get_current_document_version(pipeline_config['voter'])
+        # voter_data = super().get_current_document_version(pipeline_config['voter'])
         tip_bonus_data = super().get_current_document_version(pipeline_config['tipping_bonus'])
         mod_rewards = super().get_current_document_version(pipeline_config['mod_rewards'])
         organizer_rewards = super().get_current_document_version(pipeline_config['organizers'])
@@ -34,24 +34,26 @@ class BuildSummaryDistributionTask(DistributionTask):
             contrib_record = next((c for c in contrib_data if c['username'].lower() == d['username'].lower()), None)
             user = next((u for u in user_data if u['username'].lower() == d['username'].lower()), None)
 
-            voter = None
-            if voter_data:
-                voter = next((v for v in voter_data if v['username'].lower() == d['username'].lower()), None)
+            #voter = None
+            #if voter_data:
+                # voter = next((v for v in voter_data if v['username'].lower() == d['username'].lower()), None)
 
+            # accounts for points + voter bonus
             points = Decimal(d['points'])
+            voting = Decimal(d['points_after_bonus']) - Decimal(d['points'])
 
-            if voter:
-                points += Decimal(voter['points'])
-                voting = voter['points']
-            else:
-                voting = 0
+            points += voting
+
+            # if voter:
+            #     points += Decimal(voter['points'])
+            #     voting = voter['points']
+            # else:
+            #     voting = 0
 
             if tip_bonus:
                 points += Decimal(tip_bonus['points'])
-                donut_upvoter = tip_bonus['donut_upvoter']
                 quad_rank = tip_bonus['quad_rank']
             else:
-                donut_upvoter = 0
                 quad_rank = 0
 
             if base_record:
@@ -60,7 +62,7 @@ class BuildSummaryDistributionTask(DistributionTask):
                 base = 0
 
             if offchain:
-                if points < 0:
+                if points <= 0:
                     points = Decimal(offchain['tips'])
                 else:
                     points += Decimal(offchain['points'])
@@ -83,7 +85,7 @@ class BuildSummaryDistributionTask(DistributionTask):
                 organizer = 0
 
             contrib = (contrib_record and contrib_record['contrib']) or 0
-            pay2post = d['pay2post']
+            pay2post = float(d['pay2post_after_bonus']) or 0
 
             # if not eligible, see if they have any funded amount that needs to
             # be returned
@@ -110,26 +112,29 @@ class BuildSummaryDistributionTask(DistributionTask):
                 # -- mattg1981 -- ineligible users can now send and receive tips
                 # but will not receive their base score or any bonuses as well as 0 contrib
 
-                # return their funded amount
+                # return their funded amount + tips
                 if offchain:
                     points = Decimal(offchain['points'])
                 else:
                     points = 0
                 contrib = 0
+            else:
+                # else deduct pay2post
+                points -= Decimal(pay2post)
 
             distribution_summary.append({
                 'username': d['username'],
                 'points': max(round(points, 4), Decimal(0)),
-                'contrib': int(float(contrib)),
-                'base': base,
+                'contrib': round(float(contrib), 4),
+                'base': round(float(base), 4),
                 'offchain_tips': round(Decimal(offchain_tips), 4),
                 'funded': round(Decimal(funded), 4),
-                'voting': round(Decimal(voting), 4),
-                'donut_upvoter': donut_upvoter,
+                'voting': round(voting, 4),
+                # 'donut_upvoter': donut_upvoter,
                 'quad_rank': quad_rank,
                 'moderator': round(Decimal(moderator), 4),
                 'organizer': round(Decimal(organizer), 4),
-                'pay2post': pay2post,
+                'pay2post': pay2post * -1,
                 'eligible': d['eligible'],
                 'eligibility_reason': d['eligiblity_reason'],
                 'address': user['address']
