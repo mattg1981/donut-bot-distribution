@@ -412,7 +412,10 @@ class BuildCacheDistributionTask(DistributionTask):
         super().process(pipeline_config)
         self.logger.info(f"begin task [step: {super().current_step}] [file: {os.path.basename(__file__)}]")
 
-        self.build_and_cache_user_weights()
+        # gov weight is updated daily now so we no longer need to calculate their weight, we can use
+        # the users.json file for updated weights
+        # self.build_and_cache_user_weights()
+
         self.build_and_cache_ineligible_users()
 
         if pipeline_config['build-cache']:
@@ -420,6 +423,6 @@ class BuildCacheDistributionTask(DistributionTask):
             exit(0)
 
         return super().update_pipeline(pipeline_config, {
-            "user_weights": "user_weights",
+           # "user_weights": "user_weights",
             "ineligible_users": "ineligible_users"
         })
