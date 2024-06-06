@@ -1,6 +1,8 @@
 import csv
 import json
 import os
+import urllib
+
 import requests
 
 from urllib import request
@@ -80,15 +82,21 @@ class PullBaseFilesDistributionTask(DistributionTask):
             onchain_tips_location = super().save_document_version(onchain_tips, onchain_tips_filename)
             super().cache_file(onchain_tips_location)
         else:
-            self.logger.info("  grabbed onchain tips from cache")
+            self.logger.info("  >> grabbed onchain tips from cache")
 
-        # get offchain tips for this round
+        # get offchain tips for this round - try to grab from cache first
         self.logger.info("  grabbing offchain tips file...")
         offchain_tips_filename = "offchain_tips"
-        offchain_tips = json.load(
-            request.urlopen(
-                f"https://raw.githubusercontent.com/mattg1981/donut-bot-output/main/offchain_tips/tips_round_{super().distribution_round}.json"))
-        super().save_document_version(offchain_tips, offchain_tips_filename)
+        offchain_tips = super().get_current_document_version(offchain_tips_filename)
+
+        if not offchain_tips:
+            offchain_tips = json.load(
+                request.urlopen(
+                    f"https://raw.githubusercontent.com/mattg1981/donut-bot-output/main/offchain_tips/tips_round_{super().distribution_round}.json"))
+            offchain_tips_location = super().save_document_version(offchain_tips, offchain_tips_filename)
+            super().cache_file(offchain_tips_location)
+        else:
+            self.logger.info("  >> grabbed offchain tips from cache")
 
         # temp bans
         self.logger.info("  grabbing temp bans file...")
@@ -107,6 +115,36 @@ class PullBaseFilesDistributionTask(DistributionTask):
                                                 f"/bans/perm_bans.json"))
         super().save_document_version(perm_banned, 'perm_bans')
 
+        # arb 1 liquidity
+        self.logger.info("  grabbing liquidity file...")
+        liquidity = json.load(request.urlopen(f"https://raw.githubusercontent.com/mattg1981/donut-bot-output/main"
+                                                f"/liquidity/liquidity_leaders.json"))
+        super().save_document_version(liquidity, 'liquidity')
+
+        # base raw files
+        self.logger.info("  grabbing raw distribution zip file...")
+        if not super().get_current_document_version("raw_zip"):
+            self.logger.info("  raw zip file not present in cache, pulling down from web...")
+
+            base_raw_url = f'https://www.mydonuts.online/home/mydonuts/static/rounds/round_{super().distribution_round}.zip'
+            url_result = urllib.request.urlretrieve(base_raw_url)
+            super().cache_file(super().save_document_version([{'zip_path': url_result[0]}], "raw_zip"))
+        else:
+            self.logger.info("  cached version of the raw zipped file have been detected and being used")
+            self.logger.info("  NOTE: if there was a previous issue with this file causing a re-run to be required, "
+                             "ensure you delete this file form the cache directory")
+
+        # potd results
+        self.logger.info("  grabbing post_of_the_week file...")
+        try:
+            potd_winners = json.load(request.urlopen(f"https://raw.githubusercontent.com/mattg1981/donut-bot-output/main"
+                                                    f"/posts/potd_round_{super().distribution_round}.json"))
+        except:
+            self.logger.info("  no post_of_the_week file found...")
+            potd_winners = []
+
+        super().save_document_version(potd_winners, 'post_of_the_week')
+
         # funded accounts
         self.logger.info("  grabbing funded accounts file...")
         try:
@@ -115,6 +153,7 @@ class PullBaseFilesDistributionTask(DistributionTask):
         except:
             self.logger.info("  no funded accounts found...")
             funded_accounts = {}
+
         super().save_document_version(funded_accounts, "funded_accounts")
 
         return super().update_pipeline(pipeline_config, {
@@ -126,5 +165,8 @@ class PullBaseFilesDistributionTask(DistributionTask):
             'offchain_tips': offchain_tips_filename,
             'temp_bans': 'temp_bans',
             'perm_bans': 'perm_bans',
-            'funded_accounts': 'funded_accounts'
+            'funded_accounts': 'funded_accounts',
+            'post_of_the_week': 'post_of_the_week',
+            'liqudity': 'liquidity',
+            'raw_zip': 'raw_zip'
         })
