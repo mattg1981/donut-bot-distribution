@@ -20,14 +20,20 @@ class CreateDirectoryStructureDistributionTask(DistributionTask):
         base_dir = path.dirname(path.abspath(__file__))
         working_dir = path.join(base_dir, f"../out/round_{self.distribution_round}")
         cache_dir = path.join(base_dir, f"../cache/round_{self.distribution_round}")
+        temp_dir = path.join(base_dir, f"../temp/")
 
         os.makedirs(path.normpath(working_dir), exist_ok=True)
         os.makedirs(path.normpath(cache_dir), exist_ok=True)
 
-        self.logger.info("  clear out workding directory...")
-
         # clear out the working directory (in case files remain from a previous run)
+        self.logger.info("  clear out working directory...")
         files = glob.glob(f'{working_dir}/*.csv')
+        for f in files:
+            os.remove(f)
+
+        # clear out the temp directory (in case files remain from a previous run)
+        self.logger.info("  clear out temp directory...")
+        files = glob.glob(f'{temp_dir}/*.*')
         for f in files:
             os.remove(f)
 
@@ -37,9 +43,29 @@ class CreateDirectoryStructureDistributionTask(DistributionTask):
             os.makedirs(location, exist_ok=True)
             os.makedirs(location, exist_ok=True)
 
-        return super().update_pipeline(pipeline_config, {
+        # update the pipeline config to add working_dir, this is needed to save
+        # the distribution_breakdown in this file
+        super().update_pipeline(pipeline_config, {
             'working_dir': os.path.normpath(working_dir),
+        })
+
+        # make the allocation of donuts available downstream
+        distribution_allocation = {
+            'posts': 510_000,
+            'comments': 340_000,
+            'treasury': 255_000,
+            'tips_received': 77_000,
+            'lp_mainnet': 400_000,
+            'lp_arb1': 100_000,
+            'moderation': 85_000,
+            'distribution_organizer': 25_000
+        }
+
+        super().save_document_version(distribution_allocation, 'distribution_allocation')
+
+        return super().update_pipeline(pipeline_config, {
             'cache_dir': os.path.normpath(cache_dir),
+            'temp_dir': os.path.normpath(temp_dir),
             'log_dir': path.join(working_dir, "logs"),
             'tx_builder_dir': path.join(working_dir, "tx_builder"),
             'legacy_dir': path.join(working_dir, "legacy"),
