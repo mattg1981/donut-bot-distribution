@@ -18,12 +18,6 @@ class AllowSpecialMembersIfApplicableDistributionTask(DistributionTask):
         super().process(pipeline_config)
         self.logger.info(f"begin task [step: {super().current_step}] [file: {os.path.basename(__file__)}]")
 
-        # creating a read-only reddit instance
-        # reddit = praw.Reddit(client_id=os.getenv('INELIGIBLE_CLIENT_ID'),
-        #                      client_secret=os.getenv('INELIGIBLE_CLIENT_SECRET'),
-        #                      user_agent="ethtrader comment2vote builder (by u/mattg1981)")
-        # reddit.read_only = True
-
         onchain_tips = super().get_current_document_version(pipeline_config['onchain_tips_filename'])
         tips = super().get_current_document_version(pipeline_config['offchain_tips'])
         distribution_round = super().get_current_document_version("distribution_round")[0]
@@ -35,7 +29,8 @@ class AllowSpecialMembersIfApplicableDistributionTask(DistributionTask):
 
         self.logger.info(f"unzip raw zip file to temp directory...")
         raw_file = super().get_current_document_version("raw_zip")[0]
-        unzip_path = os.path.join(pipeline_config['temp_dir'])
+        unzip_path = str(os.path.join(pipeline_config['temp_dir']))
+
         with zipfile.ZipFile(raw_file['zip_path'], 'r') as zip_ref:
             zip_ref.extractall(unzip_path)
 
@@ -258,7 +253,6 @@ class AllowSpecialMembersIfApplicableDistributionTask(DistributionTask):
         base_csv = sorted(base_csv, key=lambda x: x['points'], reverse=True)
 
         # make the file available downstream to other pipeline processes
-        # super().save_document_version(base_csv, 'c2v')
         super().save_document_version(base_csv, 'distribution')
 
         return super().update_pipeline(pipeline_config, {
