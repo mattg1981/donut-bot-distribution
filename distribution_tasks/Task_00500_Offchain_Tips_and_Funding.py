@@ -135,8 +135,12 @@ class DistributeOffchainTipsDistributionTask(DistributionTask):
                 distribution_to = {
                     "username": tip["to_user"],
                     "comments": 0,
-                    "comment score": 0,
-                    "post score": 0,
+                    "comment_upvotes": 0,
+                    "comment_score": 0,
+                    "posts": 0,
+                    "post_upvotes": 0,
+                    "post_score": 0,
+                    "total_posts": 0,
                     "points": 0,
                     "pay2post": '0.0',
                     "blockchain_address": 0

@@ -18,34 +18,39 @@ class PullBaseFilesDistributionTask(DistributionTask):
         super().process(pipeline_config)
         self.logger.info(f"begin task [step: {super().current_step}] [file: {os.path.basename(__file__)}]")
 
-        distribution_filename = "distribution"
+        # distribution_filename = "distribution"
 
-        self.logger.info("  attempt to pull distribution file from the cache...")
+        # self.logger.info("  attempt to pull distribution file from the cache...")
+        #
+        # # test for cached file
+        # base_csv = super().get_current_document_version(distribution_filename)
+        #
+        # if not base_csv:
+        #     self.logger.info("  file not present in cache, pulling down from web...")
+        #
+        #     # get the csv file once it has been published
+        #     url = self.config["base_csv_location"]
+        #     url = url.replace("#ROUND#", str(super().distribution_round))
+        #
+        #     self.logger.info(f"  retrieving final csv file from base location... url [{url}]")
+        #
+        #     request_result = requests.get(url).text
+        #     reader = csv.DictReader(request_result.splitlines(), delimiter=',')
+        #     base_csv = list(reader)
+        # else:
+        #     self.logger.info("  cached version of distribution file detected and being used")
+        #     self.logger.info("  NOTE: if there was a previous issue with this file causing a re-run to be required, "
+        #                      "ensure you delete this file form the cache directory")
+        #
+        # base_csv_location = super().save_document_version(base_csv, distribution_filename)
+        # super().cache_file(base_csv_location)
 
-        # test for cached file
-        base_csv = super().get_current_document_version(distribution_filename)
+        # get distribution allocation file
+        self.logger.info("  grabbing distribution allocation .json file...")
+        distribution_allocation = json.load(request.urlopen(f"https://raw.githubusercontent.com/mattg1981/donut-bot-output/main/allocation/distribution_allocation.json"))
+        super().save_document_version(distribution_allocation, 'distribution_allocation')
 
-        if not base_csv:
-            self.logger.info("  file not present in cache, pulling down from web...")
-
-            # get the csv file once it has been published
-            url = self.config["base_csv_location"]
-            url = url.replace("#ROUND#", str(super().distribution_round))
-
-            self.logger.info(f"  retrieving final csv file from base location... url [{url}]")
-
-            request_result = requests.get(url).text
-            reader = csv.DictReader(request_result.splitlines(), delimiter=',')
-            base_csv = list(reader)
-        else:
-            self.logger.info("  cached version of distribution file detected and being used")
-            self.logger.info("  NOTE: if there was a previous issue with this file causing a re-run to be required, "
-                             "ensure you delete this file form the cache directory")
-
-        base_csv_location = super().save_document_version(base_csv, distribution_filename)
-        super().cache_file(base_csv_location)
-
-        # get users file that will be used for any user <-> address lookups
+        # get users file that will be used for any user <-> address lookups and gov/contrib lookups
         self.logger.info("  grabbing users.json file...")
         users_filename = "users"
         users = json.load(request.urlopen(f"https://ethtrader.github.io/donut.distribution/users.json"))
@@ -134,7 +139,7 @@ class PullBaseFilesDistributionTask(DistributionTask):
             self.logger.info("  NOTE: if there was a previous issue with this file causing a re-run to be required, "
                              "ensure you delete this file form the cache directory")
 
-        # potd results
+        # post of the week results
         self.logger.info("  grabbing post_of_the_week file...")
         try:
             potd_winners = json.load(request.urlopen(f"https://raw.githubusercontent.com/mattg1981/donut-bot-output/main"
@@ -157,7 +162,6 @@ class PullBaseFilesDistributionTask(DistributionTask):
         super().save_document_version(funded_accounts, "funded_accounts")
 
         return super().update_pipeline(pipeline_config, {
-            'distribution': distribution_filename,
             'users': users_filename,
             'memberships': memberships_filename,
             'distribution_round': distribution_round_filename,

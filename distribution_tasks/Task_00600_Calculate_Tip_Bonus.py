@@ -8,12 +8,12 @@ from distribution_tasks.distribution_task import DistributionTask
 
 class CalculateTipsBonusDistributionTask(DistributionTask):
     DONUTS_FROM_TIPPING_OTHERS = 0
-    DONUTS_FROM_RECEIVING_TIPS = 68000
+    DONUTS_FROM_RECEIVING_TIPS = 0
     GOV_WEIGHT_THRESHOLD = 500
 
     def __init__(self, config, logger_name):
         DistributionTask.__init__(self, config, logger_name)
-        self.priority = 600
+        self.priority = -600
 
     def get_onchain_post_tips(self):
         """ Get onchain tips from the csv file and filter out tips outside the range or comment tips """

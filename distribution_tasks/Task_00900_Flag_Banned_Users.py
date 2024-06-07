@@ -8,7 +8,7 @@ from distribution_tasks.distribution_task import DistributionTask
 class FlagBannedUsersDistributionTask(DistributionTask):
     def __init__(self, config, logger_name):
         DistributionTask.__init__(self, config, logger_name)
-        self.priority = 900
+        self.priority = -900
 
     def process(self, pipeline_config):
         super().process(pipeline_config)
@@ -26,12 +26,12 @@ class FlagBannedUsersDistributionTask(DistributionTask):
         for d in distribution:
             if d['username'] in banned_users:
                 d['eligible'] = False
-                d['eligiblity_reason'] = 'ban'
+                d['eligibility_reason'] = 'ban'
             else:
                 d['eligible'] = True
-                d['eligiblity_reason'] = ""
+                d['eligibility_reason'] = ""
 
-        self.logger.info(f"  distribution size after bans: [{len([x for x in distribution if x['eligiblity_reason'] != 'ban'])}]")
+        self.logger.info(f"  distribution size after bans: [{len([x for x in distribution if x['eligibility_reason'] != 'ban'])}]")
 
         super().save_document_version(distribution, pipeline_config['distribution'])
 

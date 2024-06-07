@@ -16,9 +16,9 @@ class ApplyVotingIncentivesDistributionTask(DistributionTask):
         self.logger.info(f"begin task [step: {super().current_step}] [file: {os.path.basename(__file__)}]")
 
         distribution_data = super().get_current_document_version(pipeline_config['distribution'])
-        tip_bonus_data = super().get_current_document_version(pipeline_config['tipping_bonus'])
-        mod_rewards = super().get_current_document_version(pipeline_config['mod_rewards'])
-        organizer_rewards = super().get_current_document_version(pipeline_config['organizers'])
+        # tip_bonus_data = super().get_current_document_version(pipeline_config['tipping_bonus'])
+        # mod_rewards = super().get_current_document_version(pipeline_config['mod_rewards'])
+        # organizer_rewards = super().get_current_document_version(pipeline_config['organizers'])
         distribution_allocation = super().get_current_document_version("distribution_allocation")[0]
 
         distribution_round = super().get_current_document_version(pipeline_config['distribution_round'])
@@ -114,18 +114,22 @@ class ApplyVotingIncentivesDistributionTask(DistributionTask):
                 }
             ])
 
-        super().save_document_version(voters, 'voting')
+        # append additional information for debugging
+        for v in voters:
+            v['username'] = next(u['username'] for u in users if u['address'] == v['address'])
+
+        super().save_document_version(voters, 'voter')
 
         for dist in distribution_data:
             voter = next((v for v in voters if dist["blockchain_address"].lower() == v["address"].lower()), None)
-            user = next((u for u in users if dist["username"].lower() == u["username"].lower()), None)
-            tip_bonus = next((t for t in tip_bonus_data if t['username'].lower() == user['username'].lower()), None)
-            mod = next((t for t in mod_rewards if t['username'].lower() == user['username'].lower()), None)
-            org = next((o for o in organizer_rewards if o['username'].lower() == user['username'].lower()), None)
+            # user = next((u for u in users if dist["username"].lower() == u["username"].lower()), None)
+            # tip_bonus = next((t for t in tip_bonus_data if t['username'].lower() == user['username'].lower()), None)
+            # mod = next((t for t in mod_rewards if t['username'].lower() == user['username'].lower()), None)
+            # org = next((o for o in organizer_rewards if o['username'].lower() == user['username'].lower()), None)
 
-            tip_bonus = Decimal((tip_bonus and tip_bonus['points']) or 0)
-            mod = Decimal((mod and mod['points']) or 0)
-            org = Decimal((org and org['points']) or 0)
+            # tip_bonus = Decimal((tip_bonus and tip_bonus['points']) or 0)
+            # mod = Decimal((mod and mod['points']) or 0)
+            # org = Decimal((org and org['points']) or 0)
 
             # # remove ineligible users
             # if not dist['eligible'] == 'True':
@@ -148,9 +152,9 @@ class ApplyVotingIncentivesDistributionTask(DistributionTask):
                 dist['comment_upvotes_with_bonus'] = Decimal((dist and dist['comment_upvotes']) or 0)
                 dist['voter_bonus_posts'] = 0
                 dist['post_upvotes_with_bonus'] = Decimal((dist and dist['post_upvotes']) or 0)
-                dist['mod_bonus'] = mod
-                dist['org_bonus'] = org
-                dist['tip_bonus'] = tip_bonus
+                # dist['mod_bonus'] = mod
+                # dist['org_bonus'] = org
+                # dist['tip_bonus'] = tip_bonus
                 continue
 
 
@@ -171,9 +175,9 @@ class ApplyVotingIncentivesDistributionTask(DistributionTask):
             dist['comment_upvotes_with_bonus'] = comment_upvotes + voter_bonus_comments
             dist['voter_bonus_posts'] = voter_bonus_posts
             dist['post_upvotes_with_bonus'] = post_upvotes + voter_bonus_posts
-            dist['mod_bonus'] = mod * bonus_multiplier
-            dist['org_bonus'] = org * bonus_multiplier
-            dist['tip_bonus'] = tip_bonus * bonus_multiplier
+            # dist['mod_bonus'] = mod * bonus_multiplier
+            # dist['org_bonus'] = org * bonus_multiplier
+            # dist['tip_bonus'] = tip_bonus * bonus_multiplier
 
         # calculate new comment and post ratio
 
@@ -204,11 +208,11 @@ class ApplyVotingIncentivesDistributionTask(DistributionTask):
         for dist in distribution_data:
             comment_score_after_bonus = dist['comment_upvotes_with_bonus'] * new_comment_ratio
             post_score_after_bonus = dist['post_upvotes_with_bonus'] * new_post_ratio
-            mod_bonus = dist['mod_bonus']
-            org_bonus = dist['org_bonus']
-            tip_bonus = dist['tip_bonus']
+            # mod_bonus = dist['mod_bonus']
+            # org_bonus = dist['org_bonus']
+            # tip_bonus = dist['tip_bonus']
 
-            p2p_ratio = new_pay2post_ratio * 2.5
+            p2p_ratio = min(new_pay2post_ratio * 2.5, 250)
             p2p_penalty = round(p2p_ratio * float(dist['total_posts']), 5)
 
             dist['comment_score_after_bonus'] = comment_score_after_bonus
@@ -257,4 +261,8 @@ class ApplyVotingIncentivesDistributionTask(DistributionTask):
 
         super().save_document_version(distribution_data, pipeline_config['distribution'])
 
-        return super().update_pipeline(pipeline_config)
+        return super().update_pipeline(pipeline_config,  {
+            "new_comment_ratio": new_comment_ratio,
+            "new_post_ratio": new_post_ratio,
+            "new_p2p_ratio": new_pay2post_ratio,
+        })

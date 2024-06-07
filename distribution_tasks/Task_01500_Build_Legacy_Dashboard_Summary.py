@@ -33,11 +33,11 @@ class BuildLegacySummaryDistributionTask(DistributionTask):
                     'address': d['address'],
                     'donut': float(d['points']),
                     'data': {
-                        'removed': d['eligible'] == 'False',
+                        'removed': d['eligibility_reason'] != '',
                         'removalReason': d['eligibility_reason'],
-                        'fromKarma': float(d['base']),
+                        'fromKarma': float(d['comment_score']) + float(d['post_score']),
                         'fromTipsGiven': 0,
-                        'fromTipsRecd': float(d['quad_rank']),
+                        'fromTipsRecd': 0,
                         'voterBonus': float(d['voting']),
                         'pay2PostFee': abs(float(d['pay2post']))
                     }

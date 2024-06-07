@@ -345,6 +345,8 @@ class BuildCacheDistributionTask(DistributionTask):
         distribution_round = super().get_current_document_version('distribution_round')
 
         distribution_round_end_date = datetime.strptime(distribution_round[0]['to_date'], '%Y-%m-%d %H:%M:%S.%f')
+
+        # cutoff_date = distribution_round_end_date - timedelta(days=90)
         cutoff_date = distribution_round_end_date - timedelta(days=60)
 
         # creating an authorized reddit instance
@@ -373,7 +375,9 @@ class BuildCacheDistributionTask(DistributionTask):
                         })
                         continue
 
+                # if redditor.total_karma < 500:
                 if redditor.total_karma < 100:
+                    # self.logger.info(f"    adding user [{d['username']}] to ineligible list: karma < 500")
                     self.logger.info(f"    adding user [{d['username']}] to ineligible list: karma < 100")
                     ineligible_users.append({
                         'user': d['username'],
@@ -382,6 +386,7 @@ class BuildCacheDistributionTask(DistributionTask):
                     continue
 
                 if datetime.fromtimestamp(redditor.created) > cutoff_date:
+                    # self.logger.info(f"    adding user [{d['username']}] to ineligible list: created < 90 days")
                     self.logger.info(f"    adding user [{d['username']}] to ineligible list: created < 60 days")
                     ineligible_users.append({
                         'user': d['username'],
@@ -416,7 +421,9 @@ class BuildCacheDistributionTask(DistributionTask):
         # the users.json file for updated weights
         # self.build_and_cache_user_weights()
 
-        self.build_and_cache_ineligible_users()
+        # self.build_and_cache_ineligible_users()
+
+        self.build_user_eligibility_matrix()
 
         if pipeline_config['build-cache']:
             self.logger.info("BUILD-CACHE directive ... aborting run here...")
@@ -426,3 +433,82 @@ class BuildCacheDistributionTask(DistributionTask):
            # "user_weights": "user_weights",
             "ineligible_users": "ineligible_users"
         })
+
+    def build_user_eligibility_matrix(self):
+        self.logger.info("  build eligibility matrix...")
+
+        if super().get_current_document_version("eligibility_matrix"):
+            self.logger.info("    ... file exists in cache already!")
+            return
+
+        distribution = super().get_current_document_version('distribution')
+        distribution_round = super().get_current_document_version('distribution_round')
+
+        distribution_round_end_date = datetime.strptime(distribution_round[0]['to_date'], '%Y-%m-%d %H:%M:%S.%f')
+
+        cutoff_date_posts = distribution_round_end_date - timedelta(days=90)
+        cutoff_date_comments = distribution_round_end_date - timedelta(days=60)
+
+        # creating an authorized reddit instance
+        reddit = praw.Reddit(client_id=os.getenv('INELIGIBLE_CLIENT_ID'),
+                             client_secret=os.getenv('INELIGIBLE_CLIENT_SECRET'),
+                             user_agent="ethtrader ineligible-users (by u/mattg1981)")
+
+        reddit.read_only = True
+
+        eligibility_matrix = []
+
+        idx = 0
+        for d in distribution:
+            idx += 1
+            self.logger.info(
+                f"  checking eligiblity requirements for {d['username']} [{idx} of {len(distribution)}]")
+            redditor = reddit.redditor(d['username'])
+
+            record = {
+                'user': d['username'],
+                'comments': 0,
+                'posts': 0,
+                'reason': None
+            }
+
+            try:
+                if hasattr(redditor, 'is_suspended'):
+                    if redditor.is_suspended:
+                        self.logger.info(f"    adding user [{d['username']}] to ineligible list: user is suspended")
+                        record['reason'] = 'suspended'
+                        eligibility_matrix.append(record)
+                        continue
+
+                account_created = datetime.fromtimestamp(redditor.created)
+
+                if redditor.total_karma > 1_000 and account_created < cutoff_date_posts:
+                    self.logger.info(f"    [{d['username']}] eligible for comments and posts")
+                    record["comments"] = 1
+                    record["posts"] = 1
+                    eligibility_matrix.append(record)
+                    continue
+
+                if redditor.total_karma > 500 and account_created < cutoff_date_comments:
+                    self.logger.info(f"    [{d['username']}] eligible for comments only")
+                    record['comments'] = '1'
+                    record['reason'] = 'comments only'
+                    eligibility_matrix.append(record)
+                    continue
+
+                record['reason'] = "karma and/or age"
+                eligibility_matrix.append(record)
+
+            except prawcore.exceptions.NotFound as e:
+                self.logger.info(
+                    f"    removing user [{d['username']}] from distribution: user is deleted (not found)")
+                self.logger.error(e)
+
+                record['reason'] = 'deleted or shadow ban'
+                eligibility_matrix.append(record)
+                continue
+
+            except Exception as e:
+                self.logger.error(e)
+
+        super().cache_file(super().save_document_version(eligibility_matrix, "eligibility_matrix"))
