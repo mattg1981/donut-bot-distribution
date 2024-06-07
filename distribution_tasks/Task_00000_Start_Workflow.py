@@ -41,29 +41,9 @@ class CreateDirectoryStructureDistributionTask(DistributionTask):
 
         for location in locations:
             os.makedirs(location, exist_ok=True)
-            os.makedirs(location, exist_ok=True)
-
-        # update the pipeline config to add working_dir, this is needed to save
-        # the distribution_breakdown in this file
-        super().update_pipeline(pipeline_config, {
-            'working_dir': os.path.normpath(working_dir),
-        })
-
-        # make the allocation of donuts available downstream
-        distribution_allocation = {
-            'posts': 510_000,
-            'comments': 340_000,
-            'treasury': 255_000,
-            'tips_received': 77_000,
-            'lp_mainnet': 400_000,
-            'lp_arb1': 100_000,
-            'moderation': 85_000,
-            'distribution_organizer': 25_000
-        }
-
-        super().save_document_version(distribution_allocation, 'distribution_allocation')
 
         return super().update_pipeline(pipeline_config, {
+            'working_dir': os.path.normpath(working_dir),
             'cache_dir': os.path.normpath(cache_dir),
             'temp_dir': os.path.normpath(temp_dir),
             'log_dir': path.join(working_dir, "logs"),
