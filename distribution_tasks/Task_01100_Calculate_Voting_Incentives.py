@@ -191,10 +191,11 @@ class ApplyVotingIncentivesDistributionTask(DistributionTask):
         total_post_score_after_bonus = round(sum(dist['post_upvotes_with_bonus'] for dist in distribution_data), 5)
 
         #old_post_ratio = int(distribution_allocation['posts']) / original_post_score
-        new_post_ratio = round(Decimal(int(distribution_allocation['posts']) / total_post_score_after_bonus), 5)
+        new_post_ratio = round(float(int(distribution_allocation['posts']) / total_post_score_after_bonus), 5)
 
         #old_pay2post_ratio = float(int(distribution_allocation['posts']) / original_post_score)
-        new_pay2post_ratio = float(int(distribution_allocation['posts']) / total_post_score_after_bonus)
+        # new_pay2post_ratio = round(float(int(distribution_allocation['posts']) / total_post_score_after_bonus), 5)
+        new_pay2post_ratio = round(min(new_post_ratio * 2.5, 250), 5)
 
         #self.logger.info(f"original comment ratio was: {old_comment_ratio}")
         self.logger.info(f"original comment ratio was: {pipeline_config['comment_ratio']}")
@@ -210,7 +211,7 @@ class ApplyVotingIncentivesDistributionTask(DistributionTask):
 
         for dist in distribution_data:
             comment_score_after_bonus = dist['comment_upvotes_with_bonus'] * new_comment_ratio
-            post_score_after_bonus = dist['post_upvotes_with_bonus'] * new_post_ratio
+            post_score_after_bonus = float(dist['post_upvotes_with_bonus']) * new_post_ratio
             # mod_bonus = dist['mod_bonus']
             # org_bonus = dist['org_bonus']
             # tip_bonus = dist['tip_bonus']
@@ -221,8 +222,8 @@ class ApplyVotingIncentivesDistributionTask(DistributionTask):
             dist['comment_score_after_bonus'] = comment_score_after_bonus
             dist['post_score_after_bonus'] = post_score_after_bonus
             dist['pay2post_after_bonus'] = p2p_penalty
-            dist['points_after_bonus'] = round(comment_score_after_bonus +
-                                               post_score_after_bonus - Decimal(p2p_penalty), 5)
+            dist['points_after_bonus'] = round(float(comment_score_after_bonus) +
+                                               post_score_after_bonus - p2p_penalty, 5)
                                                # mod_bonus +
                                                # org_bonus +
                                                # tip_bonus, 5)
