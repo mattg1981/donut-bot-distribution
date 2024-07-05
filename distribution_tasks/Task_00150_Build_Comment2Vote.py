@@ -212,9 +212,9 @@ class AllowSpecialMembersIfApplicableDistributionTask(DistributionTask):
                 self.logger.error(f"unable to process tip for content_id={tip['content_id']}")
                 continue
 
-        post_ratio = int(distribution_allocation['posts']) / sum([p['weight'] for p in c2v_posts])
-        comment_ratio = int(distribution_allocation['comments']) / sum(c['weight'] for c in c2v_comments)
-        p2p_ratio = min(post_ratio * 2.5, 250)
+        post_ratio = round(int(distribution_allocation['posts']) / sum([p['weight'] for p in c2v_posts]), 5)
+        comment_ratio = round(int(distribution_allocation['comments']) / sum(c['weight'] for c in c2v_comments), 5)
+        p2p_ratio = round(min(post_ratio * 2.5, 250), 5)
 
         self.logger.info(f"  post ratio: {post_ratio:.5f}")
         self.logger.info(f"  comment ratio: {comment_ratio:.5f}")
@@ -256,5 +256,8 @@ class AllowSpecialMembersIfApplicableDistributionTask(DistributionTask):
         super().save_document_version(base_csv, 'distribution')
 
         return super().update_pipeline(pipeline_config, {
-             'distribution': 'distribution'
+            'distribution': 'distribution',
+            'post_ratio': post_ratio,
+            'comment_ratio': comment_ratio,
+            'p2p_ratio': p2p_ratio
         })
