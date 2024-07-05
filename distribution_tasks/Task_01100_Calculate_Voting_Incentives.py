@@ -181,26 +181,29 @@ class ApplyVotingIncentivesDistributionTask(DistributionTask):
 
         # calculate new comment and post ratio
 
-        original_comment_score = sum(float(dist['comment_upvotes'] or 0) for dist in distribution_data)
+        #original_comment_score = sum(float(dist['comment_upvotes'] or 0) for dist in distribution_data)
         total_comment_score_after_bonus = sum(dist['comment_upvotes_with_bonus'] for dist in distribution_data)
 
-        old_comment_ratio = int(distribution_allocation['comments']) / original_comment_score
-        new_comment_ratio = Decimal(int(distribution_allocation['comments']) / total_comment_score_after_bonus)
+        #old_comment_ratio = int(distribution_allocation['comments']) / original_comment_score
+        new_comment_ratio = round(Decimal(int(distribution_allocation['comments']) / total_comment_score_after_bonus), 5)
 
-        original_post_score = sum(float(dist['post_upvotes'] or 0) for dist in distribution_data)
-        total_post_score_after_bonus = sum(dist['post_upvotes_with_bonus'] for dist in distribution_data)
+        #original_post_score = sum(float(dist['post_upvotes'] or 0) for dist in distribution_data)
+        total_post_score_after_bonus = round(sum(dist['post_upvotes_with_bonus'] for dist in distribution_data), 5)
 
-        old_post_ratio = int(distribution_allocation['posts']) / original_post_score
-        new_post_ratio = Decimal(int(distribution_allocation['posts']) / total_post_score_after_bonus)
+        #old_post_ratio = int(distribution_allocation['posts']) / original_post_score
+        new_post_ratio = round(Decimal(int(distribution_allocation['posts']) / total_post_score_after_bonus), 5)
 
-        old_pay2post_ratio = float(int(distribution_allocation['posts']) / original_post_score)
+        #old_pay2post_ratio = float(int(distribution_allocation['posts']) / original_post_score)
         new_pay2post_ratio = float(int(distribution_allocation['posts']) / total_post_score_after_bonus)
 
-        self.logger.info(f"original comment ratio was: {old_comment_ratio}")
+        #self.logger.info(f"original comment ratio was: {old_comment_ratio}")
+        self.logger.info(f"original comment ratio was: {pipeline_config['comment_ratio']}")
         self.logger.info(f"comment ratio (after voting bonus) is now: {new_comment_ratio}")
-        self.logger.info(f"original post ratio was: {old_post_ratio}")
+        #self.logger.info(f"original post ratio was: {old_post_ratio}")
+        self.logger.info(f"original post ratio was: {pipeline_config['post_ratio']}")
         self.logger.info(f"post ratio (after voting bonus) is now: {new_post_ratio}")
-        self.logger.info(f"original pay2post: {old_pay2post_ratio}")
+        # self.logger.info(f"original pay2post: {old_pay2post_ratio}")
+        self.logger.info(f"original pay2post: {pipeline_config['p2p_ratio']}")
         self.logger.info(f"pay2post ratio (after voting bonus) is now: {new_pay2post_ratio}")
 
         # apply the new ratio to each user
