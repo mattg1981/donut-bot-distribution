@@ -42,7 +42,8 @@ class BuildSummaryDistributionTask(DistributionTask):
 
             points = comment_score + post_score
 
-            voting = max(float(d['points_after_bonus']), 0) - max(float(d['points']), 0)
+            # voting = max(float(d['points_after_bonus']), 0) - max(float(d['points']), 0)
+            voting = float(d['voter_bonus_comments']) + float(d['voter_bonus_posts'])
             points += voting
 
             if mod:
