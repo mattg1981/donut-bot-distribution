@@ -216,8 +216,11 @@ class ApplyVotingIncentivesDistributionTask(DistributionTask):
             # org_bonus = dist['org_bonus']
             # tip_bonus = dist['tip_bonus']
 
-            p2p_ratio = min(new_pay2post_ratio * 2.5, 250)
-            p2p_penalty = round(p2p_ratio * float(dist['total_posts']), 5)
+            if dist['username'] == 'bazooka_star':
+                pass
+
+            #p2p_ratio = min(new_pay2post_ratio * 2.5, 250)
+            p2p_penalty = round(new_pay2post_ratio * float(dist['total_posts']), 5)
 
             dist['comment_score_after_bonus'] = comment_score_after_bonus
             dist['post_score_after_bonus'] = post_score_after_bonus
