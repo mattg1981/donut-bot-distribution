@@ -149,7 +149,7 @@ class AllowSpecialMembersIfApplicableDistributionTask(DistributionTask):
                             case 'original content':
                                 multiplier = 2
                             case 'comedy' | 'media' | 'self story':
-                                multiplier = .1
+                                multiplier = .25
                             case _:
                                 multiplier = 1
 
