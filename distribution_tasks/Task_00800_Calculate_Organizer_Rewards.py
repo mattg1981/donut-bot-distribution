@@ -57,7 +57,7 @@ class ApplyOrganizerRewardsDistributionTask(DistributionTask):
         ###
 
         community_managers = ['friendly-airline2426']
-        community_manager_reward = 10000 / len(community_managers)
+        community_manager_reward = 15000 / len(community_managers)
 
         for manager in community_managers:
             dist_record = next((x for x in distribution if x["username"].lower() == manager.lower()), None)
