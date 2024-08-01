@@ -31,7 +31,7 @@ class CalculateContribDistributionTask(DistributionTask):
             org = next((o for o in organizer_rewards if o['username'].lower() == d['username'].lower()), None)
             # base_record = next((b for b in base_distribution if b['username'].lower() == d['username'].lower()), None)
             post_of_the_week_awards = [p for p in post_of_the_week_winners if
-                                       p['username'].lower() == d['username'].lower()]
+                                       p['author'].lower() == d['username'].lower()]
 
             bonus_voter_contrib = 0
             if voter_data:
@@ -46,11 +46,11 @@ class CalculateContribDistributionTask(DistributionTask):
 
             post_of_the_week_contrib = 0
             for award in post_of_the_week_awards:
-                if award['rank'] == 1:
+                if int(award['rank']) == 1:
                     post_of_the_week_contrib += 5000
-                elif award['rank'] == 2:
+                elif int(award['rank']) == 2:
                     post_of_the_week_contrib += 3000
-                elif award['rank'] == 3:
+                elif int(award['rank']) == 3:
                     post_of_the_week_contrib += 1500
                 else:
                     post_of_the_week_contrib += 500
