@@ -22,6 +22,30 @@
       {
         "id": "0xc3ac036af5544e8fdc12b69a00224175b6a9ec7700fed02bbac78f9c1a51054a",
         "reason": "not a governance poll"
+      },
+      {
+        "id": "0xcd7093d1eb9188f08355ad383ac671743384ab8770e9d17547652570042121e0",
+        "reason": "lp donuts were not being counted"
+      },
+      {
+        "id": "0x31849a4718d03dadd164a8b426a44242da58b906fcf2b02c21201ddfe550164f",
+        "reason": "lp donuts were not being counted"
+      },
+      {
+        "id": "0x36b0c62fb5f69f1f4f8a81f0b4dcecc9b968e02edc173ad5a0a9726fc6502eca",
+        "reason": "lp donuts were not being counted"
+      },
+      {
+        "id": "0xc1c378d1a02fc91a7b8ba07534977a406c7be979a09f452a5e9af839470964f0",
+        "reason": "lp donuts were not being counted"
+      },
+      {
+        "id": "0xf3225d1822b030fba376d6fe282a233296413d799b2bb9fda785abf0f12366a9",
+        "reason": "lp donuts were not being counted"
+      },
+      {
+        "id": "0x8e9aac722a1849719f79ce8d08cecc9886506c2b3d296b81ac5a2e39a44416d9",
+        "reason": "lp donuts were not being counted"
       }
     ]
   },
