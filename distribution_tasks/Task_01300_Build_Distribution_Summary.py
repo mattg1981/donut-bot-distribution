@@ -26,6 +26,10 @@ class BuildSummaryDistributionTask(DistributionTask):
         distribution_summary = []
 
         for d in distribution_data:
+
+            if d['username'].lower() == 'darunningdead':
+                pass
+
             offchain = next((o for o in offchain_data if o['user'].lower() == d['username'].lower()), None)
             mod = next((t for t in mod_rewards if t['username'].lower() == d['username'].lower()), None)
             org = next((o for o in organizer_rewards if o['username'].lower() == d['username'].lower()), None)
@@ -73,7 +77,7 @@ class BuildSummaryDistributionTask(DistributionTask):
                 offchain_tips = 0
                 funded = 0
 
-            if d['eligibility_reason']:
+            if not d['eligible_comments'] and not d['eligible_posts']:
                 # -- mattg1981 -- ineligible users can now send and receive tips
                 # but will not receive their base score or any bonuses as well as 0 contrib
 
