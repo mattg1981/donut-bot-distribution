@@ -17,7 +17,7 @@ class FlagIneligibleUsersDistributionTask(DistributionTask):
 
         # add in banned users
         perm_bans = super().get_current_document_version("perm_bans")
-        temp_bans = super().get_current_document_version("temp_bans")
+        temp_bans = super().get_current_document_version("temp_bans") or []
 
         for pb in perm_bans:
             record = next((em for em in eligibility_matrix if pb['username'].lower() == em['user'].lower()), None)
