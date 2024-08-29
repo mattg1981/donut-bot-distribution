@@ -116,9 +116,10 @@ class ApplyVotingIncentivesDistributionTask(DistributionTask):
 
         # append additional information for debugging
         for v in voters:
-            v['username'] = next(u['username'] for u in users if u['address'] == v['address'])
+            v['username'] = next((u['username'] for u in users if u['address'] == v['address']), None)
 
-        super().save_document_version(voters, 'voter')
+        # save only those with a username
+        super().save_document_version([v for v in voters if v['username']], 'voter')
 
         for dist in distribution_data:
             voter = next((v for v in voters if dist["blockchain_address"].lower() == v["address"].lower()), None)
