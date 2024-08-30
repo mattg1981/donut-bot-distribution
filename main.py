@@ -1,7 +1,9 @@
 import base64
+import glob
 import json
 import logging
 import sys
+import os
 
 from logging.handlers import RotatingFileHandler
 from os import path, makedirs
@@ -42,6 +44,11 @@ if __name__ == '__main__':
     base_dir = path.dirname(path.abspath(__file__))
     log_dir = path.join(base_dir, f"./out/round_{round}/logs")
     makedirs(path.normpath(log_dir), exist_ok=True)
+
+    # remove any logs from a previous run
+    files = glob.glob(f'{log_dir}/*.*')
+    for f in files:
+        os.remove(f)
 
     # set up logging
     formatter = logging.Formatter("%(asctime)s - %(filename)s - %(levelname)s - %(message)s")
