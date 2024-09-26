@@ -38,7 +38,7 @@ class AllowSpecialMembersIfApplicableDistributionTask(DistributionTask):
         self.logger.info(f"compile post meta from raw zip files...")
         post_meta = []
         for file in glob.glob(os.path.join(unzip_path, 'posts_*')):
-            with open(file, 'r') as csv_file:
+            with open(file, 'r', encoding="utf8") as csv_file:
                 next(csv_file, None)  # skip header
                 reader = csv.reader(csv_file, delimiter=',')
                 for row in reader:
@@ -55,7 +55,7 @@ class AllowSpecialMembersIfApplicableDistributionTask(DistributionTask):
         self.logger.info(f"compile pay2post meta from raw zip files...")
         pay2post = []
         for file in glob.glob(os.path.join(unzip_path, 'pay2post_*')):
-            with open(file, 'r') as csv_file:
+            with open(file, 'r', encoding="utf8") as csv_file:
                 next(csv_file, None)  # skip header
                 reader = csv.reader(csv_file, delimiter=',')
                 for row in reader:
@@ -71,7 +71,7 @@ class AllowSpecialMembersIfApplicableDistributionTask(DistributionTask):
         files = glob.glob(os.path.join(unzip_path, 'comments_*'))
         files.extend(glob.glob(os.path.join(unzip_path, 'daily_*')))
         for file in files:
-            with open(file, 'r') as csv_file:
+            with open(file, 'r', encoding="utf8") as csv_file:
                 next(csv_file, None)  # skip header
                 reader = csv.reader(csv_file, delimiter=',')
                 for row in reader:
@@ -198,7 +198,7 @@ class AllowSpecialMembersIfApplicableDistributionTask(DistributionTask):
                     meta = next((m for m in comment_meta if m['id'] == tip['parent_content_id'][3:]), None)
 
                     if not meta:
-                        self.logger.info(f"  comment meta for post: {tip['parent_content_id']} not found ....")
+                        self.logger.info(f"  comment meta for comment: {tip['parent_content_id']} not found ....")
                         continue
 
                     c2v_comments.append({
