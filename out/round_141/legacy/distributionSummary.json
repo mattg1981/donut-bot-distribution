@@ -1,6 +1,6 @@
 {
     "label": "round_141",
-    "totalDistribution": 948744.8291,
+    "totalDistribution": 967633.718,
     "pay2post": 0,
     "totalVoterBonus": 10773.0712,
     "totalFromRemovedUsers": 0,
@@ -33,6 +33,20 @@
                 "pay2PostFee": 3747.8925
             }
         },
+        "aminok": {
+            "username": "aminok",
+            "address": "0xbEA18A39a1cEe253705eB5e966fe23F26dD109eF",
+            "donut": 40134.4472,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 642.0381,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 4.7496,
+                "pay2PostFee": 199.8876
+            }
+        },
         "fredzoor": {
             "username": "fredzoor",
             "address": "0x45051312DeA7a0b7302bCbCCC979E88e28a08e3F",
@@ -45,20 +59,6 @@
                 "fromTipsRecd": 0,
                 "voterBonus": 620.0943,
                 "pay2PostFee": 4247.6115
-            }
-        },
-        "aminok": {
-            "username": "aminok",
-            "address": "0xbEA18A39a1cEe253705eB5e966fe23F26dD109eF",
-            "donut": 37436.0345,
-            "data": {
-                "removed": false,
-                "removalReason": "",
-                "fromKarma": 642.0381,
-                "fromTipsGiven": 0,
-                "fromTipsRecd": 0,
-                "voterBonus": 4.7496,
-                "pay2PostFee": 199.8876
             }
         },
         "kirtash93": {
@@ -75,6 +75,20 @@
                 "pay2PostFee": 3548.0049
             }
         },
+        "friendly-airline2426": {
+            "username": "friendly-airline2426",
+            "address": "0xCA7faf6c0441049e2F449fbA86B77587987A21Fe",
+            "donut": 36653.5657,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 10325.9286,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 137.7255,
+                "pay2PostFee": 1349.2413
+            }
+        },
         "master-score7344": {
             "username": "master-score7344",
             "address": "0xb7B008FCe7D334931FF5DB41f56aa063D091dF68",
@@ -87,20 +101,6 @@
                 "fromTipsRecd": 0,
                 "voterBonus": 611.8448,
                 "pay2PostFee": 2948.3421
-            }
-        },
-        "friendly-airline2426": {
-            "username": "friendly-airline2426",
-            "address": "0xCA7faf6c0441049e2F449fbA86B77587987A21Fe",
-            "donut": 33955.153,
-            "data": {
-                "removed": false,
-                "removalReason": "",
-                "fromKarma": 10325.9286,
-                "fromTipsGiven": 0,
-                "fromTipsRecd": 0,
-                "voterBonus": 137.7255,
-                "pay2PostFee": 1349.2413
             }
         },
         "kig45": {
@@ -285,6 +285,48 @@
                 "pay2PostFee": 1898.9322
             }
         },
+        "mattg1981": {
+            "username": "mattg1981",
+            "address": "0xd762e68a2d30ab4d836683c421121AbB5b3e1DcC",
+            "donut": 21346.2903,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 790.863,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 10.5906,
+                "pay2PostFee": 99.9438
+            }
+        },
+        "reddito321": {
+            "username": "reddito321",
+            "address": "0xbE8793cE3eA65A70BdA8C0364981f900Ad80d9dB",
+            "donut": 21213.3511,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 700.3863,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 149.9157
+            }
+        },
+        "carlslarson": {
+            "username": "carlslarson",
+            "address": "0x95D9bED31423eb7d5B68511E0352Eae39a3CDD20",
+            "donut": 20476.1905,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 0.0,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
         "altruisticpops": {
             "username": "altruisticpops",
             "address": "0x6fa6922842FD09782A61b3B11ab4fb00EB87B1C0",
@@ -325,48 +367,6 @@
                 "fromTipsRecd": 0,
                 "voterBonus": 230.6823,
                 "pay2PostFee": 1099.3818
-            }
-        },
-        "mattg1981": {
-            "username": "mattg1981",
-            "address": "0xd762e68a2d30ab4d836683c421121AbB5b3e1DcC",
-            "donut": 18647.8776,
-            "data": {
-                "removed": false,
-                "removalReason": "",
-                "fromKarma": 790.863,
-                "fromTipsGiven": 0,
-                "fromTipsRecd": 0,
-                "voterBonus": 10.5906,
-                "pay2PostFee": 99.9438
-            }
-        },
-        "reddito321": {
-            "username": "reddito321",
-            "address": "0xbE8793cE3eA65A70BdA8C0364981f900Ad80d9dB",
-            "donut": 18514.9384,
-            "data": {
-                "removed": false,
-                "removalReason": "",
-                "fromKarma": 700.3863,
-                "fromTipsGiven": 0,
-                "fromTipsRecd": 0,
-                "voterBonus": 0.0,
-                "pay2PostFee": 149.9157
-            }
-        },
-        "carlslarson": {
-            "username": "carlslarson",
-            "address": "0x95D9bED31423eb7d5B68511E0352Eae39a3CDD20",
-            "donut": 17777.7778,
-            "data": {
-                "removed": false,
-                "removalReason": "",
-                "fromKarma": 0.0,
-                "fromTipsGiven": 0,
-                "fromTipsRecd": 0,
-                "voterBonus": 0.0,
-                "pay2PostFee": 0.0
             }
         },
         "narrow-professor-126": {
@@ -411,6 +411,20 @@
                 "pay2PostFee": 3847.8363
             }
         },
+        "raymv1987": {
+            "username": "raymv1987",
+            "address": "0x2A043F315F24762937CBCf0EB6CB313a43bDE534",
+            "donut": 14600.8833,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 462.83310000000006,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 7.165,
+                "pay2PostFee": 49.9719
+            }
+        },
         "parishyou": {
             "username": "parishyou",
             "address": "0x9DdA0dA917BeACbcd99c39575877C2AfA2769fbC",
@@ -453,18 +467,18 @@
                 "pay2PostFee": 1449.1851
             }
         },
-        "raymv1987": {
-            "username": "raymv1987",
-            "address": "0x2A043F315F24762937CBCf0EB6CB313a43bDE534",
-            "donut": 11902.4706,
+        "Jake123194": {
+            "username": "Jake123194",
+            "address": "0x48AFb64D55c79A2E711c14a2Bf903A7C3842baCC",
+            "donut": 12142.8571,
             "data": {
                 "removed": false,
                 "removalReason": "",
-                "fromKarma": 462.83310000000006,
+                "fromKarma": 0.0,
                 "fromTipsGiven": 0,
                 "fromTipsRecd": 0,
-                "voterBonus": 7.165,
-                "pay2PostFee": 49.9719
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
             }
         },
         "fattestlion": {
@@ -507,20 +521,6 @@
                 "fromTipsRecd": 0,
                 "voterBonus": 118.1975,
                 "pay2PostFee": 749.5785
-            }
-        },
-        "Jake123194": {
-            "username": "Jake123194",
-            "address": "0x48AFb64D55c79A2E711c14a2Bf903A7C3842baCC",
-            "donut": 9444.4444,
-            "data": {
-                "removed": false,
-                "removalReason": "",
-                "fromKarma": 0.0,
-                "fromTipsGiven": 0,
-                "fromTipsRecd": 0,
-                "voterBonus": 0.0,
-                "pay2PostFee": 0.0
             }
         },
         "inclinedumbbellpress": {
