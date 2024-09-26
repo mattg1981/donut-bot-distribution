@@ -15,7 +15,7 @@ class AllowSpecialMembersIfApplicableDistributionTask(DistributionTask):
         eligibility_matrix = super().get_current_document_version('eligibility_matrix')
         members = super().get_current_document_version(pipeline_config['memberships'])
 
-        special_member_names = [m['user'] for m in members]
+        special_member_names = list(set([m['redditor'] for m in members]))
 
         self.logger.info(f"  ineligible users BEFORE special memberships: [{len([
             em for em in eligibility_matrix if em['reason'] and em['reason'] not in ["special membership"]
