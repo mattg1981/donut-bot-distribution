@@ -1,6 +1,6 @@
 {
     "label": "round_141",
-    "totalDistribution": 923433.7182,
+    "totalDistribution": 950633.7182,
     "pay2post": 0,
     "totalVoterBonus": 10773.0712,
     "totalFromRemovedUsers": 0,
@@ -61,6 +61,20 @@
                 "pay2PostFee": 3548.0049
             }
         },
+        "aminok": {
+            "username": "aminok",
+            "address": "0xbEA18A39a1cEe253705eB5e966fe23F26dD109eF",
+            "donut": 36491.5901,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 642.0381,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 4.7496,
+                "pay2PostFee": 199.8876
+            }
+        },
         "master-score7344": {
             "username": "master-score7344",
             "address": "0xb7B008FCe7D334931FF5DB41f56aa063D091dF68",
@@ -87,6 +101,20 @@
                 "fromTipsRecd": 0,
                 "voterBonus": 510.3239,
                 "pay2PostFee": 4147.6677
+            }
+        },
+        "friendly-airline2426": {
+            "username": "friendly-airline2426",
+            "address": "0xCA7faf6c0441049e2F449fbA86B77587987A21Fe",
+            "donut": 33010.7086,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 10325.9286,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 137.7255,
+                "pay2PostFee": 1349.2413
             }
         },
         "downtown_yam9137": {
@@ -117,20 +145,6 @@
                 "pay2PostFee": 4197.6396
             }
         },
-        "aminok": {
-            "username": "aminok",
-            "address": "0xbEA18A39a1cEe253705eB5e966fe23F26dD109eF",
-            "donut": 31391.5901,
-            "data": {
-                "removed": false,
-                "removalReason": "",
-                "fromKarma": 642.0381,
-                "fromTipsGiven": 0,
-                "fromTipsRecd": 0,
-                "voterBonus": 4.7496,
-                "pay2PostFee": 199.8876
-            }
-        },
         "rikbona": {
             "username": "rikbona",
             "address": "0xc20996Ea4a76DdcAA03eC7889bc9C249cCe9E2C3",
@@ -157,20 +171,6 @@
                 "fromTipsRecd": 0,
                 "voterBonus": 437.7491,
                 "pay2PostFee": 3847.8363
-            }
-        },
-        "friendly-airline2426": {
-            "username": "friendly-airline2426",
-            "address": "0xCA7faf6c0441049e2F449fbA86B77587987A21Fe",
-            "donut": 27910.7086,
-            "data": {
-                "removed": false,
-                "removalReason": "",
-                "fromKarma": 10325.9286,
-                "fromTipsGiven": 0,
-                "fromTipsRecd": 0,
-                "voterBonus": 137.7255,
-                "pay2PostFee": 1349.2413
             }
         },
         "every_hunt_160": {
@@ -327,6 +327,20 @@
                 "pay2PostFee": 1099.3818
             }
         },
+        "mattg1981": {
+            "username": "mattg1981",
+            "address": "0xd762e68a2d30ab4d836683c421121AbB5b3e1DcC",
+            "donut": 17703.4332,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 790.863,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 10.5906,
+                "pay2PostFee": 99.9438
+            }
+        },
         "narrow-professor-126": {
             "username": "narrow-professor-126",
             "address": "0x2b23eabDCD60f60fD78E52e80c177D83144CB56b",
@@ -341,6 +355,20 @@
                 "pay2PostFee": 3597.9768
             }
         },
+        "reddito321": {
+            "username": "reddito321",
+            "address": "0xbE8793cE3eA65A70BdA8C0364981f900Ad80d9dB",
+            "donut": 17570.494,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 700.3863,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 149.9157
+            }
+        },
         "sky-876": {
             "username": "sky-876",
             "address": "0xDbE3B1F7bea6c329F6DCb8b9fA0D4D27948c22C1",
@@ -353,6 +381,20 @@
                 "fromTipsRecd": 0,
                 "voterBonus": 256.724,
                 "pay2PostFee": 2898.3702
+            }
+        },
+        "carlslarson": {
+            "username": "carlslarson",
+            "address": "0x95D9bED31423eb7d5B68511E0352Eae39a3CDD20",
+            "donut": 16833.3333,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 0.0,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
             }
         },
         "mayusuff": {
@@ -383,34 +425,6 @@
                 "pay2PostFee": 2798.4264
             }
         },
-        "mattg1981": {
-            "username": "mattg1981",
-            "address": "0xd762e68a2d30ab4d836683c421121AbB5b3e1DcC",
-            "donut": 12603.4332,
-            "data": {
-                "removed": false,
-                "removalReason": "",
-                "fromKarma": 790.863,
-                "fromTipsGiven": 0,
-                "fromTipsRecd": 0,
-                "voterBonus": 10.5906,
-                "pay2PostFee": 99.9438
-            }
-        },
-        "reddito321": {
-            "username": "reddito321",
-            "address": "0xbE8793cE3eA65A70BdA8C0364981f900Ad80d9dB",
-            "donut": 12470.494,
-            "data": {
-                "removed": false,
-                "removalReason": "",
-                "fromKarma": 700.3863,
-                "fromTipsGiven": 0,
-                "fromTipsRecd": 0,
-                "voterBonus": 0.0,
-                "pay2PostFee": 149.9157
-            }
-        },
         "creeptoecurrentsea": {
             "username": "creeptoecurrentsea",
             "address": "0x1e6FF9e5E7C301A6290Dd14662273A5E5817a2A6",
@@ -439,18 +453,18 @@
                 "pay2PostFee": 1449.1851
             }
         },
-        "carlslarson": {
-            "username": "carlslarson",
-            "address": "0x95D9bED31423eb7d5B68511E0352Eae39a3CDD20",
-            "donut": 11733.3333,
+        "raymv1987": {
+            "username": "raymv1987",
+            "address": "0x2A043F315F24762937CBCf0EB6CB313a43bDE534",
+            "donut": 10958.0262,
             "data": {
                 "removed": false,
                 "removalReason": "",
-                "fromKarma": 0.0,
+                "fromKarma": 462.83310000000006,
                 "fromTipsGiven": 0,
                 "fromTipsRecd": 0,
-                "voterBonus": 0.0,
-                "pay2PostFee": 0.0
+                "voterBonus": 7.165,
+                "pay2PostFee": 49.9719
             }
         },
         "fattestlion": {
@@ -493,6 +507,34 @@
                 "fromTipsRecd": 0,
                 "voterBonus": 118.1975,
                 "pay2PostFee": 749.5785
+            }
+        },
+        "EthTraderCommunity": {
+            "username": "EthTraderCommunity",
+            "address": "0xf7927bf0230c7b0E82376ac944AeedC3EA8dFa25",
+            "donut": 8500.0,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 0.0,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "Jake123194": {
+            "username": "Jake123194",
+            "address": "0x48AFb64D55c79A2E711c14a2Bf903A7C3842baCC",
+            "donut": 8500.0,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 0.0,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
             }
         },
         "inclinedumbbellpress": {
@@ -565,20 +607,6 @@
                 "pay2PostFee": 2198.7636
             }
         },
-        "raymv1987": {
-            "username": "raymv1987",
-            "address": "0x2A043F315F24762937CBCf0EB6CB313a43bDE534",
-            "donut": 5858.0262,
-            "data": {
-                "removed": false,
-                "removalReason": "",
-                "fromKarma": 462.83310000000006,
-                "fromTipsGiven": 0,
-                "fromTipsRecd": 0,
-                "voterBonus": 7.165,
-                "pay2PostFee": 49.9719
-            }
-        },
         "carrykind8827": {
             "username": "carrykind8827",
             "address": "0x7925F2c7a47922F1868106B416A9f8cf31d1E734",
@@ -605,90 +633,6 @@
                 "fromTipsRecd": 0,
                 "voterBonus": 68.2761,
                 "pay2PostFee": 1649.0727
-            }
-        },
-        "donut-bot": {
-            "username": "donut-bot",
-            "address": "0xa8C8c9e18C763805c91bcB720B2320aDe16a0BBf",
-            "donut": 3448.7422,
-            "data": {
-                "removed": false,
-                "removalReason": "",
-                "fromKarma": 40.7422,
-                "fromTipsGiven": 0,
-                "fromTipsRecd": 0,
-                "voterBonus": 0.0,
-                "pay2PostFee": 0.0
-            }
-        },
-        "Basoosh": {
-            "username": "Basoosh",
-            "address": "0x80148c5d2b61182107f43FAE67f8F2ec4b5dbcDE",
-            "donut": 3401.0,
-            "data": {
-                "removed": false,
-                "removalReason": "",
-                "fromKarma": 0.0,
-                "fromTipsGiven": 0,
-                "fromTipsRecd": 0,
-                "voterBonus": 0.0,
-                "pay2PostFee": 0.0
-            }
-        },
-        "dont_forget_canada": {
-            "username": "dont_forget_canada",
-            "address": "0x009af493e9A3a3Ba3DFfBF734E1B2a5B0352dF46",
-            "donut": 3400.0,
-            "data": {
-                "removed": false,
-                "removalReason": "",
-                "fromKarma": 0.0,
-                "fromTipsGiven": 0,
-                "fromTipsRecd": 0,
-                "voterBonus": 0.0,
-                "pay2PostFee": 0.0
-            }
-        },
-        "EthTraderCommunity": {
-            "username": "EthTraderCommunity",
-            "address": "0xf7927bf0230c7b0E82376ac944AeedC3EA8dFa25",
-            "donut": 3400.0,
-            "data": {
-                "removed": false,
-                "removalReason": "",
-                "fromKarma": 0.0,
-                "fromTipsGiven": 0,
-                "fromTipsRecd": 0,
-                "voterBonus": 0.0,
-                "pay2PostFee": 0.0
-            }
-        },
-        "Jake123194": {
-            "username": "Jake123194",
-            "address": "0x48AFb64D55c79A2E711c14a2Bf903A7C3842baCC",
-            "donut": 3400.0,
-            "data": {
-                "removed": false,
-                "removalReason": "",
-                "fromKarma": 0.0,
-                "fromTipsGiven": 0,
-                "fromTipsRecd": 0,
-                "voterBonus": 0.0,
-                "pay2PostFee": 0.0
-            }
-        },
-        "nootropicat": {
-            "username": "nootropicat",
-            "address": "0x52727E01d666BeF35cEF630E14E096CA873d2783",
-            "donut": 3400.0,
-            "data": {
-                "removed": false,
-                "removalReason": "",
-                "fromKarma": 0.0,
-                "fromTipsGiven": 0,
-                "fromTipsRecd": 0,
-                "voterBonus": 0.0,
-                "pay2PostFee": 0.0
             }
         },
         "drrobbe": {
@@ -1557,6 +1501,20 @@
                 "fromTipsRecd": 0,
                 "voterBonus": 0.0,
                 "pay2PostFee": 99.9438
+            }
+        },
+        "donut-bot": {
+            "username": "donut-bot",
+            "address": "0xa8C8c9e18C763805c91bcB720B2320aDe16a0BBf",
+            "donut": 48.7422,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 40.7422,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
             }
         },
         "thorp1": {
@@ -3405,6 +3363,20 @@
                 "fromTipsRecd": 0,
                 "voterBonus": 0.0,
                 "pay2PostFee": 99.9438
+            }
+        },
+        "Basoosh": {
+            "username": "Basoosh",
+            "address": "0x80148c5d2b61182107f43FAE67f8F2ec4b5dbcDE",
+            "donut": 1.0,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 0.0,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
             }
         },
         "Technical-Track2663": {
