@@ -36,25 +36,32 @@ if __name__ == '__main__':
 
     awards = [
         {
-            "user": "mattg1981",
-            "donut": 1_080_000,
-            "contrib": 216_000,
-            "reason": "DI - Arb 1 Migration"
+            "user": "kirtash93",
+            "donut": 0,
+            "contrib": 547_004.2214,
+            "reason": "https://snapshot.org/#/ethtraderdao.eth/proposal/0xfccc4d309c25815f4730370d9aba741a4af39e8f4a9df59a4179affe192777d3"
         },
         {
-            "user": "carlslarson",
-            "donut": 120_000,
-            "contrib": 24_000,
-            "reason": "DI - Arb 1 Migration"
-        },
-        {
-            "user": "mattg1981",
-            "donut": 5_000,
-            "contrib": 1_000,
-            "reason": "DI - Arb 1 Migration (transaction generator)"
-        },
-
+            "user": "rikbona",
+            "donut": 0,
+            "contrib": 86_018.2,
+            "reason": "https://snapshot.org/#/ethtraderdao.eth/proposal/0x4030c6147a8608ea57c57d55e553984acabb36c7e0d3fc5f261baffc144644cb"
+        }
     ]
+
+    # per https://www.reddit.com/r/ethtrader/comments/1fa8if9/governance_poll_proposal_automatic_surcharge_on/
+    total_donut_awards = sum(a["donut"] for a in awards)
+    total_contrib_awards = sum(a["contrib"] for a in awards)
+
+    organizer_donut_reward = int(max(.025 * total_donut_awards, 2500))
+    organizer_contrib_reward = int(max(.025 * total_contrib_awards, 2500))
+
+    awards.append({
+        "user": "mattg1981",
+        "donut": organizer_donut_reward,
+        "contrib": organizer_contrib_reward,
+        "reason": "organizer"
+    })
 
     # get users file that will be used for any user <-> address lookups
     users = json.load(request.urlopen(f"https://ethtrader.github.io/donut.distribution/users.json"))
@@ -65,7 +72,7 @@ if __name__ == '__main__':
             user = next((u for u in users if u['username'].lower() == award['user'].lower()), None)
 
             if not user:
-                print(f"donut reward user not found, ensure you typed the name correctly: [{award['user']}]")
+                print(f"user not found, ensure you typed the name correctly: [{award['user']}]")
                 exit(4)
 
             award["address"] = user["address"]
