@@ -2,3 +2,9 @@
 /venv/
 /out/ad_hoc
 /.idea
+/temp/comments*
+/temp/csv_generator.py
+/temp/daily*
+/temp/pay2post*
+/temp/posts*
+/temp/round_*
