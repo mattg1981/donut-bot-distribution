@@ -60,8 +60,7 @@ class PullBaseFilesDistributionTask(DistributionTask):
         self.logger.info("  grabbing special membership file...")
         memberships_filename = "membership"
         membership = json.load(request.urlopen(
-            f"https://raw.githubusercontent.com/mattg1981/donut-bot-output/main/memberships"
-            f"/memberships_{self.distribution_round}.json"))
+            "https://raw.githubusercontent.com/EthTrader/memberships/refs/heads/main/members.json"))
         super().save_document_version(membership, memberships_filename)
 
         # get distribution round data
