@@ -55,6 +55,10 @@ class DistributeOffchainTipsDistributionTask(DistributionTask):
             self.logger.info(
             f"  processing funded account: [user]: {fa['user']} [amount]: {fa['amount']} [token]: {fa['token']} [tx_hash]: {fa['tx_hash']}")
 
+            if not fa['user']:
+                self.logger.info(f"  > > record for transaction [{fa['tx_hash']}] not associated with a user, skipping....")
+                continue
+
             earner_record = next((x for x in distribution if x["username"].lower() == fa["user"].lower()), None)
             offchain_user = next((x for x in offchain_users if x["user"].lower() == fa["user"].lower()), None)
 
