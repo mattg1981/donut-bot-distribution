@@ -15,6 +15,7 @@ class AllowSpecialMembersIfApplicableDistributionTask(DistributionTask):
         eligibility_matrix = super().get_current_document_version('eligibility_matrix')
         members = super().get_current_document_version(pipeline_config['memberships'])
 
+        # todo: filter to community="ethtrader" or community="all" if we begin distributions in other communities
         special_member_names = list(set([m['redditor'] for m in members]))
 
         self.logger.info(f"  ineligible users BEFORE special memberships: [{len([
@@ -28,10 +29,11 @@ class AllowSpecialMembersIfApplicableDistributionTask(DistributionTask):
             self.logger.info(f"  eligible users found: {eligible_users}")
 
             for user in eligible_users:
-                self.logger.info(f"  updating matrix for user: {user} to be able to post and comment")
+                self.logger.info(f"  updating matrix for {user=} to be able to post and comment")
                 u = next(x for x in eligibility_matrix if x['user'] == user)
                 u['comments'] = 1
                 u['posts'] = 1
+                u['reason'] = 'special membership'
 
         self.logger.info(f"  ineligible users AFTER special memberships: [{len([
             em for em in eligibility_matrix if em['reason'] and em['reason'] not in ["special membership"]
