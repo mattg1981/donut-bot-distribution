@@ -68,19 +68,19 @@ class AllowSpecialMembersIfApplicableDistributionTask(DistributionTask):
         # get all comment metadata
         self.logger.info(f"compile comment meta from raw zip files...")
         comment_meta = []
-        files = glob.glob(os.path.join(unzip_path, 'comments_*'))
-        files.extend(glob.glob(os.path.join(unzip_path, 'daily_*')))
+        files = glob.glob(os.path.join(unzip_path, 'comments_*_limited*'))
+        files.extend(glob.glob(os.path.join(unzip_path, 'daily_*_limited*')))
         for file in files:
             with open(file, 'r', encoding="utf8") as csv_file:
                 next(csv_file, None)  # skip header
                 reader = csv.reader(csv_file, delimiter=',')
                 for row in reader:
                     comment_meta.append({
-                        'id': row[0],
-                        'score': int(row[1]),
-                        'author': row[2],
-                        'date': row[3],
-                        'submission': row[4],
+                        'id': row[1],
+                        'score': row[2],
+                        'author': row[3],
+                        'date': row[4],
+                        'submission': row[5],
                         'multiplier': .5 if "daily" in file else 1,
                     })
 
