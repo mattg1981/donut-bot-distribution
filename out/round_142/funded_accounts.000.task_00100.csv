@@ -1,0 +1,2 @@
+user,address,amount,token,block_number,tx_hash,tx_timestamp,processed_at,created_at
+multisig replinish,0x0,470000,DONUT,259652537,0xbdef60a799dff1d8ac21014fe6de4bf7cf5b3aaf07e7c197403f02650d64067c,2024-10-02 15:38:58,2024-10-02 15:40:07.675339,2024-10-02 15:40:06.486690
