@@ -24,8 +24,9 @@ class AllowSpecialMembersIfApplicableDistributionTask(DistributionTask):
         users = super().get_current_document_version("users")
         distribution_allocation = super().get_current_document_version("distribution_allocation")[0]
 
-        onchain_tips = [oc for oc in onchain_tips if (oc['timestamp'] >= distribution_round['from_date']) &
-                        (oc['timestamp'] <= distribution_round['to_date'])]
+        if onchain_tips:
+            onchain_tips = [oc for oc in onchain_tips if (oc['timestamp'] >= distribution_round['from_date']) &
+                            (oc['timestamp'] <= distribution_round['to_date'])]
 
         self.logger.info(f"unzip raw zip file to temp directory...")
         raw_file = super().get_current_document_version("raw_zip")[0]
@@ -85,18 +86,19 @@ class AllowSpecialMembersIfApplicableDistributionTask(DistributionTask):
                     })
 
         # map onchain tips to have the same format as offchain tips and save them in the tips array
-        for oc_tip in onchain_tips:
-            tips.append({
-                "from_user": oc_tip["from_user"],
-                "to_user": oc_tip["to_user"],
-                "amount": oc_tip["amount"],
-                "weight": oc_tip["weight"],
-                "token": oc_tip["token"],
-                "content_id": None,
-                "parent_content_id": oc_tip['content_id'],
-                "submission_content_id": oc_tip['content_id'][3:],
-                "created_date": oc_tip["timestamp"]
-            })
+        if onchain_tips:
+            for oc_tip in onchain_tips:
+                tips.append({
+                    "from_user": oc_tip["from_user"],
+                    "to_user": oc_tip["to_user"],
+                    "amount": oc_tip["amount"],
+                    "weight": oc_tip["weight"],
+                    "token": oc_tip["token"],
+                    "content_id": None,
+                    "parent_content_id": oc_tip['content_id'],
+                    "submission_content_id": oc_tip['content_id'][3:],
+                    "created_date": oc_tip["timestamp"]
+                })
 
         c2v_posts = []
         c2v_comments = []

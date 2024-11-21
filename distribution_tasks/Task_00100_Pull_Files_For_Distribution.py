@@ -80,11 +80,14 @@ class PullBaseFilesDistributionTask(DistributionTask):
 
             url = "https://raw.githubusercontent.com/mattg1981/donut-bot-output/main/onchain_tips/onchain_tips.csv"
             request_result = requests.get(url).text
-            reader = csv.DictReader(request_result.splitlines(), delimiter=',')
-            onchain_tips = list(reader)
+            if request_result:
+                reader = csv.DictReader(request_result.splitlines(), delimiter=',')
+                onchain_tips = list(reader)
 
-            onchain_tips_location = super().save_document_version(onchain_tips, onchain_tips_filename)
-            super().cache_file(onchain_tips_location)
+                onchain_tips_location = super().save_document_version(onchain_tips, onchain_tips_filename)
+                super().cache_file(onchain_tips_location)
+            else:
+                self.logger.info("  no onchain tips")
         else:
             self.logger.info("  >> grabbed onchain tips from cache")
 
