@@ -56,7 +56,7 @@ class ApplyOrganizerRewardsDistributionTask(DistributionTask):
         # mattg1981 - add community managers
         ###
 
-        community_managers = ['friendly-airline2426']
+        community_managers = ['0xmarcaurel']
         community_manager_reward = 15000 / len(community_managers)
 
         for manager in community_managers:
