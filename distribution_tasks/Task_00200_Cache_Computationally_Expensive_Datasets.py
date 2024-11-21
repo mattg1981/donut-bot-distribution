@@ -437,7 +437,7 @@ class BuildCacheDistributionTask(DistributionTask):
     def build_user_eligibility_matrix(self):
         self.logger.info("  build eligibility matrix...")
 
-        if super().get_current_document_version("eligibility_matrix"):
+        if super().get_current_document_version("matrix"):
             self.logger.info("    ... file exists in cache already!")
             return
 
@@ -511,4 +511,4 @@ class BuildCacheDistributionTask(DistributionTask):
             except Exception as e:
                 self.logger.error(e)
 
-        super().cache_file(super().save_document_version(eligibility_matrix, "eligibility_matrix"))
+        super().cache_file(super().save_document_version(eligibility_matrix, "matrix"))
