@@ -36,16 +36,70 @@ if __name__ == '__main__':
 
     awards = [
         {
-            "user": "kirtash93",
-            "donut": 0,
-            "contrib": 547_004.2214,
-            "reason": "https://snapshot.org/#/ethtraderdao.eth/proposal/0xfccc4d309c25815f4730370d9aba741a4af39e8f4a9df59a4179affe192777d3"
+            "user": "u/DBRiMatt",
+            "donut": 10_000,
+            "contrib": 10_000,
+            "reason": "round 142 contests"
         },
         {
-            "user": "rikbona",
-            "donut": 0,
-            "contrib": 86_018.2,
-            "reason": "https://snapshot.org/#/ethtraderdao.eth/proposal/0x4030c6147a8608ea57c57d55e553984acabb36c7e0d3fc5f261baffc144644cb"
+            "user": "u/Buzzalu",
+            "donut": 7_000,
+            "contrib": 7_000,
+            "reason": "round 142 contests"
+        },
+        {
+            "user": "u/whodontloveboobs",
+            "donut": 6500,
+            "contrib": 6500,
+            "reason": "round 142 contests"
+        },
+        {
+            "user": "u/Kirtash93",
+            "donut": 6000,
+            "contrib": 6000,
+            "reason": "round 142 contests"
+        },
+        {
+            "user": "u/inclinedumbbellpress",
+            "donut": 3000,
+            "contrib": 3000,
+            "reason": "round 142 contests"
+        },
+        {
+            "user": "u/LegendRXL",
+            "donut": 2000,
+            "contrib": 2000,
+            "reason": "round 142 contests"
+        },
+        {
+            "user": "u/Odd-Radio-8500",
+            "donut": 1000,
+            "contrib": 1000,
+            "reason": "round 142 contests"
+        },
+        {
+            "user": "u/goldyluckinblokchain",
+            "donut": 500,
+            "contrib": 500,
+            "reason": "round 142 contests"
+        },
+        {
+            "user": "u/Mixdealyn",
+            "donut": 500,
+            "contrib": 500,
+            "reason": "round 142 contests"
+        },
+        {
+            "user": "u/Garden_Aria",
+            "donut": 500,
+            "contrib": 500,
+            "reason": "round 142 contests"
+        },
+        {
+            "user": "u/King__Robbo",
+            "donut": 500,
+            "contrib": 500,
+            "reason": "round 142 contests"
         }
     ]
 
@@ -69,10 +123,14 @@ if __name__ == '__main__':
     # map awardee addresses
     for award in awards:
         if not 'address' in award:
-            user = next((u for u in users if u['username'].lower() == award['user'].lower()), None)
+            username = award['user'].strip().lower()
+            if username.startswith("u/"):
+                username = username.replace("u/", "")
+
+            user = next((u for u in users if u['username'].lower() == username), None)
 
             if not user:
-                print(f"user not found, ensure you typed the name correctly: [{award['user']}]")
+                print(f"user not found, ensure you typed the name correctly: [{username}]")
                 exit(4)
 
             award["address"] = user["address"]
