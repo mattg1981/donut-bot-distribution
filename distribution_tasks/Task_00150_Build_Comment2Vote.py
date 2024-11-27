@@ -116,7 +116,8 @@ class AllowSpecialMembersIfApplicableDistributionTask(DistributionTask):
                     post = post[0]
 
                     # see if this user has tipped the post previously
-                    previous_tips = [t for t in post['tips'] if t['from_user'].lower().strip() == tip['from_user'].lower().strip()]
+                    previous_tips = [t for t in post['tips'] if
+                                     t['from_user'].lower().strip() == tip['from_user'].lower().strip()]
                     if previous_tips:
                         # this user has previously tipped this post
                         self.logger.info("  post previously tipped by this user.")
@@ -155,7 +156,7 @@ class AllowSpecialMembersIfApplicableDistributionTask(DistributionTask):
                             case 'comedy' | 'media' | 'self story':
                                 multiplier = .25
                             case 'question':
-                                 multiplier = .1
+                                multiplier = .1
                             case _:
                                 multiplier = 1
 
