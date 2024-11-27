@@ -18,7 +18,7 @@
 - [How are 50 comments per day handled?](#how-are-50-comments-per-day-handled)
 
 ## Can I run this process?
-Yes, while this file produces files to be consumed by other services, it does not create any on-chain transactions or change any data.  You are free to run this application to familiarize yourself with it without the risk of any issues.
+Yes, while this process produces files to be consumed by other services, it does not create any on-chain transactions or change any data.  You are free to run this application to familiarize yourself with it without the risk of any issues.
 
 ## When do I run this?
 This process is to be run after the output of [mydonuts-csv-generator](https://github.com/EthTrader/mydonuts-csv-generator) is ready and uploaded to https://www.mydonuts.online/home/mydonuts/static/rounds/round_{distribution_round}.zip.  If this URL every changes, be sure to update `Task_00100_Pull_Files_For_Distribution.py` with the updated address.
