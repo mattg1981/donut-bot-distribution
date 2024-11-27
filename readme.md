@@ -7,6 +7,7 @@
 - [Installation](#installation)
 - [Usage](#usage)
 - [Configuration](#configuration)
+- [FAQ's](/faq.md)
 - [Contributing](#contributing)
 - [License](#license)
 
