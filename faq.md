@@ -82,7 +82,7 @@ No, all datasets used in processing are publicly available at [donut-bot-output]
 
 ## How do I build a one-off/ad-hoc transaction (e.g. for payment of a Donut Initiative)?
 
-Run `ad_hoc\donut_initiative_distribution_arb1.py` after updating the `award` variable.  This process automatically calculates the incentive for the organizer, but you will want to update who gets awarded that bonus.
+Run `ad_hoc\donut_initiative_distribution_arb1.py` after updating the `award` variable.  This process automatically calculates the incentive for the organizer, but you will want to update who gets awarded that bonus.  This produces a safe transaction file (.json) in the same directory it is run from - see [What do I do with these files after it has run to completion?](#what-do-i-do-with-these-files-after-it-has-run-to-completion) for more information on how to load that file into Safe(WALLET).
 
 ## How do I know what the post/comment/pay2post ratio was?
 
