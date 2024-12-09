@@ -45,6 +45,25 @@ class PullBaseFilesDistributionTask(DistributionTask):
         # base_csv_location = super().save_document_version(base_csv, distribution_filename)
         # super().cache_file(base_csv_location)
 
+        # base raw files
+        self.logger.info("  grabbing raw distribution zip file...")
+        if not super().get_current_document_version("raw_zip"):
+            self.logger.info("  raw zip file not present in cache, pulling down from web...")
+
+            base_raw_url = f'https://www.mydonuts.online/home/mydonuts/static/rounds/round_{super().distribution_round}.zip'
+            try:
+                url_result = urllib.request.urlretrieve(base_raw_url)
+                super().cache_file(super().save_document_version([{'zip_path': url_result[0]}], "raw_zip"))
+            except Exception as e:
+                self.logger.error(f"failed to pull down raw distribution zip file")
+                self.logger.error(f"{e}")
+                self.logger.error(f"re-run this distribution pipeline when the files are available...")
+                exit(4)
+        else:
+            self.logger.info("  cached version of the raw zipped file have been detected and being used")
+            self.logger.info("  NOTE: if there was a previous issue with this file causing a re-run to be required, "
+                             "ensure you delete this file form the cache directory")
+
         # get distribution allocation file
         self.logger.info("  grabbing distribution allocation .json file...")
         distribution_allocation = json.load(request.urlopen(f"https://raw.githubusercontent.com/mattg1981/donut-bot-output/main/allocation/distribution_allocation.json"))
@@ -127,19 +146,6 @@ class PullBaseFilesDistributionTask(DistributionTask):
         liquidity = json.load(request.urlopen(f"https://raw.githubusercontent.com/mattg1981/donut-bot-output/main"
                                                 f"/liquidity/liquidity_leaders.json"))
         super().save_document_version(liquidity, 'liquidity')
-
-        # base raw files
-        self.logger.info("  grabbing raw distribution zip file...")
-        if not super().get_current_document_version("raw_zip"):
-            self.logger.info("  raw zip file not present in cache, pulling down from web...")
-
-            base_raw_url = f'https://www.mydonuts.online/home/mydonuts/static/rounds/round_{super().distribution_round}.zip'
-            url_result = urllib.request.urlretrieve(base_raw_url)
-            super().cache_file(super().save_document_version([{'zip_path': url_result[0]}], "raw_zip"))
-        else:
-            self.logger.info("  cached version of the raw zipped file have been detected and being used")
-            self.logger.info("  NOTE: if there was a previous issue with this file causing a re-run to be required, "
-                             "ensure you delete this file form the cache directory")
 
         # post of the week results
         self.logger.info("  grabbing post_of_the_week file...")
