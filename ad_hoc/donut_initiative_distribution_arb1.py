@@ -36,72 +36,57 @@ if __name__ == '__main__':
 
     awards = [
         {
-            "user": "u/DBRiMatt",
-            "donut": 10_000,
-            "contrib": 10_000,
-            "reason": "round 142 contests"
-        },
-        {
-            "user": "u/Buzzalu",
-            "donut": 7_000,
-            "contrib": 7_000,
-            "reason": "round 142 contests"
-        },
-        {
-            "user": "u/whodontloveboobs",
-            "donut": 6500,
-            "contrib": 6500,
-            "reason": "round 142 contests"
-        },
-        {
-            "user": "u/Kirtash93",
-            "donut": 6000,
-            "contrib": 6000,
-            "reason": "round 142 contests"
-        },
-        {
-            "user": "u/inclinedumbbellpress",
-            "donut": 3000,
-            "contrib": 3000,
-            "reason": "round 142 contests"
-        },
-        {
-            "user": "u/LegendRXL",
-            "donut": 2000,
-            "contrib": 2000,
-            "reason": "round 142 contests"
-        },
-        {
-            "user": "u/Odd-Radio-8500",
-            "donut": 1000,
-            "contrib": 1000,
-            "reason": "round 142 contests"
-        },
-        {
-            "user": "u/goldyluckinblokchain",
-            "donut": 500,
-            "contrib": 500,
-            "reason": "round 142 contests"
-        },
-        {
-            "user": "u/Mixdealyn",
-            "donut": 500,
-            "contrib": 500,
-            "reason": "round 142 contests"
-        },
-        {
-            "user": "u/Garden_Aria",
-            "donut": 500,
-            "contrib": 500,
-            "reason": "round 142 contests"
-        },
-        {
-            "user": "u/King__Robbo",
-            "donut": 500,
-            "contrib": 500,
-            "reason": "round 142 contests"
+            "address": "0x0c4B8B79E0ebA3e407Bc175176Db496474046e9a",
+            "donut": 0,
+            "contrib": 878_986,
+            "reason": "migrate contrib"
         }
     ]
+
+    # awards = [
+    #     {
+    #         "user": "u/DBRiMatt",
+    #         "donut": 10_000,
+    #         "contrib": 10_000,
+    #         "reason": "round 143 contests"
+    #     },
+    #     {
+    #         "user": "u/Buzzalu",
+    #         "donut": 5_000,
+    #         "contrib": 5_000,
+    #         "reason": "round 143 contests"
+    #     },
+    #     {
+    #         "user": "u/Mrwiowijo",
+    #         "donut": 5000,
+    #         "contrib": 5000,
+    #         "reason": "round 142 contests"
+    #     },
+    #     {
+    #         "user": "u/LegendRXL ",
+    #         "donut": 3500,
+    #         "contrib": 3500,
+    #         "reason": "round 143 contests"
+    #     },
+    #     {
+    #         "user": "u/whodontloveboobs ",
+    #         "donut": 3000,
+    #         "contrib": 3000,
+    #         "reason": "round 142 contests"
+    #     },
+    #     {
+    #         "user": "u/kirtash93",
+    #         "donut": 3000,
+    #         "contrib": 3000,
+    #         "reason": "round 143 contests"
+    #     },
+    #     {
+    #         "user": "u/InclineDumbbellPress ",
+    #         "donut": 500,
+    #         "contrib": 500,
+    #         "reason": "round 143 contests"
+    #     }
+    # ]
 
     # per https://www.reddit.com/r/ethtrader/comments/1fa8if9/governance_poll_proposal_automatic_surcharge_on/
     total_donut_awards = sum(a["donut"] for a in awards)
@@ -122,7 +107,7 @@ if __name__ == '__main__':
 
     # map awardee addresses
     for award in awards:
-        if not 'address' in award:
+        if 'address' not in award:
             username = award['user'].strip().lower()
             if username.startswith("u/"):
                 username = username.replace("u/", "")
