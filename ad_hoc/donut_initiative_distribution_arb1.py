@@ -34,59 +34,23 @@ if __name__ == '__main__':
     gno_contrib_contract = w3.eth.contract(address=w3.to_checksum_address(ARB1_CONTRIB_CONTRACT_ADDRESS),
                                            abi=arb1_contrib_abi)
 
-    awards = [
-        {
-            "address": "0x0c4B8B79E0ebA3e407Bc175176Db496474046e9a",
-            "donut": 0,
-            "contrib": 878_986,
-            "reason": "migrate contrib"
-        }
-    ]
-
     # awards = [
     #     {
-    #         "user": "u/DBRiMatt",
-    #         "donut": 10_000,
-    #         "contrib": 10_000,
-    #         "reason": "round 143 contests"
-    #     },
-    #     {
-    #         "user": "u/Buzzalu",
-    #         "donut": 5_000,
-    #         "contrib": 5_000,
-    #         "reason": "round 143 contests"
-    #     },
-    #     {
-    #         "user": "u/Mrwiowijo",
-    #         "donut": 5000,
-    #         "contrib": 5000,
-    #         "reason": "round 142 contests"
-    #     },
-    #     {
-    #         "user": "u/LegendRXL ",
-    #         "donut": 3500,
-    #         "contrib": 3500,
-    #         "reason": "round 143 contests"
-    #     },
-    #     {
-    #         "user": "u/whodontloveboobs ",
-    #         "donut": 3000,
-    #         "contrib": 3000,
-    #         "reason": "round 142 contests"
-    #     },
-    #     {
-    #         "user": "u/kirtash93",
-    #         "donut": 3000,
-    #         "contrib": 3000,
-    #         "reason": "round 143 contests"
-    #     },
-    #     {
-    #         "user": "u/InclineDumbbellPress ",
-    #         "donut": 500,
-    #         "contrib": 500,
-    #         "reason": "round 143 contests"
+    #         "address": "0x0c4B8B79E0ebA3e407Bc175176Db496474046e9a",
+    #         "donut": 0,
+    #         "contrib": 878_986,
+    #         "reason": "migrate contrib"
     #     }
     # ]
+
+    awards = [
+        {
+            "user": "u/reddito321",
+            "donut": 60_000,
+            "contrib": 60_000,
+            "reason": "mydonuts tip estimator"
+        }
+    ]
 
     # per https://www.reddit.com/r/ethtrader/comments/1fa8if9/governance_poll_proposal_automatic_surcharge_on/
     total_donut_awards = sum(a["donut"] for a in awards)
