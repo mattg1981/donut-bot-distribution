@@ -155,7 +155,7 @@ class AllowSpecialMembersIfApplicableDistributionTask(DistributionTask):
                                 multiplier = .75
                             case 'comedy' | 'self story':
                                 multiplier = .25
-                            case 'meme' | 'image/video':
+                            case 'meme' | 'image/video' :
                                 multiplier = .5
                             case 'question':
                                 multiplier = .1
