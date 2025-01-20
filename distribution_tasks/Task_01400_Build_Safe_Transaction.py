@@ -36,13 +36,13 @@ class TransactionBuilderDistributionTask(DistributionTask):
         contrib_contract = w3.eth.contract(address=w3.to_checksum_address(self.config["contracts"]["arb1"]["contrib"]),
                                                abi=self.contrib_abi)
 
-        distribute_contract_data = distribute_contract.encodeABI("distribute", [
+        distribute_contract_data = distribute_contract.encode_abi("distribute", [
                     [w3.to_checksum_address(d['address']) for d in distribution_summary if float(d['points']) > 0],
                     [w3.to_wei(d['points'], 'ether') for d in distribution_summary if float(d['points']) > 0],
                     w3.to_checksum_address(self.config["contracts"]["arb1"]["donut"])
                 ])
 
-        contrib_contract_data = contrib_contract.encodeABI("mintMany", [
+        contrib_contract_data = contrib_contract.encode_abi("mintMany", [
                 [w3.to_checksum_address(d['address']) for d in distribution_summary if float(d['contrib']) > 0],
                 [w3.to_wei(d['contrib'], 'ether') for d in distribution_summary if float(d['contrib']) > 0]
             ])
