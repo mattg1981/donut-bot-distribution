@@ -8,3 +8,4 @@
 /temp/pay2post*
 /temp/posts*
 /temp/round_*
+__pycache__/
