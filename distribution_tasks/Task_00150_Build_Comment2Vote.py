@@ -151,9 +151,7 @@ class AllowSpecialMembersIfApplicableDistributionTask(DistributionTask):
                         match flair.lower().strip():
                             case 'original content':
                                 multiplier = 2
-                            case 'link':
-                                multiplier = .75
-                            case 'comedy' | 'self story':
+                            case 'comedy' | 'self story' | 'link':
                                 multiplier = .25
                             case 'meme' | 'image/video' :
                                 multiplier = .5
