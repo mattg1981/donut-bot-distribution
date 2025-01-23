@@ -133,7 +133,7 @@ class AllowSpecialMembersIfApplicableDistributionTask(DistributionTask):
                         continue
                     else:
                         post['upvotes'] = post['upvotes'] + 1
-                        post['weight'] = post['weight'] + float(tip['weight'])
+                        post['weight'] = post['weight'] + (float(tip['weight']) *  post['multiplier'])
                         post['amount'] += float(tip['amount'])
                         post['tips'].append(tip)
 
@@ -194,7 +194,7 @@ class AllowSpecialMembersIfApplicableDistributionTask(DistributionTask):
                         continue
                     else:
                         comment_record['upvotes'] = comment_record['upvotes'] + 1
-                        comment_record['weight'] = comment_record['weight'] + float(tip['weight'])
+                        comment_record['weight'] = comment_record['weight'] + (float(tip['weight']) *  comment_record['multiplier'])
                         comment_record['amount'] += float(tip['amount'])
                         comment_record['tips'].append(tip)
                 else:
