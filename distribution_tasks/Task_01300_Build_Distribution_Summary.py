@@ -18,8 +18,8 @@ class BuildSummaryDistributionTask(DistributionTask):
         contrib_data = super().get_current_document_version('contrib')
         # voter_data = super().get_current_document_version(pipeline_config['voter'])
         # tip_bonus_data = super().get_current_document_version(pipeline_config['tipping_bonus'])
-        mod_rewards = super().get_current_document_version(pipeline_config['mod_rewards'])
-        organizer_rewards = super().get_current_document_version(pipeline_config['organizers'])
+        #mod_rewards = super().get_current_document_version(pipeline_config['mod_rewards'])
+        #organizer_rewards = super().get_current_document_version(pipeline_config['organizers'])
         base_distribution_file = super().get_document_version('distribution', 0)
         user_data = super().get_current_document_version('users')
 
@@ -31,8 +31,8 @@ class BuildSummaryDistributionTask(DistributionTask):
                 pass
 
             offchain = next((o for o in offchain_data if o['user'].lower() == d['username'].lower()), None)
-            mod = next((t for t in mod_rewards if t['username'].lower() == d['username'].lower()), None)
-            org = next((o for o in organizer_rewards if o['username'].lower() == d['username'].lower()), None)
+            #mod = next((t for t in mod_rewards if t['username'].lower() == d['username'].lower()), None)
+            #org = next((o for o in organizer_rewards if o['username'].lower() == d['username'].lower()), None)
             contrib_record = next((c for c in contrib_data if c['username'].lower() == d['username'].lower()), None)
             user = next((u for u in user_data if u['username'].lower() == d['username'].lower()), None)
 
@@ -50,17 +50,17 @@ class BuildSummaryDistributionTask(DistributionTask):
             voting = float(d['voter_bonus_comments']) + float(d['voter_bonus_posts'])
             points += voting
 
-            if mod:
-                moderator = float(mod['points'])
-                points += moderator
-            else:
-                moderator = 0
-
-            if org:
-                organizer = float(org['points'])
-                points += organizer
-            else:
-                organizer = 0
+            # if mod:
+            #     moderator = float(mod['points'])
+            #     points += moderator
+            # else:
+            #     moderator = 0
+            #
+            # if org:
+            #     organizer = float(org['points'])
+            #     points += organizer
+            # else:
+            #     organizer = 0
 
             contrib = float((contrib_record and contrib_record['contrib']) or 0)
             pay2post = float(d['pay2post_after_bonus']) or 0
@@ -106,8 +106,8 @@ class BuildSummaryDistributionTask(DistributionTask):
                 'voting': round(voting, 4),
                 # 'donut_upvoter': donut_upvoter,
                 # 'quad_rank': quad_rank,
-                'moderator': round(moderator, 4),
-                'organizer': round(organizer, 4),
+                #'moderator': round(moderator, 4),
+                #'organizer': round(organizer, 4),
                 'pay2post': round(pay2post * -1, 4),
                 'eligible_comments': d['eligible_comments'],
                 'eligible_posts': d['eligible_posts'],

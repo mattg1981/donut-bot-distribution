@@ -6,7 +6,7 @@ from distribution_tasks.distribution_task import DistributionTask
 class ApplyOrganizerRewardsDistributionTask(DistributionTask):
     def __init__(self, config, logger_name):
         DistributionTask.__init__(self, config, logger_name)
-        self.priority = 800
+        self.priority = -800
 
     def process(self, pipeline_config):
         super().process(pipeline_config)
