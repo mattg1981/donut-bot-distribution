@@ -1,0 +1,6 @@
+# Ignore .log and .csv files for linguistic searching
+*.log linguist-vendored=true
+*.csv linguist-vendored=true
+
+# Mark the repository as a Python project
+* linguist-language=Python
