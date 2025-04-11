@@ -22,13 +22,15 @@ class BuildSummaryDistributionTask(DistributionTask):
         #organizer_rewards = super().get_current_document_version(pipeline_config['organizers'])
         base_distribution_file = super().get_document_version('distribution', 0)
         user_data = super().get_current_document_version('users')
+        allocation = super().get_current_document_version('distribution_allocation')[0]
 
         distribution_summary = []
+        
+        # ETIP - 121
+        # https://snapshot.box/#/s:ethtraderdao.eth/proposal/0x8bf37aad048618d6869b280e513d34cc148518de55b5047adfbdcd8549c22577
+        max_points = (float(allocation['posts']) + float(allocation['comments'])) * .05
 
         for d in distribution_data:
-
-            if d['username'].lower() == 'darunningdead':
-                pass
 
             offchain = next((o for o in offchain_data if o['user'].lower() == d['username'].lower()), None)
             #mod = next((t for t in mod_rewards if t['username'].lower() == d['username'].lower()), None)
@@ -87,10 +89,13 @@ class BuildSummaryDistributionTask(DistributionTask):
                 else:
                     points = 0
                 contrib = 0
+                
+            # remove negative values
+            points = max(round(points, 4), 0)            
 
             distribution_summary.append({
                 'username': d['username'],
-                'points': max(round(points, 4), 0),
+                'points': min(points, max_points),
                 'contrib': round(contrib, 4),
                 # 'base': round(float(base), 4),
 
