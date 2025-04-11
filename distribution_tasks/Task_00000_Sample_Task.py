@@ -23,5 +23,5 @@ class SampleDistributionTask(DistributionTask):
 
         # add results to the pipeline result. These results can be accessed by other tasks that run after this one.
         return super().update_pipeline(pipeline_config, {
-            'additional_key_to_be_passed_downtstream': 'value',
+            'additional_kvp_to_be_passed_downtstream': 'value',
         })

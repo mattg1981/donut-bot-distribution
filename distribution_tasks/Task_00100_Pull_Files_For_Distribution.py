@@ -47,13 +47,14 @@ class PullBaseFilesDistributionTask(DistributionTask):
 
         # base raw files
         self.logger.info("  grabbing raw distribution zip file...")
+        filename = "raw_zip"
         if not super().get_current_document_version("raw_zip"):
             self.logger.info("  raw zip file not present in cache, pulling down from web...")
 
             base_raw_url = f'https://www.mydonuts.online/home/mydonuts/static/rounds/round_{super().distribution_round}.zip'
             try:
                 url_result = urllib.request.urlretrieve(base_raw_url)
-                super().cache_file(super().save_document_version([{'zip_path': url_result[0]}], "raw_zip"))
+                super().cache_file(super().save_document_version([{'zip_path': url_result[0]}], filename))
             except Exception as e:
                 self.logger.error(f"failed to pull down raw distribution zip file")
                 self.logger.error(f"{e}")
@@ -61,8 +62,8 @@ class PullBaseFilesDistributionTask(DistributionTask):
                 exit(4)
         else:
             self.logger.info("  cached version of the raw zipped file have been detected and being used")
-            self.logger.info("  NOTE: if there was a previous issue with this file causing a re-run to be required, "
-                             "ensure you delete this file form the cache directory")
+            self.logger.info(f"  NOTE: if there was a previous issue with this file causing a re-run to be required, "
+                             f"ensure you delete the .csv file beginning with \"{filename}\" from the cache directory")
 
         # get distribution allocation file
         self.logger.info("  grabbing distribution allocation .json file...")
