@@ -77,11 +77,11 @@ class AllowSpecialMembersIfApplicableDistributionTask(DistributionTask):
                 reader = csv.reader(csv_file, delimiter=',')
                 for row in reader:
                     comment_meta.append({
-                        'id': row[0],
-                        'score': row[1],
-                        'author': row[2],
-                        'date': row[3],
-                        'submission': row[4],
+                        'id': row[1],
+                        'score': row[2],
+                        'author': row[3],
+                        'date': row[4],
+                        'submission': row[5],
                         'multiplier': .5 if "daily" in file else 1,
                     })
 
