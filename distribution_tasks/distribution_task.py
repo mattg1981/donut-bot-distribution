@@ -18,12 +18,15 @@ class DistributionTask:
         if not obj:
             return None
 
-        file_names = [file for file in os.listdir(self.working_directory)
-                      if file.startswith(f"{filename}.")]
+        file_names = [
+            file
+            for file in os.listdir(self.working_directory)
+            if file.startswith(f"{filename}.")
+        ]
 
         version = 0
 
-        regex_pattern = f'{filename}\\.(\\d*)\\.\\w+\\.csv'
+        regex_pattern = f"{filename}\\.(\\d*)\\.\\w+\\.csv"
         regex = re.compile(regex_pattern)
 
         if len(file_names):
@@ -34,8 +37,10 @@ class DistributionTask:
 
             version += 1
 
-        file_location = os.path.join(self.working_directory,
-                                     f"{filename}.{str(version).zfill(3)}.{self._logger_extra}.csv")
+        file_location = os.path.join(
+            self.working_directory,
+            f"{filename}.{str(version).zfill(3)}.{self._logger_extra}.csv",
+        )
 
         # wrap the dict in a list so that its a uniform structure for the following logic
         if isinstance(obj, dict):
@@ -48,8 +53,8 @@ class DistributionTask:
             # currently are dicts and objects, so it works for our needs now
             obj = [vars(o) for o in obj]
 
-        with open(file_location, 'w', newline='') as output_file:
-            writer = csv.DictWriter(output_file, obj[0].keys(), extrasaction='ignore')
+        with open(file_location, "w", newline="") as output_file:
+            writer = csv.DictWriter(output_file, obj[0].keys(), extrasaction="ignore")
             writer.writeheader()
             writer.writerows(obj)
 
@@ -63,12 +68,14 @@ class DistributionTask:
         top_level_dir = None
 
         for dir in directories:
-            file_names = [file for file in os.listdir(dir) if file.startswith(f"{filename}.")]
+            file_names = [
+                file for file in os.listdir(dir) if file.startswith(f"{filename}.")
+            ]
 
             if not file_names:
                 continue
 
-            regex_pattern = f'{filename}\\.(\\d*)\\.\\w+\\.csv'
+            regex_pattern = f"{filename}\\.(\\d*)\\.\\w+\\.csv"
             regex = re.compile(regex_pattern)
 
             if not max_versioned_location:
@@ -87,18 +94,21 @@ class DistributionTask:
 
         location = os.path.join(top_level_dir, max_versioned_location)
 
-        with open(location, newline='') as csvfile:
-            reader = csv.DictReader(csvfile, delimiter=',')
+        with open(location, newline="") as csvfile:
+            reader = csv.DictReader(csvfile, delimiter=",")
             return list(reader)
 
     def get_document_version(self, filename, version="latest"):
         if version == "latest":
             return self.get_current_document_version(filename)
 
-        file_names = [file for file in os.listdir(self.working_directory)
-                      if file.startswith(f"{filename}.")]
+        file_names = [
+            file
+            for file in os.listdir(self.working_directory)
+            if file.startswith(f"{filename}.")
+        ]
 
-        regex_pattern = f'{filename}\\.(\\d*)\\.\\w+\\.csv'
+        regex_pattern = f"{filename}\\.(\\d*)\\.\\w+\\.csv"
         regex = re.compile(regex_pattern)
 
         file_version = None
@@ -110,51 +120,55 @@ class DistributionTask:
 
         location = os.path.join(self.working_directory, file_version)
 
-        with open(location, newline='') as csvfile:
-            reader = csv.DictReader(csvfile, delimiter=',')
+        with open(location, newline="") as csvfile:
+            reader = csv.DictReader(csvfile, delimiter=",")
             return list(reader)
 
-    def save_safe_tx(self, tx):
-        tx_builder_dir = self.pipeline['tx_builder_dir']
-        tx_file_path = os.path.join(tx_builder_dir, f"arb1_tx_{self.distribution_round}.json")
+    def save_safe_tx(self, tx, file_suffix="distribution"):
+        tx_builder_dir = self.pipeline["tx_builder_dir"]
+        tx_file_path = os.path.join(
+            tx_builder_dir, f"{file_suffix}_{self.distribution_round}.json"
+        )
 
         if os.path.exists(tx_file_path):
             os.remove(tx_file_path)
 
-        with open(tx_file_path, 'w', newline='') as f:
+        with open(tx_file_path, "w", newline="") as f:
             json.dump(tx, f, indent=4)
 
     def cache_file(self, versioned_document_path):
         basename = os.path.basename(versioned_document_path)
-        shutil.copyfile(versioned_document_path, os.path.join(self.cache_directory, basename))
+        shutil.copyfile(
+            versioned_document_path, os.path.join(self.cache_directory, basename)
+        )
 
     @property
     def distribution_round(self):
         if not self.pipeline:
             return None
 
-        return self.pipeline['round']
+        return self.pipeline["round"]
 
     @property
     def current_step(self):
         if not self.pipeline:
             return None
 
-        return self.pipeline['step']
+        return self.pipeline["step"]
 
     @property
     def working_directory(self):
         if not self.pipeline:
             return None
 
-        return self.pipeline['working_dir']
+        return self.pipeline["working_dir"]
 
     @property
     def cache_directory(self):
         if not self.pipeline:
             return None
 
-        return self.pipeline['cache_dir']
+        return self.pipeline["cache_dir"]
 
     @property
     def priority(self):
