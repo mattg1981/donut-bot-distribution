@@ -160,6 +160,28 @@ class BuildSummaryDistributionTask(DistributionTask):
                 }
             )
 
+        # calculate and insert the total number of donuts to be burned
+        distribution_allocation = float(allocation["posts"]) + float(allocation["comments"])
+        burn_amount = round(distribution_allocation - distribution_summary_total, 4)
+        distribution_summary.append(
+            {
+                "username": f"ROUND {pipeline_config["round"]} BURN",
+                "points": burn_amount,
+                "contrib": 0,
+                "comment_score": 0,
+                "post_score": 0,
+                "offchain_tips": 0,
+                "funded": 0,
+                "voting": 0,
+                "pay2post": 0,
+                "eligible_comments": 0,
+                "eligible_posts": 0,
+                "eligibility_reason": "",
+                "address": "0x000000000000000000000000000000000000dEaD",
+            }
+        )
+
+        # sort the distribution summary by points
         distribution_summary.sort(key=lambda x: float(x["points"]), reverse=True)
 
         distribution_summary_filename = "distribution_summary"
@@ -172,5 +194,6 @@ class BuildSummaryDistributionTask(DistributionTask):
             {
                 "distribution_summary": distribution_summary_filename,
                 "distribution_summary_total": distribution_summary_total,
+                "burn_amount": burn_amount,
             },
         )

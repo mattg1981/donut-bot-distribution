@@ -15,7 +15,7 @@ class BuildSummaryDistributionTask(DistributionTask):
         with open(os.path.normpath("contracts/distribute_abi.json"), "r") as f:
             self.distribute_abi = json.load(f)
 
-        self.priority = 1350
+        self.priority = -1350
 
     def process(self, pipeline_config):
         super().process(pipeline_config)
@@ -23,24 +23,20 @@ class BuildSummaryDistributionTask(DistributionTask):
             f"begin task [step: {super().current_step}] [file: {os.path.basename(__file__)}]"
         )
 
-        allocation = super().get_current_document_version("distribution_allocation")[0]
-        distribution_summary_total = round(
-            float(pipeline_config["distribution_summary_total"]), 4
-        )
+        # allocation = super().get_current_document_version("distribution_allocation")[0]
+        # distribution_summary_total = round(
+        #     float(pipeline_config["distribution_summary_total"]), 4
+        # )
 
         w3 = Web3()
         distribute_contract = w3.eth.contract(
-            address=w3.to_checksum_address(
-                self.config["contracts"]["arb1"]["distribute"]
-            ),
+            address=w3.to_checksum_address(self.config["contracts"]["arb1"]["distribute"]),
             abi=self.distribute_abi,
         )
 
-        distribution_allocation = float(allocation["posts"]) + float(
-            allocation["comments"]
-        )
-
-        burn_amount = distribution_allocation - distribution_summary_total
+        # distribution_allocation = float(allocation["posts"]) + float(allocation["comments"])
+        #
+        # burn_amount = distribution_allocation - distribution_summary_total
 
         distribute_contract_data = distribute_contract.encode_abi(
             "distribute",
@@ -50,7 +46,7 @@ class BuildSummaryDistributionTask(DistributionTask):
                         "0x000000000000000000000000000000000000dEaD"
                     )  # burn address
                 ],
-                [w3.to_wei(burn_amount, "ether")],  # amount to burn
+                [w3.to_wei(int(pipeline_config["burn_amount"]), "ether")],  # amount to burn
                 w3.to_checksum_address(self.config["contracts"]["arb1"]["donut"]),
             ],
         )
