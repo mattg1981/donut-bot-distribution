@@ -16,6 +16,9 @@ class AllowSpecialMembersIfApplicableDistributionTask(DistributionTask):
         members = super().get_current_document_version(pipeline_config['memberships'])
 
         # todo: filter to community="ethtrader" or community="all" if we begin distributions in other communities
+        if not members:
+            members = []
+
         special_member_names = list(set([m['redditor'].lower() for m in members]))
 
         self.logger.info(f"  ineligible users BEFORE special memberships: [{len([
