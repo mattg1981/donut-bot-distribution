@@ -35,7 +35,7 @@ class BuildSummaryDistributionTask(DistributionTask):
         # ETIP - 121
         # https://snapshot.box/#/s:ethtraderdao.eth/proposal/0x8bf37aad048618d6869b280e513d34cc148518de55b5047adfbdcd8549c22577
         # each distribution has a set amount (allocation['posts'] +  allocation['comments'] = 850k [at time of writing]) of donuts to be distributed.
-        # The max points is 5% of that amount.
+        # The max points allowed to be earned per individual are set to 5% of that amount.
         max_points = (float(allocation["posts"]) + float(allocation["comments"])) * 0.05
 
         # ETIP - 121?
