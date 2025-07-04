@@ -46,6 +46,15 @@
       {
         "id": "0x8e9aac722a1849719f79ce8d08cecc9886506c2b3d296b81ac5a2e39a44416d9",
         "reason": "lp donuts were not being counted"
+      },
+
+      {
+        "id": "0xdcd28bdb8fe5798464e6db791b323e29d05de7e9da421ca69e9f1e30f3843146",
+        "reason": "issue with graph prevented users from voting"
+      },
+      {
+        "id": "0x9104bf7cc04cf4eecd794637005b867e763198048cd80d4548d7e2c0e082367a",
+        "reason": "issue with graph prevented users from voting"
       }
     ]
   },
