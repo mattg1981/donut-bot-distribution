@@ -15,6 +15,8 @@ class BuildSummaryDistributionTask(DistributionTask):
         with open(os.path.normpath("contracts/distribute_abi.json"), "r") as f:
             self.distribute_abi = json.load(f)
 
+        # a separate SAFE transaction is no longer generated, rather the burn is included in the distribution
+        # transaction, so this task is no longer needed
         self.priority = -1350
 
     def process(self, pipeline_config):
