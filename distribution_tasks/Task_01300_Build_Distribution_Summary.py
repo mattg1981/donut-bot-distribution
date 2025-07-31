@@ -29,6 +29,7 @@ class BuildSummaryDistributionTask(DistributionTask):
         # base_distribution_file = super().get_document_version('distribution', 0)
         user_data = super().get_current_document_version("users")
         allocation = super().get_current_document_version("distribution_allocation")[0]
+        multiplier_data = super().get_current_document_version("multiplier")
 
         distribution_summary = []
 
@@ -70,6 +71,22 @@ class BuildSummaryDistributionTask(DistributionTask):
                 ),
                 None,
             )
+
+            multiplier = next(
+                (
+                    m["multiplier"]
+                    for m in multiplier_data
+                    if m["username"].lower() == d["username"].lower()
+                ),
+                None,
+            )
+
+            if not multiplier:
+                self.logger.info("  >> no multiplier found for user %s", d["username"])
+                multiplier = 1.0
+            else:
+                multiplier = float(multiplier)
+
 
             comment_score = float(d["comment_score"])
             if not int(d["eligible_comments"]):
@@ -133,7 +150,7 @@ class BuildSummaryDistributionTask(DistributionTask):
             distribution_summary.append(
                 {
                     "username": d["username"],
-                    "points": points,
+                    "points": points * multiplier,
                     "contrib": round(contrib, 4),
                     # 'base': round(float(base), 4),
                     # 'base': Decimal(d['points_after_bonus']),
@@ -156,6 +173,7 @@ class BuildSummaryDistributionTask(DistributionTask):
                     "eligible_comments": d["eligible_comments"],
                     "eligible_posts": d["eligible_posts"],
                     "eligibility_reason": d["eligibility_reason"],
+                    "multiplier": multiplier,
                     "address": user["address"],
                 }
             )
@@ -177,6 +195,7 @@ class BuildSummaryDistributionTask(DistributionTask):
                 "eligible_comments": 0,
                 "eligible_posts": 0,
                 "eligibility_reason": "",
+                "multiplier": 1.0,
                 "address": "0x000000000000000000000000000000000000dEaD",
             }
         )

@@ -31,9 +31,23 @@ class AllowSpecialMembersIfApplicableDistributionTask(DistributionTask):
         self.logger.info(f"unzip raw zip file to temp directory...")
         raw_file = super().get_current_document_version("raw_zip")[0]
         unzip_path = str(os.path.join(pipeline_config['temp_dir']))
-
         with zipfile.ZipFile(raw_file['zip_path'], 'r') as zip_ref:
             zip_ref.extractall(unzip_path)
+
+        # per https://snapshot.box/#/s:ethtraderdao.eth/proposal/0xc50a202a666f78ba883d33245f045cf4954cfd45078b840596d15c57a5821811
+        # the multiplier field (calculation performed by u/reddito321) is stored in the round_{}.csv file.  This file
+        # was never included in the pipeline.  Save it for future use in the pipeline.
+        self.logger.info("  grabbing multiplier from extracted files...")
+        multiplier_file = os.path.join(unzip_path, f'round_{super().distribution_round}.csv')
+
+        if not os.path.exists(multiplier_file):
+            self.logger.error(f"multiplier file not found in extracted files: {multiplier_file}")
+
+        with open(multiplier_file, 'r', encoding="utf8") as csv_file:
+            reader = csv.DictReader(csv_file, delimiter=',')
+            multiplier_data = [row for row in reader]
+
+        super().save_document_version(multiplier_data, "multiplier")
 
         # get post metadata
         self.logger.info(f"compile post meta from raw zip files...")
