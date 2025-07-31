@@ -118,6 +118,10 @@ class BuildSummaryDistributionTask(DistributionTask):
             pay2post = float(d["pay2post_after_bonus"]) or 0
             points -= pay2post
 
+            # apply the multiplier to the points.  Important to do this here so that tips and funded amounts
+            # are not multiplied by the multiplier
+            points *= multiplier
+
             if offchain:
                 offchain_tips = float(offchain["tips"])
                 if points <= 0:
@@ -150,7 +154,7 @@ class BuildSummaryDistributionTask(DistributionTask):
             distribution_summary.append(
                 {
                     "username": d["username"],
-                    "points": points * multiplier,
+                    "points": points,
                     "contrib": round(contrib, 4),
                     # 'base': round(float(base), 4),
                     # 'base': Decimal(d['points_after_bonus']),
