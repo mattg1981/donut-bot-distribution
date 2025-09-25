@@ -73,7 +73,7 @@ class DistributeOffchainTipsDistributionTask(DistributionTask):
                 continue
 
             # account was funded, but they did not show up in the original distribution file, we will add them there
-            if not earner_record:
+            if not earner_record and fa['address'] != '0x0':
                 self.logger.warning(f"  user [{fa['user']}] funded account but does not appear in the .csv, adding to file")
                 distribution.append({
                     "username": {fa['username']},
