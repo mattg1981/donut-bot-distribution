@@ -1,14 +1,14 @@
 {
     "label": "round_153",
-    "totalDistribution": 850000.0,
+    "totalDistribution": 850000.0000000006,
     "pay2post": 0,
-    "totalVoterBonus": 172.8394,
+    "totalVoterBonus": 172.83939999999998,
     "totalFromRemovedUsers": 0,
     "summary": {
         "ROUND 153 BURN": {
             "username": "ROUND 153 BURN",
             "address": "0x000000000000000000000000000000000000dEaD",
-            "donut": 422283.6779,
+            "donut": 421870.248,
             "data": {
                 "removed": false,
                 "removalReason": "",
@@ -1059,6 +1059,20 @@
             "username": "fakeplayer1",
             "address": "0x47FeDc21b45718c74d635d6F4274d3aED9140E3D",
             "donut": 415.4299,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 413.4299,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "fatkid13yrs": {
+            "username": "fatkid13yrs",
+            "address": "0x0941E330FfE52f3c0e9b20D7919DE3A56b8f1962",
+            "donut": 413.4299,
             "data": {
                 "removed": false,
                 "removalReason": "",
