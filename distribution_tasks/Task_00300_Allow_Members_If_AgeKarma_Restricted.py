@@ -21,9 +21,8 @@ class AllowSpecialMembersIfApplicableDistributionTask(DistributionTask):
 
         special_member_names = list(set([m['redditor'].lower() for m in members]))
 
-        self.logger.info(f"  ineligible users BEFORE special memberships: [{len([
-            em for em in eligibility_matrix if em['reason'] and em['reason'] not in ["special membership"]
-        ])}]")
+        self.logger.info(f"  ineligible users BEFORE special memberships: "
+                         f"[{len([em for em in eligibility_matrix if em['reason'] and em['reason'] not in ['special membership']])}]")
 
         eligible_users = [u['user'] for u in eligibility_matrix if u['user'] in special_member_names
                           and (u['reason'] == 'karma and/or age' or u['reason'] == 'comments only')]
@@ -38,9 +37,7 @@ class AllowSpecialMembersIfApplicableDistributionTask(DistributionTask):
                 u['posts'] = 1
                 u['reason'] = 'special membership'
 
-        self.logger.info(f"  ineligible users AFTER special memberships: [{len([
-            em for em in eligibility_matrix if em['reason'] and em['reason'] not in ["special membership"]
-        ])}]")
+        self.logger.info(f"  ineligible users AFTER special memberships: [{len([em for em in eligibility_matrix if em['reason'] and em['reason'] not in ['special membership']])}]")
 
         super().save_document_version(eligibility_matrix, 'eligibility_matrix')
 

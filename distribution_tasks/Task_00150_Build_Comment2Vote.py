@@ -139,7 +139,7 @@ class AllowSpecialMembersIfApplicableDistributionTask(DistributionTask):
                         # determine if the weight of this tip is greater than the weight of previous tips
                         previous_max_weight = float(max(previous_tips, key=lambda x: x['weight'])['weight'])
                         if float(tip['weight']) > previous_max_weight:
-                            self.logger.info(f'  switching weight from {previous_max_weight} to {tip['weight']}')
+                            self.logger.info(f"  switching weight from {previous_max_weight} to {tip['weight']}")
                             post['weight'] -= previous_max_weight  # remove the weight previously associated
                             post['weight'] += float(tip['weight'])
                             post['amount'] += float(tip['amount'])
@@ -200,7 +200,7 @@ class AllowSpecialMembersIfApplicableDistributionTask(DistributionTask):
                         # determine if the weight of this tip is greater than the weight of previous tips
                         previous_max_weight = float(max(previous_tips, key=lambda x: x['weight'])['weight'])
                         if float(tip['weight']) > previous_max_weight:
-                            self.logger.info(f'  switching weight from {previous_max_weight} to {tip['weight']}')
+                            self.logger.info(f"  switching weight from {previous_max_weight} to {tip['weight']}")
                             comment_record['weight'] -= previous_max_weight  # remove the weight previously associated
                             comment_record['weight'] += float(tip['weight'])
                             comment_record['amount'] += float(tip['amount'])

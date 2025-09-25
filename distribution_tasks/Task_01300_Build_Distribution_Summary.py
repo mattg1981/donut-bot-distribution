@@ -187,7 +187,7 @@ class BuildSummaryDistributionTask(DistributionTask):
         burn_amount = round(distribution_allocation - distribution_summary_total, 4)
         distribution_summary.append(
             {
-                "username": f"ROUND {pipeline_config["round"]} BURN",
+                "username": f"ROUND {pipeline_config['round']} BURN",
                 "points": burn_amount,
                 "contrib": 0,
                 "comment_score": 0,
