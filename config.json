@@ -1,6 +1,7 @@
 {
   "log_path": "logs/donut-bot-distribution.log",
-  "base_csv_location": "https://www.mydonuts.online/home/mydonuts/static/rounds/round_#ROUND#.csv",
+  "base_csv_location": "https://www.mydonuts.life/home/mydonuts/static/rounds/round_#ROUND#.csv",
+  "base_zip_location": "https://www.mydonuts.life/home/mydonuts/static/rounds/round_#ROUND#.zip",
   "snapshot.org": {
     "ignore": [
       {

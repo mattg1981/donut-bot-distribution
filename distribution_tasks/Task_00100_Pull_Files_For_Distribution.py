@@ -51,7 +51,8 @@ class PullBaseFilesDistributionTask(DistributionTask):
         if not super().get_current_document_version("raw_zip"):
             self.logger.info("  raw zip file not present in cache, pulling down from web...")
 
-            base_raw_url = f'https://www.mydonuts.online/home/mydonuts/static/rounds/round_{super().distribution_round}.zip'
+            base_raw_url = self.config.get("base_zip_location").replace("#ROUND#", str(super().distribution_round))
+
             try:
                 url_result = urllib.request.urlretrieve(base_raw_url)
                 super().cache_file(super().save_document_version([{'zip_path': url_result[0]}], filename))
