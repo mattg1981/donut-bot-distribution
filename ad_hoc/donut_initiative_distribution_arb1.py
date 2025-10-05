@@ -31,24 +31,15 @@ if __name__ == '__main__':
     distribute_contract = w3.eth.contract(address=w3.to_checksum_address(ARB1_DISTRIBUTE_CONTRACT_ADDRESS),
                                           abi=distribute_abi)
 
-    gno_contrib_contract = w3.eth.contract(address=w3.to_checksum_address(ARB1_CONTRIB_CONTRACT_ADDRESS),
+    contrib_contract = w3.eth.contract(address=w3.to_checksum_address(ARB1_CONTRIB_CONTRACT_ADDRESS),
                                            abi=arb1_contrib_abi)
-
-    # awards = [
-    #     {
-    #         "address": "0x0c4B8B79E0ebA3e407Bc175176Db496474046e9a",
-    #         "donut": 0,
-    #         "contrib": 878_986,
-    #         "reason": "migrate contrib"
-    #     }
-    # ]
 
     awards = [
         {
-            "user": "u/reddito321",
-            "donut": 60_000,
-            "contrib": 60_000,
-            "reason": "mydonuts tip estimator"
+            "address": "0x354E93137D53ec467112504d7b0e4961362Ef7B7",
+            "donut": 0,
+            "contrib": 1_398_510.781,
+            "reason": "wallet migration"
         }
     ]
 
@@ -85,14 +76,14 @@ if __name__ == '__main__':
             award["address"] = user["address"]
 
     # encode the donut data
-    distribute_contract_data = distribute_contract.encodeABI("distribute", [
+    distribute_contract_data = distribute_contract.encode_abi("distribute", [
         [w3.to_checksum_address(a['address']) for a in awards if float(a['donut']) > 0],
         [w3.to_wei(a['donut'], 'ether') for a in awards if float(a['donut']) > 0],
         w3.to_checksum_address(ARB1_DONUT_CONTRACT_ADDRESS)
     ])
 
     # encode the contrib data
-    contrib_contract_data = gno_contrib_contract.encodeABI("mintMany", [
+    contrib_contract_data = contrib_contract.encode_abi("mintMany", [
         [w3.to_checksum_address(a['address']) for a in awards if float(a['contrib']) > 0],
         [w3.to_wei(a['contrib'], 'ether') for a in awards if float(a['contrib']) > 0]
     ])
