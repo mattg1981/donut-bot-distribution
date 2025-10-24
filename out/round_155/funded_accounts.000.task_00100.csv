@@ -1,0 +1,2 @@
+user,address,amount,token,block_number,tx_hash,tx_timestamp,processed_at,created_at
+,0x2fdb007e7081487880b9b6fa0145d5895b965851,55753.21118314029,DONUT,388004973,0x61a0e33436b90c2015f2834d7cac8fb1dc2e4b002fd7fa3e1f4c71ce5ca9bc55,2025-10-10 08:54:31,,2025-10-10 09:00:06.020736
