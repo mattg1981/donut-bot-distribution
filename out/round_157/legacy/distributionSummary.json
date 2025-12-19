@@ -1,0 +1,1689 @@
+{
+    "label": "round_157",
+    "totalDistribution": 850000.0000000015,
+    "pay2post": 0,
+    "totalVoterBonus": 0.0,
+    "totalFromRemovedUsers": 0,
+    "summary": {
+        "ROUND 157 BURN": {
+            "username": "ROUND 157 BURN",
+            "address": "0x000000000000000000000000000000000000dEaD",
+            "donut": 406691.6272,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 0.0,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "masterpieceloud4931": {
+            "username": "masterpieceloud4931",
+            "address": "0x16Bd6F1d0d3a5c039ca67e0Da0DEa4bA3823bB23",
+            "donut": 42500.0,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 148195.6047,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 4500.0
+            }
+        },
+        "kirtash93": {
+            "username": "kirtash93",
+            "address": "0xc149c6d082Da03319497A4Cfea8324A88CD1C898",
+            "donut": 42500.0,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 119674.6912,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 4750.0
+            }
+        },
+        "dbrimatt": {
+            "username": "dbrimatt",
+            "address": "0xFEdD14d3a32FaAbfbd6E290fAA73Aec58e894650",
+            "donut": 42500.0,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 69491.247,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 2000.0
+            }
+        },
+        "0xmarcaurel": {
+            "username": "0xmarcaurel",
+            "address": "0x354E93137D53ec467112504d7b0e4961362Ef7B7",
+            "donut": 42500.0,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 59744.991200000004,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 2500.0
+            }
+        },
+        "cymandetv": {
+            "username": "cymandetv",
+            "address": "0x94f5926AD5902b41588097788A1e84884aCE4494",
+            "donut": 42500.0,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 57261.472200000004,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 5750.0
+            }
+        },
+        "drrobbe": {
+            "username": "drrobbe",
+            "address": "0x5eD61dee19B3355cf125a5cB95bEC8f344523628",
+            "donut": 42500.0,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 49769.9884,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 1000.0
+            }
+        },
+        "siginwanne": {
+            "username": "siginwanne",
+            "address": "0xD90C22d2Da086Eaf293E6Ca056116C7d08DecA47",
+            "donut": 27143.0497,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 40962.4689,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 6250.0
+            }
+        },
+        "gabfrommars": {
+            "username": "gabfrommars",
+            "address": "0xce1EeFfa0390b7A97BA342EebF682170A1fD02C3",
+            "donut": 19519.2082,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 24482.2082,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 5000.0
+            }
+        },
+        "obolli": {
+            "username": "obolli",
+            "address": "0xd44d3D1652851a35ad1A0418114c03a0f97c1D60",
+            "donut": 12464.195,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 13699.195,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 1250.0
+            }
+        },
+        "mixdealyn": {
+            "username": "mixdealyn",
+            "address": "0xd90deab1894f334febcB808b4b44265Be463aAa2",
+            "donut": 11549.4628,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 12037.4627,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 500.0
+            }
+        },
+        "king__robbo": {
+            "username": "king__robbo",
+            "address": "0x02977d017bf7002b5B8f32C1D2F3024f96eaB73b",
+            "donut": 9749.1324,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 9676.1324,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "donut-bot": {
+            "username": "donut-bot",
+            "address": "0xa8C8c9e18C763805c91bcB720B2320aDe16a0BBf",
+            "donut": 8548.7167,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 8532.7167,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "coinfeeds-bot": {
+            "username": "coinfeeds-bot",
+            "address": "0xd056666321700092B032b2571431B2478cD6512E",
+            "donut": 8230.6902,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 8216.6902,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "wisechest8227": {
+            "username": "wisechest8227",
+            "address": "0x5dA9d055e6d8EBE0bFD59BD15cf631cBEF786082",
+            "donut": 6199.0681,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 7202.0681,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 1000.0
+            }
+        },
+        "remedyiii": {
+            "username": "remedyiii",
+            "address": "0x47F7f4a47e11e2B252aa9885C36B54cFa3Ce6eC1",
+            "donut": 3798.3185,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 3792.3185,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "lorem_epsom_dollar": {
+            "username": "lorem_epsom_dollar",
+            "address": "0xbA57aCa2547387c651cA32FE7b17D92F90253B44",
+            "donut": 3611.1289,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 3813.0183,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "xcreampye69x": {
+            "username": "xcreampye69x",
+            "address": "0xe64C85059F9560fd475cc4d3DDe881334917D4eB",
+            "donut": 3511.1114,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 3502.1114,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "thorp1": {
+            "username": "thorp1",
+            "address": "0x3f65Ad6363073D3328b3F47273D7F3C7f574fD13",
+            "donut": 3453.602,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 3476.292,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "dongerated": {
+            "username": "dongerated",
+            "address": "0xAeE1c7b2d3Ea82C4A1014696B6A5e3371fC698FC",
+            "donut": 3377.432,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 5606.432,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 2250.0
+            }
+        },
+        "interpole10": {
+            "username": "interpole10",
+            "address": "0x0433d140d0F29d05D77a8Ee9f3da24E1A2b73339",
+            "donut": 3163.2654,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 3160.2654,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "alt-co": {
+            "username": "alt-co",
+            "address": "0xc27141e41BfC20d37911E5D6178EaabA10F825d8",
+            "donut": 2632.8797,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 2880.8797,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 250.0
+            }
+        },
+        "tahiraslam8k": {
+            "username": "tahiraslam8k",
+            "address": "0x01761f6FF1CFa8f81FbFC830df947a11a1C34F6D",
+            "donut": 2533.1875,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 2537.1875,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "ikeo1": {
+            "username": "ikeo1",
+            "address": "0xb26Ea1838AF0A3bCf7CFd9fCD50e07D33e049BD3",
+            "donut": 1916.1593,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 1896.1593,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "purple-hawk-4405": {
+            "username": "purple-hawk-4405",
+            "address": "0xBb3ee4bFa92A7ca51169163668C418048E24d88c",
+            "donut": 1911.1593,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 1896.1593,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "maximumstudent1839": {
+            "username": "maximumstudent1839",
+            "address": "0xeC64E641Daf8228c7043E25948c3eE5CEd89FaC6",
+            "donut": 1901.1593,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 1896.1593,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "olmops": {
+            "username": "olmops",
+            "address": "0xCA7d56f69C1321DA5ac0fc68B2433A4B3c4624Dc",
+            "donut": 1899.1593,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 1896.1593,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "shibeceo": {
+            "username": "shibeceo",
+            "address": "0x6423c5ce78E66d37172163D581469822879b1d4a",
+            "donut": 1899.1593,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 1896.1593,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "pinewatch762": {
+            "username": "pinewatch762",
+            "address": "0x14f40e47227c9F75FD3165292D9F9ff28a4BE577",
+            "donut": 1899.1593,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 1896.1593,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "ice-flght": {
+            "username": "ice-flght",
+            "address": "0xdb45859C25c08a38f2cC04c17a04F76C0FC3191f",
+            "donut": 1591.1079,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 1589.1079,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "abcoathup": {
+            "username": "abcoathup",
+            "address": "0x13ebd3443fa5575F0Eb173e323D8419F7452CfB1",
+            "donut": 1585.1327,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 1580.1327,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "chubby_fit": {
+            "username": "chubby_fit",
+            "address": "0x50459CAE2eF68E355013dEb7d6C902C58B0B22aE",
+            "donut": 1279.1062,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 1264.1062,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "m_i_n_d_": {
+            "username": "m_i_n_d_",
+            "address": "0xD04bB94C97e27fF6dE07A316CBEF65bB5A0Fb613",
+            "donut": 1279.1062,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 1264.1062,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "zeroxoia": {
+            "username": "zeroxoia",
+            "address": "0xCfAA0ce788fe52037af11c2f3b3a6F50ADB2597B",
+            "donut": 1279.1062,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 1264.1062,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "fribben": {
+            "username": "fribben",
+            "address": "0xECe74f4811753aF8936f98259DAfCCA258769F87",
+            "donut": 1279.1062,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 1264.1062,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "security_raven": {
+            "username": "security_raven",
+            "address": "0xFBddB66A587515789f4bF2bFA5e19FE98e980104",
+            "donut": 1267.0204,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 1276.0204,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "roy1984": {
+            "username": "roy1984",
+            "address": "0x0cC7dAE1748e8E5371b2e2b47a5D9446E1D46546",
+            "donut": 1266.1062,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 1264.1062,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "chillinewman": {
+            "username": "chillinewman",
+            "address": "0xC9BEd71F2F1760002864E7ecCAA8C3f36fFc4745",
+            "donut": 1266.1062,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 1264.1062,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "flame_ftw": {
+            "username": "flame_ftw",
+            "address": "0x913A7536ed86f5CC02B749A91728E0a80D349Aa2",
+            "donut": 1266.1062,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 1264.1062,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "centralbankerscum": {
+            "username": "centralbankerscum",
+            "address": "0x6E50910Df475eb94Da8C72ac29FA6B753691Cb7b",
+            "donut": 1266.1062,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 1264.1062,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "bzzking": {
+            "username": "bzzking",
+            "address": "0x7C48CF841a4cd5754127148fB9B20580Fc51eBeb",
+            "donut": 1227.3084,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 1440.4398,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 250.0
+            }
+        },
+        "rv8n8": {
+            "username": "rv8n8",
+            "address": "0x3e38717ca367cDad980613466ea2395621EE17E8",
+            "donut": 955.0796,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 948.0796,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "0x456": {
+            "username": "0x456",
+            "address": "0x456029D4d417ab7BD4D5d2b0404215E56a25C000",
+            "donut": 951.0796,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 948.0796,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "kaijeng": {
+            "username": "kaijeng",
+            "address": "0x33de26d9083f338c9C4AC0F81c59D2C0DfBE3cE1",
+            "donut": 950.0796,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 948.0796,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "timbulance": {
+            "username": "timbulance",
+            "address": "0xf8b2808E19413E0b14C2966dD6afB497c7F5A919",
+            "donut": 941.0796,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 948.0796,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "criticalcobraz": {
+            "username": "criticalcobraz",
+            "address": "0xdBdD159aC55fCc78b67F15751A9cB66d395eCb1F",
+            "donut": 855.273,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 1352.2730000000001,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 500.0
+            }
+        },
+        "malixshak": {
+            "username": "malixshak",
+            "address": "0xb10135E33D94f8364E9dA4148f908EdF92b1bD2f",
+            "donut": 816.262,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 8922.0247,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 2250.0
+            }
+        },
+        "zepoid": {
+            "username": "zepoid",
+            "address": "0x63f0a3c5bf80D358109E962443E6c7a22822F54c",
+            "donut": 789.2465,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 1036.2464,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 250.0
+            }
+        },
+        "bottomtimer_tunafish": {
+            "username": "bottomtimer_tunafish",
+            "address": "0xcbe8B4E8A16437D94e065A8C3E4797896C228Cee",
+            "donut": 745.163,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 992.1631,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 250.0
+            }
+        },
+        "beerdrinker_mavech": {
+            "username": "beerdrinker_mavech",
+            "address": "0x0ab9cb780BAAbd1aC9b93b31A756E255905106A0",
+            "donut": 642.0531,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 632.0531,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "yoldark": {
+            "username": "yoldark",
+            "address": "0x1542cBd59A301e8b8bceD150c752e5a49D196F04",
+            "donut": 637.0531,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 632.0531,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "nickel62": {
+            "username": "nickel62",
+            "address": "0x68d2E117B2297e5161209788f9915D301d3cE532",
+            "donut": 637.0531,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 632.0531,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "oaxaca_locker": {
+            "username": "oaxaca_locker",
+            "address": "0x811C29A1222b53B32B31545e1a5acBbe8CDA8Ad7",
+            "donut": 633.0531,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 632.0531,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "voidfactory": {
+            "username": "voidfactory",
+            "address": "0xd99Ef190A8Db6AaBbA084a2ea65EC915645BDa22",
+            "donut": 633.0531,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 632.0531,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "parakite": {
+            "username": "parakite",
+            "address": "0x2921628Eb2c43ce735A89318fd4865A79e0e9a51",
+            "donut": 633.0531,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 632.0531,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "studdmufin": {
+            "username": "studdmufin",
+            "address": "0x4991eF523C86F02B76963e7c04dF084EccF2995e",
+            "donut": 633.0531,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 632.0531,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "poojaapriyaa": {
+            "username": "poojaapriyaa",
+            "address": "0x525465D20141d324fe857485F8f4E11740AAcCE1",
+            "donut": 633.0531,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 632.0531,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "wytherlanejazz": {
+            "username": "wytherlanejazz",
+            "address": "0x9663DcbcF075ab5d3A1aE2e96A52DbdD88c886Ff",
+            "donut": 633.0531,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 632.0531,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "demapples4u": {
+            "username": "demapples4u",
+            "address": "0x7FDCd2E33E371ec87B95bbFfc2554E0b2009E446",
+            "donut": 633.0531,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 632.0531,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "puddingbuks26": {
+            "username": "puddingbuks26",
+            "address": "0x6361d1737dccFD7a68a969A7f06F9D97a740c162",
+            "donut": 633.0531,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 632.0531,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "rootpl": {
+            "username": "rootpl",
+            "address": "0xEdc0321b407b165CF926BE3E77ecB6C791f731bA",
+            "donut": 633.0531,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 632.0531,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "megselepgeci": {
+            "username": "megselepgeci",
+            "address": "0xe0ADe6c4900d80Abd8cc8C462F8F9F586b5Cd065",
+            "donut": 633.0531,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 632.0531,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "offgridgecko": {
+            "username": "offgridgecko",
+            "address": "0x2496286BDB820d40C402802F828ae265b244188A",
+            "donut": 633.0531,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 632.0531,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "norecommendation9108": {
+            "username": "norecommendation9108",
+            "address": "0x3Cc905130bd541b56e70189B225491ef59EBdf14",
+            "donut": 633.0531,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 632.0531,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "distinctengineering2": {
+            "username": "distinctengineering2",
+            "address": "0xb1007d8b6a0599637Fa7784993EAcEB26A94A89f",
+            "donut": 633.0531,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 632.0531,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "hooftly": {
+            "username": "hooftly",
+            "address": "0x4CF8e4D37F561815F208565a5b6Ca8a85b143205",
+            "donut": 633.0531,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 632.0531,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "physicaljoe3011": {
+            "username": "physicaljoe3011",
+            "address": "0xA3B9703bE58185CC05C010B50Eba8f6dE69468a6",
+            "donut": 633.0531,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 632.0531,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "thinkingperson": {
+            "username": "thinkingperson",
+            "address": "0x3B753afeE5EF08832Aff91C1556e080b4EFb680d",
+            "donut": 633.0531,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 632.0531,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "wales-bloke": {
+            "username": "wales-bloke",
+            "address": "0x99dbCd0732Df1A4Aa0bb45d313cA1f22Ee2b4062",
+            "donut": 633.0531,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 632.0531,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "1moreanonaccount": {
+            "username": "1moreanonaccount",
+            "address": "0x7A6c54B21118Fa431e602A3298d86aFe42a1Ae1f",
+            "donut": 633.0531,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 632.0531,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "greenwolf_12": {
+            "username": "greenwolf_12",
+            "address": "0xe0c5b09eb1616b948103FDa95d69c9b7503a4c15",
+            "donut": 633.0531,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 632.0531,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "shelbyturtle": {
+            "username": "shelbyturtle",
+            "address": "0xf1769dbb44B0E8B1AD519Ea80e45E870a3C535C4",
+            "donut": 633.0531,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 632.0531,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "dfeldsyo": {
+            "username": "dfeldsyo",
+            "address": "0xBa2dd18c7A9903187a09ca6f6982afAD98847B32",
+            "donut": 633.0531,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 632.0531,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "shib_army": {
+            "username": "shib_army",
+            "address": "0xE4cebdE475674EB709f3B169541386Bf326066Df",
+            "donut": 633.0531,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 632.0531,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "bapfelbaum": {
+            "username": "bapfelbaum",
+            "address": "0x94D7923914498FeC496E6F15cC7d30099f204EaC",
+            "donut": 633.0531,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 632.0531,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "desperate-fondant-41": {
+            "username": "desperate-fondant-41",
+            "address": "0xDaB5762B13dFC77FE26CECCF7989A5E0ecAA41F9",
+            "donut": 633.0531,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 632.0531,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "jesser9": {
+            "username": "jesser9",
+            "address": "0x7d0C0FCD7EbF36c8b3Adf162168F8139E6E72f74",
+            "donut": 633.0531,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 632.0531,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "hardciderguy": {
+            "username": "hardciderguy",
+            "address": "0xeaE4c266C073776b7fc1A008B12d56F052811c1b",
+            "donut": 633.0531,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 632.0531,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "dogstunning4845": {
+            "username": "dogstunning4845",
+            "address": "0xa21fca7a26bb74E8604858F329aF48c68428d596",
+            "donut": 633.0531,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 632.0531,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "2020visionsloth": {
+            "username": "2020visionsloth",
+            "address": "0x0431A561C0Dc7D3DcEffd9df42D0E241E7959fCc",
+            "donut": 626.0531,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 632.0531,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "aminok": {
+            "username": "aminok",
+            "address": "0xbEA18A39a1cEe253705eB5e966fe23F26dD109eF",
+            "donut": 613.0531,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 632.0531,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "legionticket": {
+            "username": "legionticket",
+            "address": "0x4a5008a960Df61CE7CF1EFDe0CBc268C390ff94F",
+            "donut": 603.8247,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 3152.8228,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 750.0
+            }
+        },
+        "alternativewonder471": {
+            "username": "alternativewonder471",
+            "address": "0x1c2f252a47d6C0160a0fDe8e70FDb09e790a7d5D",
+            "donut": 475.2199,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 720.2199,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 250.0
+            }
+        },
+        "according_time5120": {
+            "username": "according_time5120",
+            "address": "0xeDDf642049e08c287335a9aa87854E3442ff99B4",
+            "donut": 472.2199,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 720.2199,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 250.0
+            }
+        },
+        "k4yce": {
+            "username": "k4yce",
+            "address": "0xa682ff6C94C4df3fDb9aa7C7d5E9b0B2a84c1ef6",
+            "donut": 385.0531,
+            "data": {
+                "removed": true,
+                "removalReason": "comments only",
+                "fromKarma": 632.0531,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 250.0
+            }
+        },
+        "basoosh": {
+            "username": "basoosh",
+            "address": "0x80148c5d2b61182107f43FAE67f8F2ec4b5dbcDE",
+            "donut": 317.0265,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 316.0265,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "memeycurmudgeon": {
+            "username": "memeycurmudgeon",
+            "address": "0x7f25555A0C85B53Cb8934960D0e4ae2DF65CeCaB",
+            "donut": 317.0265,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 316.0265,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "flashy-butterfly6310": {
+            "username": "flashy-butterfly6310",
+            "address": "0xD5bB9395dB87015F8240D768ad9575987CEDAF3F",
+            "donut": 265.2154,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 632.0531,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "incompetentdonuts": {
+            "username": "incompetentdonuts",
+            "address": "0x2A043F315F24762937CBCf0EB6CB313a43bDE534",
+            "donut": 237.9066,
+            "data": {
+                "removed": true,
+                "removalReason": "comments only",
+                "fromKarma": 1580.1327,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "fattestlion": {
+            "username": "fattestlion",
+            "address": "0x2dBB136D8DC31698ADA7C56E0853C255629d0cA6",
+            "donut": 218.8302,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 1264.1062,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "gubbie99": {
+            "username": "gubbie99",
+            "address": "0xaF29FACA9278f3FE68BaDd745BB7f5b1538A17Ff",
+            "donut": 205.0362,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 1300.0068,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 250.0
+            }
+        },
+        "tserica": {
+            "username": "tserica",
+            "address": "0x2dED425b17b63c26bC51C8888466B560717C1Dd8",
+            "donut": 188.6159,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 1896.1593,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "ifnotme": {
+            "username": "ifnotme",
+            "address": "0xD90507FF211f65732e59B9e54221A9A03cCF3600",
+            "donut": 151.0,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 0.0,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "physicallodging": {
+            "username": "physicallodging",
+            "address": "0x100301F03299C90EC2945f64Db1f9F4e424d71F2",
+            "donut": 80.1255,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 360.11,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 250.0
+            }
+        },
+        "mattie_kadlec": {
+            "username": "mattie_kadlec",
+            "address": "0xF443e10e9d0FadD4b5153320B3F27840c2c7e5DC",
+            "donut": 77.8711,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 632.0531,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "uthillygooth": {
+            "username": "uthillygooth",
+            "address": "0xAf79312EB821871208ac76A80c8E282f8796964e",
+            "donut": 65.2053,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 632.0531,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "mimsoo777": {
+            "username": "mimsoo777",
+            "address": "0x0F178370Bd5F68003C107527143C3a082134F966",
+            "donut": 64.2053,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 632.0531,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "nethanns": {
+            "username": "nethanns",
+            "address": "0xB3184DA621427417e4991eD9321895e03052608E",
+            "donut": 64.2053,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 632.0531,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "guaranteejazzlike653": {
+            "username": "guaranteejazzlike653",
+            "address": "0xca18B5f8e506ca52fE4878B4BD35196Ed76a87E1",
+            "donut": 15.0,
+            "data": {
+                "removed": true,
+                "removalReason": "karma and/or age",
+                "fromKarma": 0.0,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "ContributionOk2574": {
+            "username": "ContributionOk2574",
+            "address": "0x16A11fc86EeBfB09824B5C7FCB9D47D35f885D8d",
+            "donut": 15.0,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 0.0,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "consistentpeachkey": {
+            "username": "consistentpeachkey",
+            "address": "0x1e3f0E9Cfb23931A79E086530914a96371c618a7",
+            "donut": 14.0,
+            "data": {
+                "removed": true,
+                "removalReason": "karma and/or age",
+                "fromKarma": 0.0,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "creative_ad7831": {
+            "username": "creative_ad7831",
+            "address": "0x5ce03C34F851066DA7a7392526a7EC4F81790e1D",
+            "donut": 13.0,
+            "data": {
+                "removed": true,
+                "removalReason": "temp ban",
+                "fromKarma": 0.0,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 1500.0
+            }
+        },
+        "few-butterscotch1572": {
+            "username": "few-butterscotch1572",
+            "address": "0x0292259335185a332a337f8c88945Ef61AF7137B",
+            "donut": 10.0,
+            "data": {
+                "removed": true,
+                "removalReason": "karma and/or age",
+                "fromKarma": 0.0,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "prospero_quant": {
+            "username": "prospero_quant",
+            "address": "0xF1F4f85EC7393d01fF52E5eA22Fc39457b62a19c",
+            "donut": 8.0,
+            "data": {
+                "removed": true,
+                "removalReason": "karma and/or age",
+                "fromKarma": 0.0,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 250.0
+            }
+        },
+        "arthropal": {
+            "username": "arthropal",
+            "address": "0x4BC2C9f9AEDa34534eCA66351b770A8E5dF66eCf",
+            "donut": 5.0,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 0.0,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "MickeydaCat": {
+            "username": "MickeydaCat",
+            "address": "0x68Ef673886Ab2446d0cE4D8D1fB5Ee9a41e2E203",
+            "donut": 5.0,
+            "data": {
+                "removed": true,
+                "removalReason": "perma ban",
+                "fromKarma": 0.0,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "Fatmacassih0511": {
+            "username": "Fatmacassih0511",
+            "address": "0xB853894f1EDe821C39CAcC89560D24a1be009D01",
+            "donut": 5.0,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 0.0,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "kingkai1998": {
+            "username": "kingkai1998",
+            "address": "0xf34bb068b683511136726E5A8ce620ce869822eb",
+            "donut": 4.0,
+            "data": {
+                "removed": true,
+                "removalReason": "karma and/or age",
+                "fromKarma": 0.0,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "_-_--_---": {
+            "username": "_-_--_---",
+            "address": "0x98134B610e5bBaD482dd09553B81a5DD55b8E8d0",
+            "donut": 4.0,
+            "data": {
+                "removed": true,
+                "removalReason": "suspended",
+                "fromKarma": 0.0,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 250.0
+            }
+        },
+        "MaconBacon01": {
+            "username": "MaconBacon01",
+            "address": "0xC05cFB4fa62BB3C9dF7Ac65fE77d28345aFa3485",
+            "donut": 2.0,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 0.0,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "cuervo_gris": {
+            "username": "cuervo_gris",
+            "address": "0x8D66B343b169DEA7F9450c71e933Ac978a0AF52E",
+            "donut": 1.0,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 0.0,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "Jenn2895": {
+            "username": "Jenn2895",
+            "address": "0x35ACD062dac967F50aB7e19Caa1dD529096040C5",
+            "donut": 1.0,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 0.0,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "Legitimate_Towel_919": {
+            "username": "Legitimate_Towel_919",
+            "address": "0xc7081355932E6Bc287eC1D53239ab8e47846977c",
+            "donut": 1.0,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 0.0,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "EchoEnclosure": {
+            "username": "EchoEnclosure",
+            "address": "0x42e84F0bCe28696cF1D254F93DfDeaeEB6F0D67d",
+            "donut": 1.0,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 0.0,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "oneawesomewave": {
+            "username": "oneawesomewave",
+            "address": "0x1Ae5B9D3DD5a7a3cDBc6bEc6B26cf7A73a3f3f58",
+            "donut": 1.0,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 0.0,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "CM19901": {
+            "username": "CM19901",
+            "address": "0x676eDd42FcB0dC9852036cf6eCa52d3BE9204DFb",
+            "donut": 1.0,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 0.0,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "Usual-Locksmith4657": {
+            "username": "Usual-Locksmith4657",
+            "address": "0x5f98883A30f4f9678F0EE9EA04f8F33CA493b855",
+            "donut": 1.0,
+            "data": {
+                "removed": false,
+                "removalReason": "",
+                "fromKarma": 0.0,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "odd-radio-8500": {
+            "username": "odd-radio-8500",
+            "address": "0x795065F0368BE7149140D2b134fe2bA072db42AE",
+            "donut": 0.0,
+            "data": {
+                "removed": true,
+                "removalReason": "temp ban",
+                "fromKarma": 0.0,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "emergensee13": {
+            "username": "emergensee13",
+            "address": "0xC73d8C34297F3d78Cb1d0708c6D458AC068fFC53",
+            "donut": 0.0,
+            "data": {
+                "removed": true,
+                "removalReason": "karma and/or age",
+                "fromKarma": 0.0,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        },
+        "master-cicada1480": {
+            "username": "master-cicada1480",
+            "address": "0x6842317481Df7EC9Bae5118B6d532070900A8CE2",
+            "donut": 0.0,
+            "data": {
+                "removed": true,
+                "removalReason": "perma ban",
+                "fromKarma": 0.0,
+                "fromTipsGiven": 0,
+                "fromTipsRecd": 0,
+                "voterBonus": 0.0,
+                "pay2PostFee": 0.0
+            }
+        }
+    }
+}
