@@ -171,6 +171,8 @@ class AllowSpecialMembersIfApplicableDistributionTask(DistributionTask):
                                 multiplier = .5
                             case 'question':
                                 multiplier = .1
+                            case 'shitpost':
+                                multiplier = 0
                             case _:
                                 multiplier = 1
 
