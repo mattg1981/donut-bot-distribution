@@ -7,14 +7,18 @@ from enum import Enum
 
 
 class SafeChain(Enum):
-    GNOSIS = 1
-    ARB1 = 2
+    MAINNET = 1
+    GNOSIS = 2
+    ARB1 = 3
 
 
 def build_tx_builder_json(chain: SafeChain, description: str, transactions: list):
     if chain == SafeChain.ARB1:
         schema_path = os.path.normpath(
             os.path.join(pathlib.Path(__file__).parent.resolve(), "tx_builder_schema_arb1.json"))
+    elif chain == SafeChain.MAINNET:
+        schema_path = os.path.normpath(
+            os.path.join(pathlib.Path(__file__).parent.resolve(), "tx_builder_schema_mainnet.json"))
     else:
         schema_path = os.path.normpath(
             os.path.join(pathlib.Path(__file__).parent.resolve(), "tx_builder_schema_gno.json"))
